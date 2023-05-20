@@ -88,7 +88,6 @@ class ViewController: UIViewController{
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
             progressview.setProgress(strtvalyueofprogresview, animated: true)
             counting = Int(databasehelper.sharaintance.getdata().last!.startValue)
-            print("startvalue \(databasehelper.sharaintance.getdata().last!.startValue ?? 0), tergetvalue \(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)")
             lbl_Show_counting_Valyue.text = "\(counting)"
         }else{
             count_current_value = true
@@ -160,18 +159,18 @@ class ViewController: UIViewController{
     }
     //btntapped pluse counting
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
-        if count_current_value == false{
+        if !count_current_value{
             print("startvalue btn click first \(databasehelper.sharaintance.getdata().last!.startValue ?? 0), tergetvalue  btn click first\(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)")
             let objDtabase = databasehelper.sharaintance.getdata().last
-            
-            databasehelper.sharaintance.getdata().last?.startValue += 1
-           
-            progressview.progress = Float(objDtabase!.startValue) / Float(objDtabase!.targetValue)
-            lbl_Show_counting_Valyue.text = "\(counting)"
-            print("startvalue btn click \(databasehelper.sharaintance.getdata().last!.startValue ?? 0), tergetvalue  btn click\(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)")
-        }else if count_current_value == true{
+          
             counting = counting + 1
+            progressview.progress = Float(counting) / Float(objDtabase!.targetValue)
             lbl_Show_counting_Valyue.text = "\(counting)"
+            databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
+            databasehelper.sharaintance.saveItems()
+        }else if count_current_value{
+                counting = counting + 1
+         lbl_Show_counting_Valyue.text = "\(counting)"
         }
             if selectedsound{
                 audioPlayer.play()
@@ -183,12 +182,27 @@ class ViewController: UIViewController{
     }
 //btntapped minus counting
     @IBAction func btn_click_minus_counting(_ sender: UIButton)  {
-        if counting > 0{
-            counting = counting - 1
-            lbl_Show_counting_Valyue.text = "\(counting)"
-        }else{
-            counting = 0
-        }}
+        if !count_current_value{
+            if counting > 0{
+                counting = counting - 1
+                progressview.progress = Float(counting) / Float(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)
+                databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
+                databasehelper.sharaintance.saveItems()
+                lbl_Show_counting_Valyue.text = "\(counting)"
+                
+            }else{
+                counting = 0
+            }
+            
+        }else if count_current_value{
+            if counting > 0{
+                counting = counting - 1
+                lbl_Show_counting_Valyue.text = "\(counting)"
+            }else{
+                counting = 0
+            }
+        }
+    }
     //btntapped pluse counting
     @IBAction func btn_click_reload_conting(_ sender: UIButton) {
         
@@ -208,6 +222,8 @@ class ViewController: UIViewController{
     
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
         counting = 0
+        progressview.progress = Float(counting) / Float(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)
+        databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
         lbl_Show_counting_Valyue.text = "\(counting)"
         view_reset_Counting_bottom_sheet.isHidden = true
         resetBollian.toggle()

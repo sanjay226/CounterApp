@@ -18,15 +18,29 @@ class ListViewController: UIViewController{
     @IBOutlet weak var btn_sort_Date: UIButton!
     @IBOutlet weak var btn_sort_Valyue: UIButton!
     @IBOutlet weak var btn_view_cansal: UIButton!
+    @IBOutlet weak var btn_continue: UIButton!
+    @IBOutlet weak var lbl_sort_continue: UILabel!
     @IBOutlet weak var lbl_Alphabetic_sort_valyue: UILabel!
     @IBOutlet weak var lbl_cancel: UILabel!
     @IBOutlet weak var lbl_sort_valyue: UILabel!
     @IBOutlet weak var lbl_sort_Date: UILabel!
     @IBOutlet weak var View_Sorted_All_data_bottomview: UIView!
-   //MARK: - All veriable
+    
+    @IBOutlet weak var img_continue_bottom_view: UIImageView!
+    
+    @IBOutlet weak var img_sourt_bydate_bottomview: UIImageView!
+    
+    @IBOutlet weak var img_Alphabetic_sort_bottomview: UIImageView!
+    
+    @IBOutlet weak var img_cansal_bottomview: UIImageView!
+    
+    @IBOutlet weak var img_sort_by_value_bottomview: UIImageView!
+    
+    //MARK: - All veriable
     var showFilterMenu = true
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
+    var didselectIndex = -1
    //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -169,9 +183,7 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellShowCurrentList", for: indexPath) as! CellShowCurrentList
         let obj = Ary_textfield_get_list[indexPath.row]
-        
         let persent = (Float(obj.startValue) * 100) / Float(obj.targetValue)
-        
         let formatted = String(format: "%.1f", persent)
         cell.progressView.setProgress(Float(obj.startValue)/Float(obj.targetValue), animated: true)
         cell.lbl_Days_ago.text = getCreatDate(obj: obj)
@@ -183,6 +195,13 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        View_Sorted_All_data_bottomview.isHidden = false
+        lbl_sort_Date.text = "Edit"
+        lbl_Alphabetic_sort_valyue.text = "Reset Counter"
+        lbl_sort_valyue.text = "Delet"
+        
     }
     
     func getCreatDate(obj: Garland) -> String {

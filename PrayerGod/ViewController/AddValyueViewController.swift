@@ -10,7 +10,7 @@ protocol AddValyuViewControllerDelegate{
     func popupCloseEvent()
 }
 
-class AddValyueViewController: UIViewController, UITextFieldDelegate{
+class AddValyueViewController: UIViewController{
     //MARK: - All @IBOutlet
     
     @IBOutlet weak var lbl_title: UILabel!
@@ -41,30 +41,61 @@ class AddValyueViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var View_Height_Tragetvalue: NSLayoutConstraint!
     
     //MARK: - All veriable
-    var celllable_heightbool = Bool()
+    
     var delegate_addVc : AddValyuViewControllerDelegate?
-    //var booli = Bool()
-   
+    var select_Index_list_Vc_database = Int()
+    var is_selectIndex_bool_Dtabase = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         allmetodeAssignViewDidload()
        
     }
-//MARK: - Custum Function
-    func allmetodeAssignViewDidload(){
-        set_lefr_and_right_barButtonItem_Add()
-        lbl_height_zero(height_title, txt_title)
-        lbl_height_zero(height_value,txt_Start_value)
-        lbl_height_zero(height_reminder,txt_reminder)
-        lbl_height_zero(height_targetvalue,txt_target_value)
-        view_height_constrain_zero(View_Height_title,txt_title)
-        view_height_constrain_zero(View_Height_Value,txt_Start_value)
-        view_height_constrain_zero(View_Height_reminder,txt_reminder)
-        view_height_constrain_zero(View_Height_Tragetvalue,txt_target_value)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        selected_index_list_on_listVc()
         
-     }
-  
+    }
+    
+    
+    //MARK: - Custum Function
+    func allmetodeAssignViewDidload(){
+        height_reminder.constant = 0
+        height_title.constant = 0
+        height_value.constant = 0
+        height_targetvalue.constant = 0
+        
+        View_Height_reminder.constant = 88
+        View_Height_Value.constant = 88
+        View_Height_Tragetvalue.constant = 88
+        View_Height_title.constant = 88
+        set_lefr_and_right_barButtonItem_Add()
+        txt_target_value.delegate = self
+        txt_title.delegate = self
+    }
+    
+    func selected_index_list_on_listVc(){
+        if is_selectIndex_bool_Dtabase{
+            var newdatabaseindex_data = databasehelper.sharaintance.getdata()
+            let data = newdatabaseindex_data[select_Index_list_Vc_database]
+            txt_reminder.text=String(data.reminder)
+            txt_title.text = data.title
+            txt_Start_value.text = String(data.startValue)
+            txt_target_value.text = String(data.targetValue)
+            textView_Note.text = data.note
+        
+         }
+    }
+
+    func updateName_Value_all_list(){
+        var newdatabaseindex_data = databasehelper.sharaintance.getdata()
+        newdatabaseindex_data[select_Index_list_Vc_database].title = txt_title.text ?? ""
+        newdatabaseindex_data[select_Index_list_Vc_database].reminder = Int16(txt_reminder.text ?? "") ?? 0
+        newdatabaseindex_data[select_Index_list_Vc_database].startValue = Int16(txt_Start_value.text ?? "") ?? 0
+        newdatabaseindex_data[select_Index_list_Vc_database].targetValue = Int16(txt_target_value.text ?? "") ?? 0
+        newdatabaseindex_data[select_Index_list_Vc_database].note = textView_Note.text ?? ""
+       
+      }
     
 func set_lefr_and_right_barButtonItem_Add(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoRootVc))
@@ -86,42 +117,80 @@ func set_lefr_and_right_barButtonItem_Add(){
         if self.presentingViewController != nil{
             
             self.dismiss(animated: true, completion: nil)
-           
+         
         }else{
             self.navigationController?.popViewController(animated: true)
-            
-          
-        }
+            }
     }
-
-   
+    
+    
     @objc func GoFirst_view_controller(){
-      
-      
-        if txt_title.text != "" {
+       // txt_target_all_textfield(txt_reminder)
+        
+//        if txt_title.text != "" || txt_Start_value.text != "" || txt_target_value.text != "" || txt_reminder.text != "" {
+//
+//                if Start_convert_int >= End_convert_int{
+//                    height_targetvalue.constant = 20
+//                    View_Height_Tragetvalue.constant = 116
+//                    lbl_target_six_digit_value.text = "not enter greter"
+//                }else{
+//                    height_targetvalue.constant = 0
+//                    View_Height_Tragetvalue.constant = 88
+//                }
+////            if End_convert_int <= Start_convert_int{
+////                height_value.constant = 20
+////                View_Height_Value.constant = 116
+////               lbl_strat_Value_six_digit.text = "not enter greter"
+////            }else{
+////                height_value.constant = 0
+////                View_Height_Value.constant = 88
+////               }
+//
+//
+//           }
+       // text_fields_validation(txt_reminder, height_reminder, View_Height_reminder, lbl_reminders_six_digit)
+        if is_selectIndex_bool_Dtabase{
+            if self.presentingViewController != nil{
+                
+                self.dismiss(animated: true, completion: nil)
+                
+            }else{
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+           updateName_Value_all_list()
+            databasehelper.sharaintance.saveItems()
+            
+        }else{
             savedata()
             self.presentingViewController?.dismiss(animated: false, completion: nil)
             self.presentingViewController?.dismiss(animated: true, completion: nil)
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true
-            
-         }
-    }
-   
-    func lbl_height_zero(_ sender : NSLayoutConstraint ,_ txtfield : UITextField){
-        if txtfield.text!.count > 5{
-          // sender.constant = 15
-        }else{
-          //  sender.constant = 0
+            GlobalData.sharedInstance.selectindex = databasehelper.sharaintance.getdata().last
         }
+        
+    }
+func text_fields_validation( _ textfield : UITextField, _ height : NSLayoutConstraint,_ viewheight : NSLayoutConstraint,_ lbl : UILabel){
+        if textfield.text!.count > 6 {
+            height.constant = 20
+            viewheight.constant = 116
+            lbl.backgroundColor = .white
+        }else{
+            height.constant = 0
+            viewheight.constant = 88
+        }
+ 
+    }
+func counting_Range_value_txt(){
+    
+  }
+    func lbl_height_zero(_ sender : NSLayoutConstraint ,_ txtfield : UITextField){
+    sender.constant = 0
     }
     
     func view_height_constrain_zero(_ sender: NSLayoutConstraint,_ txtfield : UITextField){
-        if txtfield.text!.count > 6{
-            sender.constant = 116
-        }else{
-            sender.constant = 88
-        }
+        sender.constant = 88
     }
     
     func savedata(){
@@ -129,9 +198,10 @@ func set_lefr_and_right_barButtonItem_Add(){
         databasehelper.sharaintance.dataSave(object: objTask)
         databasehelper.sharaintance.saveItems()
         
-        }
+        
     }
-
+    
+}
 private var kAssociationKeyMaxLength: Int = 0
 extension UITextField {
 
@@ -165,3 +235,26 @@ extension UITextField {
         selectedTextRange = selection
     }
 }
+extension AddValyueViewController : UITextFieldDelegate{
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
+//    func textFieldDidBeginEditing(textField: UITextField) -> Bool {
+//        if textField == txt_title {
+//            if textField.text != "" && textField.text!.count > 3{
+//                lbl_six_digitEnter.text = "ijsdfouq"
+//                height_title.constant = 20
+//                View_Height_title.constant = 116
+//            }else{
+//                height_title.constant = 0
+//                View_Height_title.constant = 88
+//            }
+//
+//        }
+//        return true
+//    }
+
+       
+
+    }
+

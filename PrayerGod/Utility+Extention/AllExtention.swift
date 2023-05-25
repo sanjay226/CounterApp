@@ -89,5 +89,5 @@ final class GlobalData: NSObject {
    private override init() { }
     var isFromSaveTask: Bool?
     var selectindex : Garland?
-    var isfromsavevalue : Bool?
+  //  var isfromsavevalue : Bool?
 }

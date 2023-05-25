@@ -47,6 +47,7 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_dilitrow = Bool()
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
+  
 //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +62,9 @@ class ListViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewGesture_cover_bottom_sheet.isHidden = true
+        DispatchQueue.main.async { [self] in
+            Tbl_list_of_malaEnding.reloadData()
+        }
     }
     //MARK: - Custem methode
     func set_lefr_and_right_barButtonItem(){
@@ -177,11 +181,24 @@ class ListViewController: UIViewController{
         }) { [self] (finished) in
             if finished {
                hide_mainbottom_view()
+                }
             }
+        
+        }
+    }
+    func shortedAlphabetic(){
+        let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
+          Ary_textfield_get_list = sortedarry
+        databasehelper.sharaintance.saveItems()
+        tblview_reload()
+  }
+    func tblview_reload(){
+        DispatchQueue.main.async {
+            self.Tbl_list_of_malaEnding.reloadData()
         }
         
     }
-}
+      
 
 @IBAction func btn_did_tapped_open_addVc(_ sender: UIButton) {
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
@@ -206,12 +223,7 @@ class ListViewController: UIViewController{
         is_Sort_all_ButtonClicked.toggle()
         self.navigationItem.rightBarButtonItem?.isEnabled = true
        }
-  func shortedAlphabetic(){
-      let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
-        Ary_textfield_get_list = sortedarry
-       Tbl_list_of_malaEnding.reloadData()
-        databasehelper.sharaintance.saveItems()
-}
+
     
     @IBAction func btnPopupEvents(_ sender: UIButton){
        
@@ -221,34 +233,36 @@ class ListViewController: UIViewController{
             case 1:
               
                 shortedAlphabetic()
-                databasehelper.sharaintance.saveItems()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
-            case 2:
-              
-                let sorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date.distantFuture) < ($1.date ?? Date.distantPast)})
-                Ary_textfield_get_list = sorted
-                Tbl_list_of_malaEnding.reloadData()
-                databasehelper.sharaintance.saveItems()
-                View_Sorted_All_data_bottomview.isHidden = true
-                Tbl_list_of_malaEnding.isUserInteractionEnabled = true
-                ispresen_tbottom_view.toggle()
-                hide_mainbottom_view()
-                is_Sort_all_ButtonClicked = Bool()
-            case 3:
                 
+            case 2:
+              let sorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
+                Ary_textfield_get_list = sorted
+                databasehelper.sharaintance.saveItems()
+               tblview_reload()
+                View_Sorted_All_data_bottomview.isHidden = true
+                Tbl_list_of_malaEnding.isUserInteractionEnabled = true
+                ispresen_tbottom_view.toggle()
+                hide_mainbottom_view()
+                is_Sort_all_ButtonClicked = Bool()
+              
+            case 3:
+               
                 let sorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
                 Ary_textfield_get_list = sorted
-                Tbl_list_of_malaEnding.reloadData()
                 databasehelper.sharaintance.saveItems()
+                tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
+             
+    
             default:
                 return
             }
@@ -257,30 +271,41 @@ class ListViewController: UIViewController{
             ispresen_tbottom_view.toggle()
             switch sender.tag {
             case 1:
+         
                    let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
+            
+                let navigationController = UINavigationController(rootViewController: nav)
+             
+                navigationController.setNavigationBarHidden(false, animated: true)
+                let navigationControlr1 = UINavigationController(rootViewController: nav)
+                navigationControlr1.modalPresentationStyle = .fullScreen
+                   nav.delegate_addVc = self
+                    nav.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
+                    nav.navigationController?.modalPresentationStyle = .fullScreen
+                    nav.select_Index_list_Vc_database = didselectIndex
+                    nav.is_selectIndex_bool_Dtabase = true
                 
-                    let navigationControlr1 = UINavigationController(rootViewController: nav)
-                    navigationControlr1.modalPresentationStyle = .fullScreen
-                    nav.delegate_addVc = self
-                    self.present(navigationControlr1, animated: true, completion: nil)
+                    present(navigationControlr1, animated: true)
+
                     View_Sorted_All_data_bottomview.isHidden = true
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
-            
-              case 2:
+              
+                   
+             case 2:
                 Ary_textfield_get_list[didselectIndex].startValue = 0
                 databasehelper.sharaintance.saveItems()
                 Ary_textfield_get_list = databasehelper.sharaintance.getdata()
-                Tbl_list_of_malaEnding.reloadData()
+                tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-               // self.navigationItem.rightBarButtonItem?.isEnabled = true
+              
             case 3:
-                Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
+              Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
                 databasehelper.sharaintance.saveItems()
                 Ary_textfield_get_list = databasehelper.sharaintance.getdata()
-                Tbl_list_of_malaEnding.reloadData()
+               tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
@@ -332,7 +357,7 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view_continue_bottomview.isHidden = false
-      // bottom_up()
+      
         is_Sort_all_ButtonClicked = false
         show_mainbottom_view()
         View_Sorted_All_data_bottomview.isHidden = false
@@ -355,7 +380,7 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ssz"
         let date = dateFormatter.date(from: "\(obj.date ?? Date())")
-        dateFormatter.dateFormat = "dd MMM, yyyy"
+        dateFormatter.dateFormat = "dd MMM, yyyy hh:mm a"
         return dateFormatter.string(from: date ?? Date())
     }
     

@@ -61,65 +61,47 @@ class ViewController: UIViewController{
     var strtvalyueofprogresview = Float()
     var count_current_value = Bool()
     var End_progresscount = Float()
-   // var progresstotal_count_min = Float()
+  
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         AllCutemMethoddeToSet_VIewLoad()
     
-   
-       
-    }
+   }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
        
       
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
-        let isfromValue = GlobalData.sharedInstance.isfromsavevalue ?? false
-       current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
+        current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
         if isFromSaveTask {
             
             count_current_value = false
             stackview.isHidden = false
             
-            lbl_title_topview.text = databasehelper.sharaintance.getdata().last?.title
-            lbl_target_topview.text = "\(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)"
-            lbl_reminder_topview.text = "\(databasehelper.sharaintance.getdata().last?.reminder ?? 0)"
-            strtvalyueofprogresview = (Float(databasehelper.sharaintance.getdata().last?.startValue ?? 0) / Float(databasehelper.sharaintance.getdata().last?.targetValue ?? 0))
-            
-          GlobalData.sharedInstance.isFromSaveTask = false
+            lbl_title_topview.text = current_data_list_obj.title
+            lbl_target_topview.text = String(current_data_list_obj.targetValue)
+            lbl_reminder_topview.text = String(current_data_list_obj.reminder)
+            strtvalyueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
             progressview.setProgress(strtvalyueofprogresview, animated: true)
-            counting = Int(databasehelper.sharaintance.getdata().last!.startValue)
+            counting = Int(current_data_list_obj.startValue)
             lbl_Show_counting_Valyue.text = "\(counting)"
+            GlobalData.sharedInstance.isFromSaveTask = false
+      
         }
-        else if isfromValue{
-            count_current_value = false
-            stackview.isHidden = false
-           
-            lbl_title_topview.text = current_data_list_obj.title
-           lbl_target_topview.text = String(current_data_list_obj.targetValue)
-           print("current_data_list_obj.title", String(current_data_list_obj.targetValue))
-            lbl_reminder_topview.text = String(current_data_list_obj.reminder)
 
-            GlobalData.sharedInstance.isfromsavevalue = false
-           self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
-            strtvalyueofprogresview = (Float(current_data_list_obj.startValue ) / Float(current_data_list_obj.targetValue ?? 0))
-            print("Float(current_data_list_obj.startValue ?? 0)",Float(current_data_list_obj.startValue  ))
-          print("Float(current_data_list_obj.targetvalue ?? 0)",Float(current_data_list_obj.targetValue))
-
-            progressview.setProgress(strtvalyueofprogresview, animated: true)
-          counting = Int(current_data_list_obj.startValue)
-            lbl_Show_counting_Valyue.text = "\(counting)"
-           databasehelper.sharaintance.saveItems()
-
-        }else{
+        else{
             count_current_value = true
             stackview.isHidden = true
             counting = 0
             lbl_Show_counting_Valyue.text = "\(counting)"
         }
           
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        progressview.setProgress(0.0, animated: true)
     }
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
@@ -143,8 +125,12 @@ class ViewController: UIViewController{
         appears_Back_Graund_coloure(btn_change_view_coloure)
         progressview.progressTintColor = .black
       
-        
-}
+    }
+    func btnClick_topview_open_insideView(){
+        navigationController?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.down.to.line.alt")
+        navigationController?.navigationItem.rightBarButtonItem?.customView?.backgroundColor = .yellow
+        view_End_Edit_btn.isHidden = true
+    }
     
     func setupTheme(){
         bgColor = self.colors.randomElement()!
@@ -178,20 +164,24 @@ class ViewController: UIViewController{
     }
     //btntapped go sidemenu
     @IBAction func btn_did_Tapped_goaddVlyueVc(_ sender: UIBarButtonItem) {
-        let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
-        nav.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(nav, animated: true)
+        if sender.customView?.backgroundColor == .yellow{
+            view_End_Edit_btn.isHidden = false
+        }else{
+            let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
+            nav.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(nav, animated: true)
+        }
     }
     //btntapped pluse counting
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
         if !count_current_value{
           
-            let objDtabase = databasehelper.sharaintance.getdata().last
+            let objDtabase = current_data_list_obj
             
             counting = counting + 1
-            progressview.progress = Float(counting) / Float(objDtabase!.targetValue)
+            progressview.progress = Float(counting) / Float(objDtabase.targetValue)
             lbl_Show_counting_Valyue.text = "\(counting)"
-            databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
+           current_data_list_obj.startValue = Int16(counting)
             databasehelper.sharaintance.saveItems()
         }else if count_current_value{
                 counting = counting + 1
@@ -210,8 +200,8 @@ class ViewController: UIViewController{
         if !count_current_value{
             if counting > 0{
                 counting = counting - 1
-                progressview.progress = Float(counting) / Float(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)
-                databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
+                progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
+               current_data_list_obj.startValue = Int16(counting)
                 databasehelper.sharaintance.saveItems()
                 lbl_Show_counting_Valyue.text = "\(counting)"
                 
@@ -247,8 +237,8 @@ class ViewController: UIViewController{
     
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
         counting = 0
-        progressview.progress = Float(counting) / Float(databasehelper.sharaintance.getdata().last?.targetValue ?? 0)
-        databasehelper.sharaintance.getdata().last?.startValue = Int16(counting)
+        progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
+        current_data_list_obj.startValue = Int16(counting)
         lbl_Show_counting_Valyue.text = "\(counting)"
         view_reset_Counting_bottom_sheet.isHidden = true
         resetBollian.toggle()

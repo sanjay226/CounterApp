@@ -962,7 +962,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uBy-Hq-afY">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="759"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="IJS-bd-Nqw">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="IJS-bd-Nqw">
                                                 <rect key="frame" x="25" y="20" width="343" height="473"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="awn-RI-00m">
@@ -984,12 +984,7 @@
                                                                 </constraints>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                                                        <integer key="value" value="7"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
+                                                                <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Maximum 6 digits." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6LQ-do-iLB">
                                                                 <rect key="frame" x="10" y="83" width="80.666666666666671" height="20"/>
@@ -1170,13 +1165,13 @@
                                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qid-Qi-bj0">
-                                                <rect key="frame" x="35" y="496" width="35.333333333333343" height="18"/>
+                                                <rect key="frame" x="35" y="503" width="35.333333333333343" height="18"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="OpF-Dx-yHA">
-                                                <rect key="frame" x="35" y="519" width="323" height="128"/>
+                                                <rect key="frame" x="35" y="526" width="323" height="128"/>
                                                 <color key="backgroundColor" red="0.038000002499999998" green="0.038000002499999998" blue="0.038000002499999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -1194,7 +1189,7 @@
                                             <constraint firstAttribute="trailing" secondItem="IJS-bd-Nqw" secondAttribute="trailing" constant="25" id="2UY-2W-DkV"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Qid-Qi-bj0" secondAttribute="trailing" constant="20" symbolic="YES" id="MF0-jy-a8K"/>
                                             <constraint firstItem="IJS-bd-Nqw" firstAttribute="leading" secondItem="uBy-Hq-afY" secondAttribute="leading" constant="25" id="PeL-Hy-NOS"/>
-                                            <constraint firstItem="Qid-Qi-bj0" firstAttribute="top" secondItem="IJS-bd-Nqw" secondAttribute="bottom" constant="3" id="Qao-i7-mZ4"/>
+                                            <constraint firstItem="Qid-Qi-bj0" firstAttribute="top" secondItem="IJS-bd-Nqw" secondAttribute="bottom" constant="10" id="Qao-i7-mZ4"/>
                                             <constraint firstAttribute="trailing" secondItem="OpF-Dx-yHA" secondAttribute="trailing" constant="35" id="a6h-bG-hCV"/>
                                             <constraint firstItem="Qid-Qi-bj0" firstAttribute="leading" secondItem="uBy-Hq-afY" secondAttribute="leading" constant="35" id="rkj-Nm-GdL"/>
                                             <constraint firstItem="OpF-Dx-yHA" firstAttribute="top" secondItem="Qid-Qi-bj0" secondAttribute="bottom" constant="5" id="vcD-Fx-mZ4"/>

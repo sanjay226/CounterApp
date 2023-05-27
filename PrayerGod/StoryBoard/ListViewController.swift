@@ -83,21 +83,19 @@ class ListViewController: UIViewController{
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         View_Sorted_All_data_bottomview.isHidden = true
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = false
-        
-       
+           
     }
     
     @objc func GoBackVc(){
-    
-        if self.presentingViewController != nil{
-           
+        
+            if self.presentingViewController != nil{
+
             self.dismiss(animated: true, completion: nil)
         }else{
-          
             self.navigationController?.popViewController(animated: true)
-            
             }
-    }
+        
+   }
     
     @objc func show_Arrow_view(){
         
@@ -113,11 +111,9 @@ class ListViewController: UIViewController{
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = true
        Tbl_list_of_malaEnding.isUserInteractionEnabled = false
         ispresen_tbottom_view.toggle()
-      
-    }
+          }
     
     @objc func handleTapGesture(sender: UITapGestureRecognizer) {
-       
         viewGesture_cover_bottom_sheet.isHidden = true
         showwAndHideFilterMenu(category: 1)
         View_Sorted_All_data_bottomview.isHidden = true
@@ -126,6 +122,7 @@ class ListViewController: UIViewController{
         hide_mainbottom_view()
         is_Sort_all_ButtonClicked = Bool()
      }
+    
     func Animation_open_bottomview(_ view : UIView){
         UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0,options:.curveEaseIn, animations: {
             self.view.frame = CGRect(x: 0, y: 0, width: 353, height: 315)
@@ -133,6 +130,7 @@ class ListViewController: UIViewController{
             print("finish")
         }
     }
+    
     func Animation_hide_bottomview(){
         UIView.animate(withDuration: 1.5, delay: 0.5, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0,options:.curveEaseIn, animations: {
             self.view.frame = CGRect(x: 0, y: 527, width: 353, height: 315)
@@ -140,10 +138,31 @@ class ListViewController: UIViewController{
             if finished{
                 self.view.removeFromSuperview()
             }
-            
+            }
         }
-              
-    }
+//    func showDeleteWarning(){
+//        //Create the alert controller and actions
+//        let alert = UIAlertController(title: "Warning Title", message: "Warning Message", preferredStyle: .alert)
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+//            DispatchQueue.main.async { [self] in
+//                Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
+//                  databasehelper.sharaintance.saveItems()
+//                  Ary_textfield_get_list = databasehelper.sharaintance.getdata()
+//                 tblview_reload()
+//                  View_Sorted_All_data_bottomview.isHidden = true
+//                  is_Sort_all_ButtonClicked = Bool()
+//                  hide_mainbottom_view()
+//            }
+//        }
+//
+//        //Add the actions to the alert controller
+//        alert.addAction(cancelAction)
+//        alert.addAction(deleteAction)
+//    }
+    
    //gesture bottonview hide
     func hide_mainbottom_view(){
         viewGesture_cover_bottom_sheet.isHidden = true
@@ -302,7 +321,7 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
               
             case 3:
-              Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
+                Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
                 databasehelper.sharaintance.saveItems()
                 Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                tblview_reload()

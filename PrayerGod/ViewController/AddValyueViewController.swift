@@ -45,6 +45,8 @@ class AddValyueViewController: UIViewController{
     var delegate_addVc : AddValyuViewControllerDelegate?
     var select_Index_list_Vc_database = Int()
     var is_selectIndex_bool_Dtabase = Bool()
+   var editGarland_firstVc_topview = Garland()
+    var isEdit_first_vc_topviewData = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +56,10 @@ class AddValyueViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selected_index_list_on_listVc()
-        
-    }
+       
+        }
     
-    
-    //MARK: - Custum Function
+//MARK: - Custum Function
     func allmetodeAssignViewDidload(){
         height_reminder.constant = 0
         height_title.constant = 0
@@ -78,7 +79,7 @@ class AddValyueViewController: UIViewController{
     
     func selected_index_list_on_listVc(){
         if is_selectIndex_bool_Dtabase{
-            var newdatabaseindex_data = databasehelper.sharaintance.getdata()
+            let newdatabaseindex_data = databasehelper.sharaintance.getdata()
             let data = newdatabaseindex_data[select_Index_list_Vc_database]
             txt_reminder.text=String(data.reminder)
             txt_title.text = data.title
@@ -86,6 +87,12 @@ class AddValyueViewController: UIViewController{
             txt_target_value.text = String(data.targetValue)
             textView_Note.text = data.note
             
+        }else if isEdit_first_vc_topviewData{
+            txt_title.text = editGarland_firstVc_topview.title
+            txt_target_value.text = String(editGarland_firstVc_topview.targetValue)
+            txt_reminder.text = String(editGarland_firstVc_topview.reminder)
+            txt_Start_value.text = String(editGarland_firstVc_topview.startValue)
+            textView_Note.text = editGarland_firstVc_topview.note
         }
     }
     
@@ -98,7 +105,7 @@ class AddValyueViewController: UIViewController{
         newdatabaseindex_data[select_Index_list_Vc_database].note = textView_Note.text ?? ""
         
     }
-    
+
     func set_lefr_and_right_barButtonItem_Add(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoRootVc))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
@@ -126,54 +133,69 @@ class AddValyueViewController: UIViewController{
     }
     
     @objc func GoFirst_view_controller(){
-        
-     
-        if txt_title.text == nil{
-            if txt_title.text?.count == 0{
-                lbl_six_digitEnter.text = "This field is required."
-                View_Height_title.constant = 110
-                height_title.constant = 20
-            }else{
-                View_Height_title.constant = 88
-                height_title.constant = 0
-            }
-        }else if txt_Start_value.text != "" && txt_target_value.text != nil{
-            if  Int(txt_Start_value.text ?? "") ?? 0  >= Int( txt_target_value.text ?? "") ?? 0{
-                lbl_target_six_digit_value.text = "Must be greater than the start value."
-                View_Height_Tragetvalue.constant = 110
-                height_targetvalue.constant = 20
-            }else {
-                View_Height_Tragetvalue.constant = 88
-                height_targetvalue.constant = 0
-                
-            }
+        if txt_title.text == ""{
+            lbl_six_digitEnter.text = "This field is required."
+            View_Height_title.constant = 110
+            height_title.constant = 20
+        }else if txt_Start_value.text == "" && txt_reminder.text == "" && txt_target_value.text == ""{
+            saveDataAndSetValueIfBlank()
+        }else if Int(txt_Start_value.text ?? "") ?? 0  >= Int( txt_target_value.text ?? "") ?? 0 {
+            lbl_target_six_digit_value.text = "Must be greater than the start value."
+            View_Height_Tragetvalue.constant = 110
+            height_targetvalue.constant = 20
+        }else if Int(txt_target_value.text ?? "") ?? 0  <= Int( txt_reminder.text ?? "") ?? 0{
+            lbl_reminders_six_digit.text = "Must be less than the target value."
+            height_reminder.constant = 20
+            View_Height_reminder.constant = 110
         }else if is_selectIndex_bool_Dtabase{
                 if self.presentingViewController != nil{
-                    
                     self.dismiss(animated: true, completion: nil)
-                    
                 }else{
                     self.navigationController?.popViewController(animated: true)
-                    
                 }
                 updateName_Value_all_list()
                 databasehelper.sharaintance.saveItems()
-                
-        }else if txt_title.text != "" || txt_reminder.text == "" || txt_Start_value.text == "" || txt_target_value.text != "" {
-                
-                savedata()
-                self.presentingViewController?.dismiss(animated: false, completion: nil)
-                self.presentingViewController?.dismiss(animated: true, completion: nil)
-                self.delegate_addVc?.popupCloseEvent()
-                GlobalData.sharedInstance.isFromSaveTask = true
-                GlobalData.sharedInstance.selectindex = databasehelper.sharaintance.getdata().last
+                is_selectIndex_bool_Dtabase = false
+        }else if isEdit_first_vc_topviewData{
+            if self.presentingViewController != nil{
+                self.dismiss(animated: true, completion: nil)
             }else{
-                print("aqRQW")
+                self.navigationController?.popViewController(animated: true)
             }
-            
-        
+            let newdatabaseindex_data = databasehelper.sharaintance.getdata()
+            var updetDatafirstVc = newdatabaseindex_data.first(where: {$0 == editGarland_firstVc_topview})
+            updetDatafirstVc?.title = txt_title.text
+            updetDatafirstVc?.targetValue = Int16(txt_target_value.text ?? "") ?? 0
+            updetDatafirstVc?.startValue = Int16(txt_Start_value.text ?? "") ?? 0
+            updetDatafirstVc?.reminder = Int16(txt_reminder.text ?? "") ?? 0
+            updetDatafirstVc?.note = textView_Note.text ?? ""
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
+           self.presentingViewController?.dismiss(animated: true, completion: nil)
+            self.delegate_addVc?.popupCloseEvent()
+            GlobalData.sharedInstance.isFromSaveTask = true
+            GlobalData.sharedInstance.selectindex = updetDatafirstVc
+            databasehelper.sharaintance.saveItems()
+//            self.presentingViewController?.dismiss(animated: false, completion: nil)
+//            self.presentingViewController?.dismiss(animated: true, completion: nil)
+            isEdit_first_vc_topviewData = false
+        }
+        else {
+            saveDataAndSetValueIfBlank()
+        }
     }
     
+    func saveDataAndSetValueIfBlank(){
+        txt_Start_value.text = txt_Start_value.text == "" ? "0" : txt_Start_value.text
+        txt_reminder.text = txt_reminder.text == "" ? "0" : txt_reminder.text
+        txt_target_value.text = txt_target_value.text == "" ? "0" : txt_target_value.text
+        
+        savedata()
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.delegate_addVc?.popupCloseEvent()
+        GlobalData.sharedInstance.isFromSaveTask = true
+        GlobalData.sharedInstance.selectindex = databasehelper.sharaintance.getdata().last
+    }
     
     func lbl_height_zero(_ sender : NSLayoutConstraint ,_ txtfield : UITextField){
         sender.constant = 0
@@ -184,11 +206,9 @@ class AddValyueViewController: UIViewController{
     }
     
     func savedata(){
-        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? ""),reminder: Int(txt_reminder.text ?? ""), targetValue: Int(txt_target_value.text ?? ""), note: textView_Note.text, date: Date())
+        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date())
         databasehelper.sharaintance.dataSave(object: objTask)
         databasehelper.sharaintance.saveItems()
-        
-        
     }
 }
 extension AddValyueViewController : UITextFieldDelegate{
@@ -196,27 +216,27 @@ extension AddValyueViewController : UITextFieldDelegate{
             self.view.endEditing(true)
         }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    
-    let currentCharacterCount = textField.text?.count
-
-    if (range.length + range.location > currentCharacterCount ?? 0 ){
-        return false
+        let currentCharacterCount = textField.text?.count
+        if (range.length + range.location > currentCharacterCount ?? 0 ){
+            return false
         }
-    let newLength = (currentCharacterCount ?? 0) + string.count - range.length
-       
-        if textField.isEqual(txt_target_value) || textField.isEqual(txt_reminder) || textField.isEqual(txt_Start_value){
-        if txt_reminder.text!.count >= 6{
+        let newLength = (currentCharacterCount ?? 0) + string.count - range.length
+        if newLength > 6 && textField.isEqual(txt_reminder){
             lbl_reminders_six_digit.text = "Maximum 6 digits."
             height_reminder.constant = 20
             View_Height_reminder.constant = 110
-        }else if txt_Start_value.text!.count >= 6{
+        }else if newLength > 6 && textField.isEqual(txt_Start_value){
             lbl_strat_Value_six_digit.text = "Maximum 6 digits."
             height_value.constant = 20
             View_Height_Value.constant = 110
-        }else if txt_target_value.text!.count >= 6{
+        }
+        else if newLength > 6 && textField.isEqual(txt_target_value){
             lbl_target_six_digit_value.text = "Maximum 6 digits."
             height_targetvalue.constant = 20
             View_Height_Tragetvalue.constant = 110
+        }else if newLength > 0 && textField.isEqual(txt_title) {
+            height_title.constant = 0
+            View_Height_title.constant = 88
         }else {
             height_reminder.constant = 0
             View_Height_reminder.constant = 88
@@ -227,7 +247,6 @@ extension AddValyueViewController : UITextFieldDelegate{
             height_title.constant = 0
             View_Height_title.constant = 88
         }
-    }
         return true
     }
      

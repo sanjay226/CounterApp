@@ -68,7 +68,7 @@ class ViewController: UIViewController{
     var count_current_value = Bool()
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
-  
+    lazy var isnavigation_bar_coloure_change = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,16 +77,23 @@ class ViewController: UIViewController{
     
    }
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(true)
-      view_End_Edit_btn.isHidden = true
+        bgColor = self.colors.randomElement()!
+        counterBgColor = self.colors.randomElement()!
+        counterBorderColor = self.colors.randomElement()!
+        
+        
+        view_End_Edit_btn.isHidden = true
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
         if isFromSaveTask{
-          btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .yellow
-            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "arrowtriangle.down.fill"), for: .normal)
+          btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
+            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
             btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
             count_current_value = false
             stackview.isHidden = false
+            isnavigation_bar_coloure_change = true
             
             lbl_title_topview.text = current_data_list_obj.title
             lbl_target_topview.text = String(current_data_list_obj.targetValue)
@@ -96,6 +103,7 @@ class ViewController: UIViewController{
             progressview.setProgress(strtvalyueofprogresview, animated: true)
             counting = Int(current_data_list_obj.startValue)
             lbl_Show_counting_Valyue.text = "\(counting)"
+        
             GlobalData.sharedInstance.isFromSaveTask = false
       
         }
@@ -111,7 +119,6 @@ class ViewController: UIViewController{
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
-        
     }
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
@@ -136,20 +143,18 @@ class ViewController: UIViewController{
         progressview.progressTintColor = .black
       
     }
-    func btnClick_topview_open_insideView(){
-        navigationController?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.down.to.line.alt")
-        navigationController?.navigationItem.rightBarButtonItem?.customView?.backgroundColor = .yellow
-        view_End_Edit_btn.isHidden = true
-    }
-    
-    func showalert( _ start : Float, _ target : Float){
-        if Float(start) == Float(target){
-            
-            let alert = UIAlertController(title: nil, message: "Reminder has been reached.", preferredStyle: .alert)
+//    func btnClick_topview_open_insideView(){
+//        navigationController?.navigationItem.rightBarButtonItem?.image = UIImage(systemName: "arrow.down.to.line.alt")
+//        navigationController?.navigationItem.rightBarButtonItem?.customView?.backgroundColor = counterBorderColor
+//        view_End_Edit_btn.isHidden = true
+//    }
+//
+    func showalert(){
+     let alert = UIAlertController(title: nil, message: "Reminder has been reached.", preferredStyle: .alert)
             present(alert, animated: true)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
                 alert.dismiss(animated: true)
-            }
+           
         }
     }
 
@@ -166,9 +171,11 @@ class ViewController: UIViewController{
         img_coloure_convertore.borderColor = counterBorderColor
         btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
         btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
-    }
+        btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
     
-    func bottom()  {
+    }
+  
+func bottom()  {
         
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
             self.view_reset_Counting_bottom_sheet.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
@@ -184,38 +191,55 @@ class ViewController: UIViewController{
         let nav = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuViewController") as! SideMenuViewController
         self.navigationController?.pushViewController(nav, animated: false)
     }
-    //btntapped go sidemenu
+  
     @IBAction func btn_did_Tapped_goaddVlyueVc_openEndEditBtn(_ sender: UIButton) {
-        if sender.backgroundColor == .yellow{
-            view_End_Edit_btn.isHidden = false
-            stackview.backgroundColor = .gray
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .red
-            btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
-            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        }else if sender.backgroundColor == .red{
-            view_End_Edit_btn.isHidden = true
-            stackview.backgroundColor = .gray
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .yellow
-            btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
-            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "plus"), for: .normal)
-        }
-        else{
+        if count_current_value{
             let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
             nav.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(nav, animated: true)
+    
         }
+        else if !count_current_value{
+            if isnavigation_bar_coloure_change{
+                view_End_Edit_btn.isHidden = false
+                stackview.backgroundColor = .gray
+                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .gray
+                btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+                isnavigation_bar_coloure_change = false
+                
+            }else if !isnavigation_bar_coloure_change{
+                view_End_Edit_btn.isHidden = true
+                stackview.backgroundColor = .gray
+                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
+                btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                isnavigation_bar_coloure_change = true
+            }
+        }
+       
     }
     //btntapped pluse counting
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
         if !count_current_value{
           
             let objDtabase = current_data_list_obj
-            
+            if counting >= current_data_list_obj.targetValue{
+              print(counting)
+                print(current_data_list_obj.targetValue)
+                view_reset_Counting_bottom_sheet.isHidden = false
+                bottom()
+                lbl_resetCounter_bottom_view.text = "Target Reached"
+                lbl_AreYou_sure_boomview.text = "The target value has been reached.Would you like to reset the counter?"
+            }else if counting + 1 == current_data_list_obj.reminder{
+                showalert()
+            }
             counting = counting + 1
-            progressview.progress = Float(counting) / Float(objDtabase.targetValue)
+            progressview.progress = Float(counting) / Float((objDtabase.targetValue))
             lbl_Show_counting_Valyue.text = "\(counting)"
            current_data_list_obj.startValue = Int16(counting)
             databasehelper.sharaintance.saveItems()
+           // showalert(Float(counting), Float(objDtabase.reminder))
             
         }else if count_current_value{
                 counting = counting + 1
@@ -234,6 +258,11 @@ class ViewController: UIViewController{
         if !count_current_value{
             if counting > 0{
                 counting = counting - 1
+                if counting <= current_data_list_obj.targetValue{
+                    sender.isUserInteractionEnabled = true
+                }else{
+                    sender.isUserInteractionEnabled = false
+                }
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
                current_data_list_obj.startValue = Int16(counting)
                 databasehelper.sharaintance.saveItems()
@@ -281,8 +310,8 @@ class ViewController: UIViewController{
               self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
               counting = 0
               lbl_Show_counting_Valyue.text = "\(counting)"
-             // Reset Counter
-             // Are you sure you want to reset the counter?
+              count_current_value = true
+             
           }else if counting > 0{
               counting = counting - counting
               progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
@@ -290,12 +319,13 @@ class ViewController: UIViewController{
               databasehelper.sharaintance.saveItems()
               lbl_Show_counting_Valyue.text = "\(counting)"
               view_reset_Counting_bottom_sheet.isHidden = true
+              count_current_value = true
                 }
         }else if count_current_value{
            counting = 0
             lbl_Show_counting_Valyue.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
-                    }else{
+               }else{
             print("advad")
         }
 
@@ -369,7 +399,7 @@ class ViewController: UIViewController{
 @IBAction func btn_Preyer_Edit_topview(_ sender: UIButton) {
     // is_bootom_EndMala = false
         let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
-        nav.modalPresentationStyle = .fullScreen
+    nav.modalPresentationStyle = .fullScreen
     databasehelper.sharaintance.saveItems()
     nav.is_selectIndex_bool_Dtabase = false
     current_data_list_obj.targetValue = Int16(lbl_target_topview.text!) ?? 0
@@ -379,9 +409,7 @@ class ViewController: UIViewController{
     nav.editGarland_firstVc_topview = current_data_list_obj
     nav.isEdit_first_vc_topviewData = true
     self.navigationController?.pushViewController(nav, animated: true)
-
-    
-    }
+}
     
     func appears_Back_Graund_coloure(_ Sender : UIButton){
         Sender.backgroundColor = .systemBrown

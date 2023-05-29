@@ -43,10 +43,11 @@ class ListViewController: UIViewController{
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
     var didselectIndex = -1
-   lazy var is_Sort_all_ButtonClicked = Bool()
+    lazy var is_Sort_all_ButtonClicked = Bool()
     lazy var is_btn_bottomview_dilitrow = Bool()
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
+    
   
 //MARK: - Application lifecycle
     override func viewDidLoad() {
@@ -89,16 +90,18 @@ class ListViewController: UIViewController{
     @objc func GoBackVc(){
         
         if self.presentingViewController != nil{
-           
-             self.dismiss(animated: true, completion: nil)
-            }else{
+            self.dismiss(animated: true, completion: nil)
+        }else{
             self.navigationController?.popViewController(animated: true)
-          
-            }
-        View_Sorted_All_data_bottomview.isHidden = true
-        is_Sort_all_ButtonClicked = Bool()
-        hide_mainbottom_view()
         }
+        if is_Sort_all_ButtonClicked{
+            View_Sorted_All_data_bottomview.isHidden = true
+            
+            hide_mainbottom_view()
+            GlobalData.sharedInstance.isFromSaveTask = true
+            is_Sort_all_ButtonClicked = Bool()
+        }
+    }
     
     @objc func show_Arrow_view(){
         
@@ -208,6 +211,7 @@ class ListViewController: UIViewController{
         
         }
     }
+    
     func shortedAlphabetic(){
         let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
           Ary_textfield_get_list = sortedarry

@@ -176,8 +176,6 @@ class AddValyueViewController: UIViewController{
             GlobalData.sharedInstance.isFromSaveTask = true
             GlobalData.sharedInstance.selectindex = updetDatafirstVc
             databasehelper.sharaintance.saveItems()
-//            self.presentingViewController?.dismiss(animated: false, completion: nil)
-//            self.presentingViewController?.dismiss(animated: true, completion: nil)
             isEdit_first_vc_topviewData = false
         }
         else {

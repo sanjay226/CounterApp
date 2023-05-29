@@ -88,14 +88,17 @@ class ListViewController: UIViewController{
     
     @objc func GoBackVc(){
         
-            if self.presentingViewController != nil{
-
-            self.dismiss(animated: true, completion: nil)
-        }else{
+        if self.presentingViewController != nil{
+           
+             self.dismiss(animated: true, completion: nil)
+            }else{
             self.navigationController?.popViewController(animated: true)
+          
             }
-        
-   }
+        View_Sorted_All_data_bottomview.isHidden = true
+        is_Sort_all_ButtonClicked = Bool()
+        hide_mainbottom_view()
+        }
     
     @objc func show_Arrow_view(){
         
@@ -303,7 +306,7 @@ class ListViewController: UIViewController{
                     nav.navigationController?.modalPresentationStyle = .fullScreen
                     nav.select_Index_list_Vc_database = didselectIndex
                     nav.is_selectIndex_bool_Dtabase = true
-                
+                    GlobalData.sharedInstance.isFromSaveTask = true
                     present(navigationControlr1, animated: true)
 
                     View_Sorted_All_data_bottomview.isHidden = true
@@ -330,17 +333,13 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
             case 4:
                 if self.presentingViewController != nil{
-                   
                     self.dismiss(animated: true, completion: nil)
                 }else{
-                  
                     self.navigationController?.popViewController(animated: true)
-                    
                     }
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-              
             default:
                 return
             }

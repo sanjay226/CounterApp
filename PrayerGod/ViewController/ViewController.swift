@@ -78,8 +78,7 @@ class ViewController: UIViewController{
    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-      
-        view_End_Edit_btn.isHidden = true
+      view_End_Edit_btn.isHidden = true
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
         if isFromSaveTask{
@@ -112,6 +111,7 @@ class ViewController: UIViewController{
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
+        
     }
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
@@ -191,7 +191,7 @@ class ViewController: UIViewController{
             stackview.backgroundColor = .gray
             btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .red
             btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
-            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "arrowtriangle.up.fill"), for: .normal)
+            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         }else if sender.backgroundColor == .red{
             view_End_Edit_btn.isHidden = true
             stackview.backgroundColor = .gray
@@ -278,9 +278,11 @@ class ViewController: UIViewController{
               btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
               btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
               btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "doc.plaintext.fill"), for: .normal)
+              self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
               counting = 0
               lbl_Show_counting_Valyue.text = "\(counting)"
-             
+             // Reset Counter
+             // Are you sure you want to reset the counter?
           }else if counting > 0{
               counting = counting - counting
               progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
@@ -365,7 +367,7 @@ class ViewController: UIViewController{
     }
     
 @IBAction func btn_Preyer_Edit_topview(_ sender: UIButton) {
-       // is_bootom_EndMala = false
+    // is_bootom_EndMala = false
         let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
         nav.modalPresentationStyle = .fullScreen
     databasehelper.sharaintance.saveItems()

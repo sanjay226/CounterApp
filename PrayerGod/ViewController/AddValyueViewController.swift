@@ -130,6 +130,7 @@ class AddValyueViewController: UIViewController{
         }else{
             self.navigationController?.popViewController(animated: true)
         }
+        saveDataAndSetValueIfBlank()
     }
     
     @objc func GoFirst_view_controller(){
@@ -163,7 +164,7 @@ class AddValyueViewController: UIViewController{
                 self.navigationController?.popViewController(animated: true)
             }
             let newdatabaseindex_data = databasehelper.sharaintance.getdata()
-            var updetDatafirstVc = newdatabaseindex_data.first(where: {$0 == editGarland_firstVc_topview})
+            let updetDatafirstVc = newdatabaseindex_data.first(where: {$0 == editGarland_firstVc_topview})
             updetDatafirstVc?.title = txt_title.text
             updetDatafirstVc?.targetValue = Int16(txt_target_value.text ?? "") ?? 0
             updetDatafirstVc?.startValue = Int16(txt_Start_value.text ?? "") ?? 0

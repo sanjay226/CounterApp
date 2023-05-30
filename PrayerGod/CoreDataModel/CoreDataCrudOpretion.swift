@@ -19,23 +19,22 @@ class databasehelper{
         user?.startValue = Int16(object.startValue ?? 0)
         user?.note = object.note
         user?.targetValue = Int16(object.targetValue ?? 0)
-        
         user?.date = object.date ?? Date()
-        
         do{
             try context.save()
         }catch{
             print(error.localizedDescription)
         }
     }
+    
     func saveItems(){
         do{
             try context.save()
         }catch{
             print("Error Saving item with \(error)")
         }
-        
     }
+    
     func getdata() -> [Garland]{
         var fetchdata = [Garland]()
         let fetchreqast = NSFetchRequest<NSManagedObject>(entityName: "Garland")
@@ -46,12 +45,10 @@ class databasehelper{
             print(error.localizedDescription)
         }
         return fetchdata
-        
     }
     // func allDelit( objUser: Garland) -> [Garland]{
     func allDelit( _ index : Int, objUser: Garland) -> [Garland]{
         context.delete(objUser)
-        
         do{
             try context.save()
         }catch
@@ -60,5 +57,4 @@ class databasehelper{
         }
         return databasehelper.sharaintance.getdata()
     }
- 
-}
+ }

@@ -12,7 +12,6 @@ protocol AddValyuViewControllerDelegate{
 
 class AddValyueViewController: UIViewController{
     //MARK: - All @IBOutlet
-    
     @IBOutlet weak var lbl_title: UILabel!
     @IBOutlet weak var txt_title: UITextField!
     @IBOutlet weak var lbl_six_digitEnter: UILabel!
@@ -22,43 +21,35 @@ class AddValyueViewController: UIViewController{
     @IBOutlet weak var lbl_reminder: UILabel!
     @IBOutlet weak var txt_reminder: UITextField!
     @IBOutlet weak var lbl_reminders_six_digit: UILabel!
-    
     @IBOutlet weak var lbl_target_Vllue: UILabel!
     @IBOutlet weak var txt_target_value: UITextField!
     @IBOutlet weak var lbl_target_six_digit_value: UILabel!
     @IBOutlet weak var lbl_note: UILabel!
     @IBOutlet weak var textView_Note: UITextView!
-    
     @IBOutlet weak var height_title: NSLayoutConstraint!
     @IBOutlet weak var height_value: NSLayoutConstraint!
     @IBOutlet weak var height_reminder: NSLayoutConstraint!
     @IBOutlet weak var height_targetvalue: NSLayoutConstraint!
-    
     @IBOutlet weak var View_Height_title: NSLayoutConstraint!
     @IBOutlet weak var View_Height_Value: NSLayoutConstraint!
     @IBOutlet weak var View_Height_reminder
     : NSLayoutConstraint!
     @IBOutlet weak var View_Height_Tragetvalue: NSLayoutConstraint!
-    
     //MARK: - All veriable
-    
     var delegate_addVc : AddValyuViewControllerDelegate?
     var select_Index_list_Vc_database = Int()
     var is_selectIndex_bool_Dtabase = Bool()
-   var editGarland_firstVc_topview = Garland()
+    var editGarland_firstVc_topview = Garland()
     var isEdit_first_vc_topviewData = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         allmetodeAssignViewDidload()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selected_index_list_on_listVc()
-       
-        }
-    
+    }
 //MARK: - Custum Function
     func allmetodeAssignViewDidload(){
         height_reminder.constant = 0
@@ -103,7 +94,6 @@ class AddValyueViewController: UIViewController{
         newdatabaseindex_data[select_Index_list_Vc_database].startValue = Int16(txt_Start_value.text ?? "") ?? 0
         newdatabaseindex_data[select_Index_list_Vc_database].targetValue = Int16(txt_target_value.text ?? "") ?? 0
         newdatabaseindex_data[select_Index_list_Vc_database].note = textView_Note.text ?? ""
-        
     }
 
     func set_lefr_and_right_barButtonItem_Add(){
@@ -195,25 +185,20 @@ class AddValyueViewController: UIViewController{
         GlobalData.sharedInstance.isFromSaveTask = true
         GlobalData.sharedInstance.selectindex = databasehelper.sharaintance.getdata().last
     }
-    
-    func lbl_height_zero(_ sender : NSLayoutConstraint ,_ txtfield : UITextField){
-        sender.constant = 0
-    }
-    
-    func view_height_constrain_zero(_ sender: NSLayoutConstraint,_ txtfield : UITextField){
-        sender.constant = 88
-    }
-    
-    func savedata(){
+        
+func savedata(){
         let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date())
         databasehelper.sharaintance.dataSave(object: objTask)
         databasehelper.sharaintance.saveItems()
     }
 }
+
 extension AddValyueViewController : UITextFieldDelegate{
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             self.view.endEditing(true)
         }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentCharacterCount = textField.text?.count
         if (range.length + range.location > currentCharacterCount ?? 0 ){

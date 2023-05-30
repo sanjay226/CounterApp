@@ -94,12 +94,10 @@ class ListViewController: UIViewController{
         }else{
             self.navigationController?.popViewController(animated: true)
         }
-        if is_Sort_all_ButtonClicked{
+        if is_Sort_all_ButtonClicked == false{
             View_Sorted_All_data_bottomview.isHidden = true
-            
             hide_mainbottom_view()
             GlobalData.sharedInstance.isFromSaveTask = true
-            is_Sort_all_ButtonClicked = Bool()
         }
     }
     
@@ -146,29 +144,6 @@ class ListViewController: UIViewController{
             }
             }
         }
-//    func showDeleteWarning(){
-//        //Create the alert controller and actions
-//        let alert = UIAlertController(title: "Warning Title", message: "Warning Message", preferredStyle: .alert)
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
-//            DispatchQueue.main.async { [self] in
-//                Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
-//                  databasehelper.sharaintance.saveItems()
-//                  Ary_textfield_get_list = databasehelper.sharaintance.getdata()
-//                 tblview_reload()
-//                  View_Sorted_All_data_bottomview.isHidden = true
-//                  is_Sort_all_ButtonClicked = Bool()
-//                  hide_mainbottom_view()
-//            }
-//        }
-//
-//        //Add the actions to the alert controller
-//        alert.addAction(cancelAction)
-//        alert.addAction(deleteAction)
-//    }
-    
    //gesture bottonview hide
     func hide_mainbottom_view(){
         viewGesture_cover_bottom_sheet.isHidden = true
@@ -183,7 +158,6 @@ class ListViewController: UIViewController{
     }
     
     func bottom_up()  {
-
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
             self.View_Sorted_All_data_bottomview.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
         }) { [self] (finished) in
@@ -208,15 +182,14 @@ class ListViewController: UIViewController{
                hide_mainbottom_view()
                 }
             }
-        
         }
     }
     
     func shortedAlphabetic(){
         let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
-          Ary_textfield_get_list = sortedarry
-        databasehelper.sharaintance.saveItems()
-        tblview_reload()
+            Ary_textfield_get_list = sortedarry
+            databasehelper.sharaintance.saveItems()
+            tblview_reload()
   }
     func tblview_reload(){
         DispatchQueue.main.async {
@@ -257,14 +230,12 @@ class ListViewController: UIViewController{
            showFilterMenu.toggle()
             switch sender.tag {
             case 1:
-              
                 shortedAlphabetic()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
-                
             case 2:
               let sorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
                 Ary_textfield_get_list = sorted
@@ -275,9 +246,7 @@ class ListViewController: UIViewController{
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
-              
             case 3:
-               
                 let sorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
                 Ary_textfield_get_list = sorted
                 databasehelper.sharaintance.saveItems()
@@ -287,18 +256,14 @@ class ListViewController: UIViewController{
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
-             
-    
-            default:
+                default:
                 return
             }
         }else{
-          
             ispresen_tbottom_view.toggle()
             switch sender.tag {
             case 1:
-         
-                   let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
+                let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
             
                 let navigationController = UINavigationController(rootViewController: nav)
              
@@ -316,8 +281,6 @@ class ListViewController: UIViewController{
                     View_Sorted_All_data_bottomview.isHidden = true
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
-              
-                   
              case 2:
                 Ary_textfield_get_list[didselectIndex].startValue = 0
                 databasehelper.sharaintance.saveItems()
@@ -326,7 +289,6 @@ class ListViewController: UIViewController{
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-              
             case 3:
                 Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
                 databasehelper.sharaintance.saveItems()
@@ -344,12 +306,11 @@ class ListViewController: UIViewController{
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
+                GlobalData.sharedInstance.isFromSaveTask = true
             default:
                 return
             }
         }
-       
-        
     }
 }
 
@@ -370,13 +331,13 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         cell.lbl_prabhuji_name.text = obj.title
         cell.lbl_mala_Count.text = String(obj.startValue)
         cell.lbl_persenteg.text = "\(formatted)%"
-        
-           return cell
-       
+        return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 170
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view_continue_bottomview.isHidden = false
       
@@ -395,7 +356,6 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         GlobalData.sharedInstance.isFromSaveTask = true
         GlobalData.sharedInstance.selectindex = Ary_textfield_get_list[indexPath.row]
-       
     }
     
     func getCreatDate(obj: Garland) -> String {
@@ -405,16 +365,14 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         dateFormatter.dateFormat = "dd MMM, yyyy hh:mm a"
         return dateFormatter.string(from: date ?? Date())
     }
-    
 }
+
 extension ListViewController: AddValyuViewControllerDelegate{
-   
     func popupCloseEvent() {
-        Ary_textfield_get_list = databasehelper.sharaintance.getdata()
-      
-       DispatchQueue.main.async {
-            self.Tbl_list_of_malaEnding.reloadData()
+            Ary_textfield_get_list = databasehelper.sharaintance.getdata()
+                DispatchQueue.main.async {
+                        self.Tbl_list_of_malaEnding.reloadData()
+                }
+            }
         }
-    }
-}
 

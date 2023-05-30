@@ -167,8 +167,8 @@
 			children = (
 				2220B2E7409B25A8009AE513 /* GodNameLiistViewController.swift */,
 				2215D3262A0503C500DC1129 /* ListViewController.swift */,
-				22D49B792A09AB7900C5F15B /* ViewController.swift */,
 				2264D1A329ED72840043E5CD /* AddValyueViewController.swift */,
+				22D49B792A09AB7900C5F15B /* ViewController.swift */,
 				2264D1A529ED731D0043E5CD /* SideMenuViewController.swift */,
 			);
 			path = ViewController;

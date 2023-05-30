@@ -39,7 +39,7 @@ class ListViewController: UIViewController{
     @IBOutlet weak var img_sort_by_value_bottomview: UIImageView!
     
     //MARK: - All veriable
-    var showFilterMenu = true
+  //  var showFilterMenu = true
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
     var didselectIndex = -1
@@ -47,6 +47,7 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_dilitrow = Bool()
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
+    lazy var isnavigation_blank_or_fill = Bool()
     
   
 //MARK: - Application lifecycle
@@ -88,19 +89,14 @@ class ListViewController: UIViewController{
     }
     
     @objc func GoBackVc(){
-        
-        if self.presentingViewController != nil{
-            self.dismiss(animated: true, completion: nil)
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
-        if is_Sort_all_ButtonClicked == false{
-            View_Sorted_All_data_bottomview.isHidden = true
-            hide_mainbottom_view()
+            if self.presentingViewController != nil{
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                self.navigationController?.popViewController(animated: true)
+            }
             GlobalData.sharedInstance.isFromSaveTask = true
-        }
+           
     }
-    
     @objc func show_Arrow_view(){
         
         viewGesture_cover_bottom_sheet.isHidden = false
@@ -212,14 +208,14 @@ class ListViewController: UIViewController{
     @IBAction func btn_cencal_didtapped_go_rootVc(_ sender: UIButton) {
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: { [self] in
             self.View_Sorted_All_data_bottomview.isHidden = true
-            showFilterMenu = true
+          
         }) { [self] (finished) in
             if finished {
                hide_mainbottom_view()
                }
             }
         Tbl_list_of_malaEnding.isUserInteractionEnabled = true
-        is_Sort_all_ButtonClicked.toggle()
+        is_Sort_all_ButtonClicked = Bool()
         self.navigationItem.rightBarButtonItem?.isEnabled = true
        }
 
@@ -227,7 +223,7 @@ class ListViewController: UIViewController{
     @IBAction func btnPopupEvents(_ sender: UIButton){
        
         if is_Sort_all_ButtonClicked{
-           showFilterMenu.toggle()
+        
             switch sender.tag {
             case 1:
                 shortedAlphabetic()

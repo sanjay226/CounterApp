@@ -32,6 +32,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var view_reminder: UIView!
     @IBOutlet weak var view_End_Edit_btn: UIView!
     
+    @IBOutlet weak var view_gesture_reaset_counter: UIView!
     @IBOutlet weak var btn_vnavigationItem_rightbar_BtnItem: UIButton!
 
     @IBOutlet weak var lbl_resetCounter_bottom_view: UILabel!
@@ -73,27 +74,29 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         AllCutemMethoddeToSet_VIewLoad()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handle_Tap_Gesture(sender:)))
+       view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
+        view_gesture_reaset_counter.isHidden = true
        
-    
-   }
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         bgColor = self.colors.randomElement()!
         counterBgColor = self.colors.randomElement()!
         counterBorderColor = self.colors.randomElement()!
         view_End_Edit_btn.isHidden = true
-        
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
-        
+      
         if isFromSaveTask{
-          btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
-            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+         
+            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
             count_current_value = false
             stackview.isHidden = false
+            stackview.backgroundColor = .clear
             isnavigation_bar_coloure_change = true
-            
+           btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
             lbl_title_topview.text = current_data_list_obj.title
             lbl_target_topview.text = String(current_data_list_obj.targetValue)
             lbl_reminder_topview.text = String(current_data_list_obj.reminder)
@@ -103,11 +106,19 @@ class ViewController: UIViewController{
             counting = Int(current_data_list_obj.startValue)
             lbl_Show_counting_Valyue.text = "\(counting)"
             GlobalData.sharedInstance.isFromSaveTask = false
+            view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
+            lbl_title_topview.textColor = .white
+            lbl_target_topview.textColor = .white
+            lbl_reminder_topview.textColor = .white
         }else{
             count_current_value = true
             stackview.isHidden = true
             counting = 0
             lbl_Show_counting_Valyue.text = "\(counting)"
+            view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
         }
     }
     
@@ -119,7 +130,7 @@ class ViewController: UIViewController{
     func AllCutemMethoddeToSet_VIewLoad(){
         lbl_Show_counting_Valyue.text = "\(counting)"
         lbl_Show_counting_Valyue.textColor = .white
-        view_reset_Counting_bottom_sheet.isHidden = true
+    
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         do {
@@ -145,7 +156,11 @@ class ViewController: UIViewController{
                 alert.dismiss(animated: true)
             }
     }
-    
+    @objc func handle_Tap_Gesture(sender: UITapGestureRecognizer){
+        view_reset_Counting_bottom_sheet.isHidden = true
+        view_gesture_reaset_counter.isHidden = true
+        resetBollian.toggle()
+    }
     func setupTheme(){
         bgColor = self.colors.randomElement()!
         counterBgColor = self.colors.randomElement()!
@@ -160,7 +175,7 @@ class ViewController: UIViewController{
         btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
         btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
         }
-  
+    
 func bottom(){
     UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: {
             self.view_reset_Counting_bottom_sheet.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
@@ -178,28 +193,33 @@ func bottom(){
     }
   
     @IBAction func btn_did_Tapped_goaddVlyueVc_openEndEditBtn(_ sender: UIButton) {
+       // btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
         if count_current_value{
             let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
             nav.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(nav, animated: true)
-    
-        }
+    }
         else if !count_current_value{
             if isnavigation_bar_coloure_change{
                 view_End_Edit_btn.isHidden = false
-                stackview.backgroundColor = .gray
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .gray
+                stackview.backgroundColor = .systemBrown
+                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .systemBrown
                 btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
-                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                lbl_title_topview.textColor = .black
+                lbl_target_topview.textColor = .black
+                lbl_reminder_topview.textColor = .black
                 isnavigation_bar_coloure_change = false
-                
             }else if !isnavigation_bar_coloure_change{
                 view_End_Edit_btn.isHidden = true
-                stackview.backgroundColor = .gray
+                stackview.backgroundColor = .clear
                 btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
                 btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
-                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
                 isnavigation_bar_coloure_change = true
+                lbl_title_topview.textColor = .white
+                lbl_target_topview.textColor = .white
+                lbl_reminder_topview.textColor = .white
             }
         }
     }
@@ -208,11 +228,13 @@ func bottom(){
         if !count_current_value{
             let objDtabase = current_data_list_obj
             if counting >= current_data_list_obj.targetValue{
+                view_gesture_reaset_counter.isHidden = false
                 view_reset_Counting_bottom_sheet.isHidden = false
                 bottom()
                 lbl_resetCounter_bottom_view.text = "Target Reached"
                 lbl_AreYou_sure_boomview.text = "The target value has been reached.Would you like to reset the counter?"
-                btn_pluse_count.isUserInteractionEnabled = false
+                counting = Int(current_data_list_obj.targetValue)
+               // btn_pluse_count.isUserInteractionEnabled = false
             }else if counting + 1 == current_data_list_obj.reminder{
                 showalert()
             }
@@ -243,6 +265,7 @@ func bottom(){
                 lbl_Show_counting_Valyue.text = "\(counting)"
                 if counting + 1 == current_data_list_obj.reminder{
                     showalert()
+                   
                 }
             }else{
                 counting = 0
@@ -258,34 +281,16 @@ func bottom(){
     }
     //btntapped pluse counting
     @IBAction func btn_click_reload_conting(_ sender: UIButton) {
-        if count_current_value || !count_current_value{
-            if resetBollian {
-                if lbl_Show_counting_Valyue.text != "0" {
-                    view_reset_Counting_bottom_sheet.isHidden = false
-                    bottom()
-                    resetBollian.toggle()
-                    lbl_resetCounter_bottom_view.text = "Reaset counter"
-                    lbl_AreYou_sure_boomview.text = "Are you sure reaset you want to reaset counter?"
-                }
-            }else{
-                view_reset_Counting_bottom_sheet.isHidden = true
+        if resetBollian {
+            if lbl_Show_counting_Valyue.text != "0" {
+                view_gesture_reaset_counter.isHidden = false
+                view_reset_Counting_bottom_sheet.isHidden = false
+                bottom()
+               lbl_resetCounter_bottom_view.text = "Reaset counter"
+                lbl_AreYou_sure_boomview.text = "Are you sure reaset you want to reaset counter?"
                 resetBollian.toggle()
             }
-            
         }
- //           else if !count_current_value{
-//            if lbl_Show_counting_Valyue.text != "0" {
-//                view_reset_Counting_bottom_sheet.isHidden = false
-//                bottom()
-//                resetBollian.toggle()
-//                lbl_resetCounter_bottom_view.text = "Reaset counter"
-//                lbl_AreYou_sure_boomview.text = "Are you sure reaset you want to reaset counter?"
-//            }else
-//                {
-//                view_reset_Counting_bottom_sheet.isHidden = true
-//                resetBollian.toggle()
-//            }
-//        }
     }
     
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
@@ -294,6 +299,7 @@ func bottom(){
               databasehelper.sharaintance.saveItems()
               stackview.isHidden = true
               view_reset_Counting_bottom_sheet.isHidden = true
+              view_gesture_reaset_counter.isHidden = true
               btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
               btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
               btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "doc.plaintext.fill"), for: .normal)
@@ -301,19 +307,22 @@ func bottom(){
               counting = 0
               lbl_Show_counting_Valyue.text = "\(counting)"
               count_current_value = true
+            
         }else if counting > 0{
               counting = counting - counting
               progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
               current_data_list_obj.startValue = Int16(counting)
               databasehelper.sharaintance.saveItems()
               lbl_Show_counting_Valyue.text = "\(counting)"
-              view_reset_Counting_bottom_sheet.isHidden = true
+            view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
               count_current_value = true
                 }
         }else if count_current_value{
            counting = 0
             lbl_Show_counting_Valyue.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
                }else{
             print("advad")
         }
@@ -325,11 +334,13 @@ func bottom(){
             
         }) { [self] (isCompleted) in
             resetBollian.toggle()
+            self.view_gesture_reaset_counter.isHidden = true
         }
     }
     
     @IBAction func btn_Hide_Bottom_sheet(_ sender: Any) {
         view_reset_Counting_bottom_sheet.isHidden = true
+        view_gesture_reaset_counter.isHidden = true
         resetBollian.toggle()
     }
     
@@ -354,6 +365,7 @@ func bottom(){
         selectedcoloure = true
         setupTheme()
         selectedmode = true
+       
     }
     
     @IBAction func btn_mode_dark(_ sender: UIButton) {
@@ -376,14 +388,14 @@ func bottom(){
     @IBAction func btn_Preyer_End_topview(_ sender: UIButton) {
         is_bootom_EndMala = true
         view_reset_Counting_bottom_sheet.isHidden = false
+        view_gesture_reaset_counter.isHidden = false
         bottom()
         lbl_resetCounter_bottom_view.text = "End Mala"
         lbl_AreYou_sure_boomview.text = "Are you sure you want to end this mala?"
     }
     
 @IBAction func btn_Preyer_Edit_topview(_ sender: UIButton) {
-    // is_bootom_EndMala = false
-        let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
+   let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
         nav.modalPresentationStyle = .fullScreen
         databasehelper.sharaintance.saveItems()
         nav.is_selectIndex_bool_Dtabase = false
@@ -399,13 +411,14 @@ func bottom(){
     func appears_Back_Graund_coloure(_ Sender : UIButton){
         Sender.backgroundColor = .systemBrown
     }
-
 }
+
 extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
     }
 }
+
 extension UIColor {
     static func random() -> UIColor {
         return UIColor(

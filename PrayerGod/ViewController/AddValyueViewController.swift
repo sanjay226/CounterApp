@@ -120,7 +120,7 @@ class AddValyueViewController: UIViewController{
         }else{
             self.navigationController?.popViewController(animated: true)
         }
-        saveDataAndSetValueIfBlank()
+       // saveDataAndSetValueIfBlank()
     }
     
     @objc func GoFirst_view_controller(){

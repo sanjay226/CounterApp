@@ -6,7 +6,7 @@
 //
 
 import UIKit
-protocol AddValyuViewControllerDelegate{
+protocol AddValueViewControllerDelegate{
     func popupCloseEvent()
 }
 
@@ -36,7 +36,7 @@ class AddValyueViewController: UIViewController{
     : NSLayoutConstraint!
     @IBOutlet weak var View_Height_Tragetvalue: NSLayoutConstraint!
     //MARK: - All veriable
-    var delegate_addVc : AddValyuViewControllerDelegate?
+    var delegate_addVc : AddValueViewControllerDelegate?
     var select_Index_list_Vc_database = Int()
     var is_selectIndex_bool_Dtabase = Bool()
     var editGarland_firstVc_topview = Garland()
@@ -160,7 +160,7 @@ class AddValyueViewController: UIViewController{
             updetDatafirstVc?.startValue = Int16(txt_Start_value.text ?? "") ?? 0
             updetDatafirstVc?.reminder = Int16(txt_reminder.text ?? "") ?? 0
             updetDatafirstVc?.note = textView_Note.text ?? ""
-        self.presentingViewController?.dismiss(animated: false, completion: nil)
+            self.presentingViewController?.dismiss(animated: false, completion: nil)
            self.presentingViewController?.dismiss(animated: true, completion: nil)
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true

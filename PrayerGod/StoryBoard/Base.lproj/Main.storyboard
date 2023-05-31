@@ -512,7 +512,7 @@
                         <outlet property="btn_vnavigationItem_rightbar_BtnItem" destination="dWY-4j-iGb" id="p2L-4W-BtT"/>
                         <outlet property="img_coloure_convertore" destination="A3L-hN-Fke" id="vwo-WD-T0A"/>
                         <outlet property="lbl_AreYou_sure_boomview" destination="8Cw-5I-kvp" id="obm-L7-0ZX"/>
-                        <outlet property="lbl_Show_counting_Valyue" destination="dXI-OB-ymY" id="RSZ-J9-9yc"/>
+                        <outlet property="lbl_Show_counting_Value" destination="dXI-OB-ymY" id="YNO-KB-Ma8"/>
                         <outlet property="lbl_reminder_topview" destination="zxB-LW-lN2" id="NYE-Xz-FGS"/>
                         <outlet property="lbl_resetCounter_bottom_view" destination="cJc-kF-Tp8" id="wpb-Fz-xVN"/>
                         <outlet property="lbl_target_topview" destination="VVJ-Vc-W1k" id="GJp-kl-TuI"/>
@@ -967,7 +967,7 @@
                         <outlet property="btn_continue" destination="uTw-az-SIN" id="IIa-6H-sVJ"/>
                         <outlet property="btn_open_addlistVc" destination="xuz-p4-P42" id="ght-3B-Wb9"/>
                         <outlet property="btn_sort_Date" destination="oab-yh-xaU" id="gvu-oT-Ryw"/>
-                        <outlet property="btn_sort_Valyue" destination="0S9-sK-rwW" id="GMw-PI-TfZ"/>
+                        <outlet property="btn_sort_Value" destination="0S9-sK-rwW" id="CQc-FN-oYl"/>
                         <outlet property="btn_sort_alphabett" destination="4mk-t0-h8S" id="esR-fi-YFo"/>
                         <outlet property="btn_view_cansal" destination="acq-6O-NIu" id="zia-Uq-GMC"/>
                         <outlet property="img_Add_dismis" destination="7D9-iF-BJW" id="NfE-bY-ZSv"/>
@@ -976,11 +976,11 @@
                         <outlet property="img_continue_bottom_view" destination="Uyk-hY-Q7d" id="bG5-kg-SAk"/>
                         <outlet property="img_sort_by_value_bottomview" destination="Xg0-xa-XrW" id="YD2-7R-oip"/>
                         <outlet property="img_sourt_bydate_bottomview" destination="5bR-Ov-e3g" id="8kf-SL-xnb"/>
-                        <outlet property="lbl_Alphabetic_sort_valyue" destination="tV9-2H-gio" id="l1c-KB-aHW"/>
+                        <outlet property="lbl_Alphabetic_sort_value" destination="tV9-2H-gio" id="6Ef-Fe-hZd"/>
                         <outlet property="lbl_cancel" destination="pnC-Vc-Lni" id="ajF-Wn-veM"/>
                         <outlet property="lbl_sort_Date" destination="gPH-jC-nxt" id="xZ6-VP-wDI"/>
                         <outlet property="lbl_sort_continue" destination="ZhN-ha-ch7" id="v3V-gV-Wq2"/>
-                        <outlet property="lbl_sort_valyue" destination="ZNl-NR-Uzn" id="Q1Y-na-dLV"/>
+                        <outlet property="lbl_sort_value" destination="ZNl-NR-Uzn" id="d2H-S7-Fs9"/>
                         <outlet property="viewGesture_cover_bottom_sheet" destination="lfm-w4-DSt" id="qPm-8e-iDY"/>
                         <outlet property="view_continue_bottomview" destination="x2Q-E3-itO" id="ODq-KG-hee"/>
                     </connections>

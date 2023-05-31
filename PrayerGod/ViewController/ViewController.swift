@@ -14,7 +14,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var btn_pluse_count: UIButton!
     @IBOutlet weak var btn_minus_count: UIButton!
     @IBOutlet weak var btn_Reload_count: UIButton!
-    @IBOutlet weak var lbl_Show_counting_Valyue: UILabel!
+    @IBOutlet weak var lbl_Show_counting_Value: UILabel!
     @IBOutlet weak var view_reset_Counting_bottom_sheet: UIView!
     @IBOutlet weak var img_coloure_convertore: UIImageView!
     @IBOutlet weak var btn_change_view_coloure: UIButton!
@@ -65,7 +65,7 @@ class ViewController: UIViewController{
     var counterBgColor = UIColor()
     var counterBorderColor = UIColor()
     var current_data_list_obj = Garland()
-    var strtvalyueofprogresview = Float()
+    var strtvalueofprogresview = Float()
     var count_current_value = Bool()
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
@@ -100,12 +100,12 @@ class ViewController: UIViewController{
             lbl_title_topview.text = current_data_list_obj.title
             lbl_target_topview.text = String(current_data_list_obj.targetValue)
             lbl_reminder_topview.text = String(current_data_list_obj.reminder)
-            strtvalyueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
+            strtvalueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
-            progressview.setProgress(strtvalyueofprogresview, animated: true)
+            progressview.setProgress(strtvalueofprogresview, animated: true)
             counting = Int(current_data_list_obj.startValue)
-            lbl_Show_counting_Valyue.text = "\(counting)"
-            GlobalData.sharedInstance.isFromSaveTask = false
+            lbl_Show_counting_Value.text = "\(counting)"
+//            GlobalData.sharedInstance.isFromSaveTask = false
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
             lbl_title_topview.textColor = .white
@@ -115,7 +115,7 @@ class ViewController: UIViewController{
             count_current_value = true
             stackview.isHidden = true
             counting = 0
-            lbl_Show_counting_Valyue.text = "\(counting)"
+            lbl_Show_counting_Value.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
             btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
@@ -128,8 +128,8 @@ class ViewController: UIViewController{
     }
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
-        lbl_Show_counting_Valyue.text = "\(counting)"
-        lbl_Show_counting_Valyue.textColor = .white
+        lbl_Show_counting_Value.text = "\(counting)"
+        lbl_Show_counting_Value.textColor = .white
     
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -240,12 +240,12 @@ func bottom(){
             }
             counting = counting + 1
             progressview.progress = Float(counting) / Float((objDtabase.targetValue))
-            lbl_Show_counting_Valyue.text = "\(counting)"
+            lbl_Show_counting_Value.text = "\(counting)"
            current_data_list_obj.startValue = Int16(counting)
             databasehelper.sharaintance.saveItems()
         }else if count_current_value{
                 counting = counting + 1
-         lbl_Show_counting_Valyue.text = "\(counting)"
+         lbl_Show_counting_Value.text = "\(counting)"
         }
         if selectedsound{
                 audioPlayer.play()
@@ -262,7 +262,7 @@ func bottom(){
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
                 current_data_list_obj.startValue = Int16(counting)
                 databasehelper.sharaintance.saveItems()
-                lbl_Show_counting_Valyue.text = "\(counting)"
+                lbl_Show_counting_Value.text = "\(counting)"
                 if counting + 1 == current_data_list_obj.reminder{
                     showalert()
                    
@@ -273,7 +273,7 @@ func bottom(){
         }else if count_current_value{
             if counting > 0{
                 counting = counting - 1
-                lbl_Show_counting_Valyue.text = "\(counting)"
+                lbl_Show_counting_Value.text = "\(counting)"
             }else{
                 counting = 0
             }
@@ -282,7 +282,7 @@ func bottom(){
     //btntapped pluse counting
     @IBAction func btn_click_reload_conting(_ sender: UIButton) {
         if resetBollian {
-            if lbl_Show_counting_Valyue.text != "0" {
+            if lbl_Show_counting_Value.text != "0" {
                 view_gesture_reaset_counter.isHidden = false
                 view_reset_Counting_bottom_sheet.isHidden = false
                 bottom()
@@ -295,36 +295,34 @@ func bottom(){
     
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
         if !count_current_value{
-          if is_bootom_EndMala{
-              databasehelper.sharaintance.saveItems()
-              stackview.isHidden = true
-              view_reset_Counting_bottom_sheet.isHidden = true
-              view_gesture_reaset_counter.isHidden = true
-              btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
-              btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
-              btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "doc.plaintext.fill"), for: .normal)
-              self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-              counting = 0
-              lbl_Show_counting_Valyue.text = "\(counting)"
-              count_current_value = true
-            
-        }else if counting > 0{
-              counting = counting - counting
-              progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
-              current_data_list_obj.startValue = Int16(counting)
-              databasehelper.sharaintance.saveItems()
-              lbl_Show_counting_Valyue.text = "\(counting)"
+            if is_bootom_EndMala{
+                databasehelper.sharaintance.saveItems()
+                stackview.isHidden = true
+                view_reset_Counting_bottom_sheet.isHidden = true
+                view_gesture_reaset_counter.isHidden = true
+                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
+                btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "doc.plaintext.fill"), for: .normal)
+                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                counting = 0
+                lbl_Show_counting_Value.text = "\(counting)"
+                count_current_value = true
+                GlobalData.sharedInstance.isFromSaveTask = false
+            }else if counting > 0{
+                counting = counting - counting
+                progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
+                current_data_list_obj.startValue = Int16(counting)
+                databasehelper.sharaintance.saveItems()
+                lbl_Show_counting_Value.text = "\(counting)"
+                view_reset_Counting_bottom_sheet.isHidden = true
+                view_gesture_reaset_counter.isHidden = true
+                count_current_value = true
+            }
+        }else{
+            counting = 0
+            lbl_Show_counting_Value.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
-              count_current_value = true
-                }
-        }else if count_current_value{
-           counting = 0
-            lbl_Show_counting_Valyue.text = "\(counting)"
-            view_reset_Counting_bottom_sheet.isHidden = true
-            view_gesture_reaset_counter.isHidden = true
-               }else{
-            print("advad")
         }
     }
     
@@ -365,8 +363,7 @@ func bottom(){
         selectedcoloure = true
         setupTheme()
         selectedmode = true
-       
-    }
+        }
     
     @IBAction func btn_mode_dark(_ sender: UIButton) {
         if selectedmode{
@@ -400,7 +397,7 @@ func bottom(){
         databasehelper.sharaintance.saveItems()
         nav.is_selectIndex_bool_Dtabase = false
         current_data_list_obj.targetValue = Int16(lbl_target_topview.text!) ?? 0
-        current_data_list_obj.startValue = Int16(lbl_Show_counting_Valyue.text!) ?? 0
+        current_data_list_obj.startValue = Int16(lbl_Show_counting_Value.text!) ?? 0
         current_data_list_obj.reminder = Int16(lbl_reminder_topview.text!) ?? 0
         current_data_list_obj.title = lbl_title_topview.text
         nav.editGarland_firstVc_topview = current_data_list_obj

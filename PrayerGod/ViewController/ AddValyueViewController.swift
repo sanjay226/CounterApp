@@ -39,7 +39,7 @@ class AddValyueViewController: UIViewController{
     var delegate_addVc : AddValueViewControllerDelegate?
     var select_Index_list_Vc_database = Int()
     var is_selectIndex_bool_Dtabase = Bool()
-    var editGarland_firstVc_topview = Garland()
+    //var editGarland_firstVc_topview = Garland()
     var isEdit_first_vc_topviewData = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
@@ -79,11 +79,14 @@ class AddValyueViewController: UIViewController{
             textView_Note.text = data.note
             
         }else if isEdit_first_vc_topviewData{
-            txt_title.text = editGarland_firstVc_topview.title
-            txt_target_value.text = String(editGarland_firstVc_topview.targetValue)
-            txt_reminder.text = String(editGarland_firstVc_topview.reminder)
-            txt_Start_value.text = String(editGarland_firstVc_topview.startValue)
-            textView_Note.text = editGarland_firstVc_topview.note
+            let editGarland_firstVc_topview = databasehelper.sharaintance.getdata()
+            let newindex = editGarland_firstVc_topview.firstIndex(where: {$0 == GlobalData.sharedInstance.selectindex! as NSObject})
+            let newdata_first_vc = editGarland_firstVc_topview[select_Index_list_Vc_database]
+            txt_title.text = newdata_first_vc.title
+            txt_target_value.text = String(newdata_first_vc.targetValue)
+            txt_reminder.text = String(newdata_first_vc.reminder)
+            txt_Start_value.text = String(newdata_first_vc.startValue)
+            textView_Note.text = newdata_first_vc.note
         }
     }
     
@@ -154,18 +157,17 @@ class AddValyueViewController: UIViewController{
                 self.navigationController?.popViewController(animated: true)
             }
             let newdatabaseindex_data = databasehelper.sharaintance.getdata()
-            let updetDatafirstVc = newdatabaseindex_data.first(where: {$0 == editGarland_firstVc_topview})
-            updetDatafirstVc?.title = txt_title.text
-            updetDatafirstVc?.targetValue = Int16(txt_target_value.text ?? "") ?? 0
-            updetDatafirstVc?.startValue = Int16(txt_Start_value.text ?? "") ?? 0
-            updetDatafirstVc?.reminder = Int16(txt_reminder.text ?? "") ?? 0
-            updetDatafirstVc?.note = textView_Note.text ?? ""
+            let updatedata = newdatabaseindex_data[select_Index_list_Vc_database]
+           updatedata.title = txt_title.text
+            updatedata.targetValue = Int16(txt_target_value.text ?? "") ?? 0
+            updatedata.startValue = Int16(txt_Start_value.text ?? "") ?? 0
+            updatedata.reminder = Int16(txt_reminder.text ?? "") ?? 0
+            updatedata.note = textView_Note.text ?? ""
             self.presentingViewController?.dismiss(animated: false, completion: nil)
            self.presentingViewController?.dismiss(animated: true, completion: nil)
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true
-            GlobalData.sharedInstance.selectindex = updetDatafirstVc
-            databasehelper.sharaintance.saveItems()
+            GlobalData.sharedInstance.selectindex = select_Index_list_Vc_database;   databasehelper.sharaintance.saveItems()
             isEdit_first_vc_topviewData = false
         }
         else {
@@ -183,7 +185,13 @@ class AddValyueViewController: UIViewController{
         self.presentingViewController?.dismiss(animated: true, completion: nil)
         self.delegate_addVc?.popupCloseEvent()
         GlobalData.sharedInstance.isFromSaveTask = true
-        GlobalData.sharedInstance.selectindex = databasehelper.sharaintance.getdata().last
+        let data = databasehelper.sharaintance.getdata().last
+        let new = databasehelper.sharaintance.getdata()
+        var newdata = new.firstIndex(where: {$0 == data})
+   
+        GlobalData.sharedInstance.selectindex = newdata
+     
+       
     }
         
 func savedata(){

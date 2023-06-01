@@ -69,6 +69,7 @@ class ViewController: UIViewController{
     var count_current_value = Bool()
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
+    var reminder_Count  = 0
     lazy var isnavigation_bar_coloure_change = Bool()
     //MARK: - Application lifecycle
     override func viewDidLoad() {
@@ -77,6 +78,7 @@ class ViewController: UIViewController{
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handle_Tap_Gesture(sender:)))
        view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
         view_gesture_reaset_counter.isHidden = true
+     
        
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -86,10 +88,9 @@ class ViewController: UIViewController{
         counterBorderColor = self.colors.randomElement()!
         view_End_Edit_btn.isHidden = true
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
-        current_data_list_obj = GlobalData.sharedInstance.selectindex ?? Garland()
-      
         if isFromSaveTask{
-         
+            var newgetdata_of_database = databasehelper.sharaintance.getdata()
+            current_data_list_obj = newgetdata_of_database[GlobalData.sharedInstance.selectindex ?? 0]
             btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
             count_current_value = false
@@ -150,11 +151,24 @@ class ViewController: UIViewController{
     }
     
     func showalert(){
-     let alert = UIAlertController(title: nil, message: "Reminder has been reached.", preferredStyle: .alert)
-            present(alert, animated: true)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2.0) {
-                alert.dismiss(animated: true)
+        let toastLabel = UILabel(frame: CGRectMake(self.view.frame.size.width/2-150,0, 300, 35))
+        toastLabel.backgroundColor = .systemBrown
+        toastLabel.textColor = .black
+        toastLabel.textAlignment = NSTextAlignment.center;
+        self.view.addSubview(toastLabel)
+        toastLabel.text = "Reminder has been reached."
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+      
+        UIView.animate(withDuration: 1.0, delay: 0.1, options: [.curveEaseInOut], animations: {
+            toastLabel.frame = CGRect(x:self.view.frame.size.width/2-150 , y: self.view.frame.size.height/9, width: 300.0, height: 35)
+        }) { (finished) in
+            if finished {
+                toastLabel.alpha = 0.0
             }
+            
+        }
     }
     @objc func handle_Tap_Gesture(sender: UITapGestureRecognizer){
         view_reset_Counting_bottom_sheet.isHidden = true
@@ -263,10 +277,10 @@ func bottom(){
                 current_data_list_obj.startValue = Int16(counting)
                 databasehelper.sharaintance.saveItems()
                 lbl_Show_counting_Value.text = "\(counting)"
+               
                 if counting + 1 == current_data_list_obj.reminder{
                     showalert()
-                   
-                }
+                   }
             }else{
                 counting = 0
             }
@@ -356,6 +370,14 @@ func bottom(){
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
         let navigationControlr = UINavigationController(rootViewController: nav)
         navigationControlr.modalPresentationStyle = .fullScreen
+        let data = databasehelper.sharaintance.getdata()
+        let newIndex = data.firstIndex(where: {$0 == current_data_list_obj})
+        if GlobalData.sharedInstance.isFromSaveTask == false{
+            nav.index_firstVc_selected_index =  -1
+        }else{
+            nav.index_firstVc_selected_index = newIndex ?? -1
+        }
+        
         self.present(navigationControlr, animated: true, completion: nil)
         }
     
@@ -400,7 +422,9 @@ func bottom(){
         current_data_list_obj.startValue = Int16(lbl_Show_counting_Value.text!) ?? 0
         current_data_list_obj.reminder = Int16(lbl_reminder_topview.text!) ?? 0
         current_data_list_obj.title = lbl_title_topview.text
-        nav.editGarland_firstVc_topview = current_data_list_obj
+        let data = databasehelper.sharaintance.getdata()
+        let newIndex = data.firstIndex(where: {$0 == current_data_list_obj})
+        nav.select_Index_list_Vc_database = newIndex!
         nav.isEdit_first_vc_topviewData = true
         self.navigationController?.pushViewController(nav, animated: true)
 }
@@ -424,6 +448,17 @@ extension UIColor {
            blue:  .random(),
            alpha: 0.0
         )
+    }
+}
+ extension UIAlertController {
+    func show() {
+        let win = UIWindow(frame: UIScreen.main.bounds)
+        let vc = UIViewController()
+        vc.view.backgroundColor = .clear
+        win.rootViewController = vc
+        win.windowLevel = UIWindow.Level.alert + 1  // Swift 3-4: UIWindowLevelAlert + 1
+        win.makeKeyAndVisible()
+        vc.present(self, animated: true, completion: nil)
     }
 }
 

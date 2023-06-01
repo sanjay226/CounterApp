@@ -48,6 +48,7 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
     lazy var isnavigation_blank_or_fill = Bool()
+    lazy var index_firstVc_selected_index = Int()
     
   
 //MARK: - Application lifecycle
@@ -275,6 +276,7 @@ class ListViewController: UIViewController{
                     present(navigationControlr1, animated: true)
 
                     View_Sorted_All_data_bottomview.isHidden = true
+            
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
                    // GlobalData.sharedInstance.isFromSaveTask = false
@@ -288,7 +290,8 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
             //GlobalData.sharedInstance.isFromSaveTask = false
             case 3:
-                if GlobalData.sharedInstance.isFromSaveTask ?? false{
+            if index_firstVc_selected_index == didselectIndex
+                {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
                     alertController.setValue(NSAttributedString(string: "This data couldn't be deleted because it is active.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedMessage")
@@ -300,9 +303,10 @@ class ListViewController: UIViewController{
                         View_Sorted_All_data_bottomview.isHidden = true
                         is_Sort_all_ButtonClicked = Bool()
                         hide_mainbottom_view()
-                      }))
+                    }))
                     present(alertController, animated: true, completion: nil)
-                }else{
+               
+              }else{
                     Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
                     databasehelper.sharaintance.saveItems()
                     Ary_textfield_get_list = databasehelper.sharaintance.getdata()
@@ -310,7 +314,8 @@ class ListViewController: UIViewController{
                     View_Sorted_All_data_bottomview.isHidden = true
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
-                }
+              
+            }
             case 4:
                 if self.presentingViewController != nil{
                     self.dismiss(animated: true, completion: nil)
@@ -321,7 +326,7 @@ class ListViewController: UIViewController{
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
                 GlobalData.sharedInstance.isFromSaveTask = true
-             
+           
             default:
                 return
             }
@@ -369,7 +374,8 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         img_sort_by_value_bottomview.image = UIImage(systemName: "10.square")
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         GlobalData.sharedInstance.isFromSaveTask = true
-        GlobalData.sharedInstance.selectindex = Ary_textfield_get_list[indexPath.row]
+        GlobalData.sharedInstance.selectindex = indexPath.row
+        didselectIndex = GlobalData.sharedInstance.selectindex!
     }
     
     func getCreatDate(obj: Garland) -> String {

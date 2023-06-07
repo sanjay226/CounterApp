@@ -16,7 +16,6 @@ class SideMenuViewController: UIViewController {
         super.viewDidLoad()
         tbl_Side_Menu.delegate = self
         tbl_Side_Menu.dataSource = self
-       
     }
 }
 //MARK: - UITableViewDelegate, && UITableViewDataSource

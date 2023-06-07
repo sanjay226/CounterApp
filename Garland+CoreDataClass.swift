@@ -1,8 +1,8 @@
 //
 //  Garland+CoreDataClass.swift
-//  
+//  PrayerGod
 //
-//  Created by macOS on 19/05/23.
+//  Created by macOS on 07/06/23.
 //
 //
 

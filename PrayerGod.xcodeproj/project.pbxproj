@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		220FB29B2A11ED44002601AC /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 220FB2992A11ED44002601AC /* CoreDataModel.xcdatamodeld */; };
 		2215D3272A0503C500DC1129 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2215D3262A0503C500DC1129 /* ListViewController.swift */; };
-		2220B2E8409B25A8009AE513 /* GodNameLiistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220B2E7409B25A8009AE513 /* GodNameLiistViewController.swift */; };
 		2220B2EC409B26E3009AE513 /* sound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2220B2EB409B26E3009AE513 /* sound.mp3 */; };
 		223413E42B43468C001ED0E9 /* AllStrMOdel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223413E32B43468C001ED0E9 /* AllStrMOdel.swift */; };
 		2237CB5929EE5EA200B06899 /* CellsidemenuTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2237CB5829EE5EA200B06899 /* CellsidemenuTableVc.swift */; };
+		223D8F9F2A2B1F6200B6A65A /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223D8F9E2A2B1F6200B6A65A /* TempViewController.swift */; };
 		226352DD2A050FD600D42636 /* CellShowCurrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226352DC2A050FD600D42636 /* CellShowCurrentList.swift */; };
 		22636D5A29EE9E1300C50F80 /* CellFiltextTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22636D5929EE9E1300C50F80 /* CellFiltextTableVc.swift */; };
 		22636D6729EEAFF800C50F80 /* PersistantStorej.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22636D6629EEAFF800C50F80 /* PersistantStorej.swift */; };
@@ -21,8 +21,8 @@
 		2264D1A429ED72840043E5CD /*  AddValyueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */; };
 		2264D1A629ED731D0043E5CD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2264D1A529ED731D0043E5CD /* SideMenuViewController.swift */; };
 		226934122A173B1B001D9751 /* GradientProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226934112A173B1B001D9751 /* GradientProgressView.swift */; };
-		226934142A1763F9001D9751 /* Garland+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226934132A1763F9001D9751 /* Garland+CoreDataProperties.swift */; };
-		226934162A1763FE001D9751 /* Garland+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226934152A1763FE001D9751 /* Garland+CoreDataClass.swift */; };
+		226B93052A3073DF000F429C /* Garland+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */; };
+		226B93062A3073DF000F429C /* Garland+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */; };
 		228334DC29ED047A0071FADB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334DB29ED047A0071FADB /* AppDelegate.swift */; };
 		228334DE29ED047A0071FADB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334DD29ED047A0071FADB /* SceneDelegate.swift */; };
 		228334E329ED047A0071FADB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228334E129ED047A0071FADB /* Main.storyboard */; };
@@ -37,10 +37,10 @@
 		00553C58A852E2560BDAFF26 /* Pods-PrayerGod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrayerGod.release.xcconfig"; path = "Target Support Files/Pods-PrayerGod/Pods-PrayerGod.release.xcconfig"; sourceTree = "<group>"; };
 		220FB29A2A11ED44002601AC /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		2215D3262A0503C500DC1129 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListViewController.swift; path = PrayerGod/StoryBoard/ListViewController.swift; sourceTree = SOURCE_ROOT; };
-		2220B2E7409B25A8009AE513 /* GodNameLiistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GodNameLiistViewController.swift; path = PrayerGod/StoryBoard/GodNameLiistViewController.swift; sourceTree = SOURCE_ROOT; };
 		2220B2EB409B26E3009AE513 /* sound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sound.mp3; sourceTree = "<group>"; };
 		223413E32B43468C001ED0E9 /* AllStrMOdel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllStrMOdel.swift; sourceTree = "<group>"; };
 		2237CB5829EE5EA200B06899 /* CellsidemenuTableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsidemenuTableVc.swift; sourceTree = "<group>"; };
+		223D8F9E2A2B1F6200B6A65A /* TempViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		226352DC2A050FD600D42636 /* CellShowCurrentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellShowCurrentList.swift; sourceTree = "<group>"; };
 		22636D5929EE9E1300C50F80 /* CellFiltextTableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CellFiltextTableVc.swift; path = PrayerGod/View/CellFiltextTableVc.swift; sourceTree = SOURCE_ROOT; };
 		22636D6629EEAFF800C50F80 /* PersistantStorej.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistantStorej.swift; sourceTree = "<group>"; };
@@ -49,8 +49,8 @@
 		2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AddValyueViewController.swift"; sourceTree = "<group>"; };
 		2264D1A529ED731D0043E5CD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		226934112A173B1B001D9751 /* GradientProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientProgressView.swift; sourceTree = "<group>"; };
-		226934132A1763F9001D9751 /* Garland+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		226934152A1763FE001D9751 /* Garland+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataClass.swift"; sourceTree = "<group>"; };
+		226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		228334D829ED047A0071FADB /* PrayerGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		228334DB29ED047A0071FADB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		228334DD29ED047A0071FADB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -87,10 +87,10 @@
 		22636D5B29EEAE2000C50F80 /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */,
+				226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */,
 				220FB2992A11ED44002601AC /* CoreDataModel.xcdatamodeld */,
 				22636D6629EEAFF800C50F80 /* PersistantStorej.swift */,
-				226934132A1763F9001D9751 /* Garland+CoreDataProperties.swift */,
-				226934152A1763FE001D9751 /* Garland+CoreDataClass.swift */,
 				22636D6829EEB3DE00C50F80 /* CoreDataCrudOpretion.swift */,
 			);
 			path = CoreDataModel;
@@ -165,7 +165,6 @@
 		228334F729ED106E0071FADB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2220B2E7409B25A8009AE513 /* GodNameLiistViewController.swift */,
 				2215D3262A0503C500DC1129 /* ListViewController.swift */,
 				2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */,
 				22D49B792A09AB7900C5F15B /* ViewController.swift */,
@@ -178,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				228334E129ED047A0071FADB /* Main.storyboard */,
+				223D8F9E2A2B1F6200B6A65A /* TempViewController.swift */,
 				228334E929ED047B0071FADB /* LaunchScreen.storyboard */,
 			);
 			path = StoryBoard;
@@ -310,21 +310,21 @@
 			files = (
 				2215D3272A0503C500DC1129 /* ListViewController.swift in Sources */,
 				2264D1A629ED731D0043E5CD /* SideMenuViewController.swift in Sources */,
+				223D8F9F2A2B1F6200B6A65A /* TempViewController.swift in Sources */,
 				22636D6729EEAFF800C50F80 /* PersistantStorej.swift in Sources */,
-				2220B2E8409B25A8009AE513 /* GodNameLiistViewController.swift in Sources */,
-				226934142A1763F9001D9751 /* Garland+CoreDataProperties.swift in Sources */,
 				2264D1A429ED72840043E5CD /*  AddValyueViewController.swift in Sources */,
 				22636D6929EEB3DE00C50F80 /* CoreDataCrudOpretion.swift in Sources */,
 				223413E42B43468C001ED0E9 /* AllStrMOdel.swift in Sources */,
 				2237CB5929EE5EA200B06899 /* CellsidemenuTableVc.swift in Sources */,
-				226934162A1763FE001D9751 /* Garland+CoreDataClass.swift in Sources */,
 				228334FA29ED11D90071FADB /* AllExtention.swift in Sources */,
 				2264D1A229ED52FC0043E5CD /* CollectionViewCell.swift in Sources */,
 				226352DD2A050FD600D42636 /* CellShowCurrentList.swift in Sources */,
 				226934122A173B1B001D9751 /* GradientProgressView.swift in Sources */,
 				228334DC29ED047A0071FADB /* AppDelegate.swift in Sources */,
+				226B93052A3073DF000F429C /* Garland+CoreDataClass.swift in Sources */,
 				220FB29B2A11ED44002601AC /* CoreDataModel.xcdatamodeld in Sources */,
 				228334DE29ED047A0071FADB /* SceneDelegate.swift in Sources */,
+				226B93062A3073DF000F429C /* Garland+CoreDataProperties.swift in Sources */,
 				22D49B7A2A09AB7900C5F15B /* ViewController.swift in Sources */,
 				22636D5A29EE9E1300C50F80 /* CellFiltextTableVc.swift in Sources */,
 			);

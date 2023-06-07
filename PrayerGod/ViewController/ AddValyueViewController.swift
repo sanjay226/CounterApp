@@ -56,7 +56,6 @@ class AddValyueViewController: UIViewController{
         height_title.constant = 0
         height_value.constant = 0
         height_targetvalue.constant = 0
-        
         View_Height_reminder.constant = 88
         View_Height_Value.constant = 88
         View_Height_Tragetvalue.constant = 88
@@ -80,7 +79,6 @@ class AddValyueViewController: UIViewController{
             
         }else if isEdit_first_vc_topviewData{
             let editGarland_firstVc_topview = databasehelper.sharaintance.getdata()
-            let newindex = editGarland_firstVc_topview.firstIndex(where: {$0 == GlobalData.sharedInstance.selectindex! as NSObject})
             let newdata_first_vc = editGarland_firstVc_topview[select_Index_list_Vc_database]
             txt_title.text = newdata_first_vc.title
             txt_target_value.text = String(newdata_first_vc.targetValue)
@@ -91,7 +89,7 @@ class AddValyueViewController: UIViewController{
     }
     
     func updateName_Value_all_list(){
-        var newdatabaseindex_data = databasehelper.sharaintance.getdata()
+        let newdatabaseindex_data = databasehelper.sharaintance.getdata()
         newdatabaseindex_data[select_Index_list_Vc_database].title = txt_title.text ?? ""
         newdatabaseindex_data[select_Index_list_Vc_database].reminder = Int16(txt_reminder.text ?? "") ?? 0
         newdatabaseindex_data[select_Index_list_Vc_database].startValue = Int16(txt_Start_value.text ?? "") ?? 0
@@ -105,7 +103,6 @@ class AddValyueViewController: UIViewController{
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle.fill"), style: .plain, target: self, action: #selector(GoFirst_view_controller))
         self.navigationItem.rightBarButtonItem?.tintColor = .green
-        
         let backButton1 = UIBarButtonItem()
         backButton1.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton1
@@ -115,7 +112,7 @@ class AddValyueViewController: UIViewController{
         navigationController?.navigationBar.titleTextAttributes = textAttributes1
     }
     
-    @objc func GoRootVc(){
+@objc func GoRootVc(){
         if self.presentingViewController != nil{
             
             self.dismiss(animated: true, completion: nil)
@@ -141,7 +138,12 @@ class AddValyueViewController: UIViewController{
             lbl_reminders_six_digit.text = "Must be less than the target value."
             height_reminder.constant = 20
             View_Height_reminder.constant = 110
-        }else if is_selectIndex_bool_Dtabase{
+        }else if Int(txt_target_value.text ?? "") ?? 0 <= Int(txt_reminder.text ?? "") ?? 0{
+            lbl_reminders_six_digit.text = "Must be less than the target value."
+            height_reminder.constant = 20
+            View_Height_reminder.constant = 110
+        }
+        else if is_selectIndex_bool_Dtabase{
                 if self.presentingViewController != nil{
                     self.dismiss(animated: true, completion: nil)
                 }else{
@@ -158,17 +160,18 @@ class AddValyueViewController: UIViewController{
             }
             let newdatabaseindex_data = databasehelper.sharaintance.getdata()
             let updatedata = newdatabaseindex_data[select_Index_list_Vc_database]
-           updatedata.title = txt_title.text
+            updatedata.title = txt_title.text
             updatedata.targetValue = Int16(txt_target_value.text ?? "") ?? 0
             updatedata.startValue = Int16(txt_Start_value.text ?? "") ?? 0
             updatedata.reminder = Int16(txt_reminder.text ?? "") ?? 0
             updatedata.note = textView_Note.text ?? ""
             self.presentingViewController?.dismiss(animated: false, completion: nil)
-           self.presentingViewController?.dismiss(animated: true, completion: nil)
+            self.presentingViewController?.dismiss(animated: true, completion: nil)
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true
-            GlobalData.sharedInstance.selectindex = select_Index_list_Vc_database;   databasehelper.sharaintance.saveItems()
-            isEdit_first_vc_topviewData = false
+            GlobalData.sharedInstance.selectindex = select_Index_list_Vc_database;
+            databasehelper.sharaintance.saveItems()
+        
         }
         else {
             saveDataAndSetValueIfBlank()
@@ -179,7 +182,6 @@ class AddValyueViewController: UIViewController{
         txt_Start_value.text = txt_Start_value.text == "" ? "0" : txt_Start_value.text
         txt_reminder.text = txt_reminder.text == "" ? "0" : txt_reminder.text
         txt_target_value.text = txt_target_value.text == "" ? "0" : txt_target_value.text
-        
         savedata()
         self.presentingViewController?.dismiss(animated: false, completion: nil)
         self.presentingViewController?.dismiss(animated: true, completion: nil)
@@ -187,17 +189,13 @@ class AddValyueViewController: UIViewController{
         GlobalData.sharedInstance.isFromSaveTask = true
         let data = databasehelper.sharaintance.getdata().last
         let new = databasehelper.sharaintance.getdata()
-        var newdata = new.firstIndex(where: {$0 == data})
-   
+        let newdata = new.firstIndex(where: {$0 == data})
         GlobalData.sharedInstance.selectindex = newdata
-     
-       
-    }
+        }
         
 func savedata(){
-        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date())
-        databasehelper.sharaintance.dataSave(object: objTask)
-        databasehelper.sharaintance.saveItems()
+        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date(), isActive: true)
+            databasehelper.sharaintance.dataSave(object: objTask)
     }
 }
 

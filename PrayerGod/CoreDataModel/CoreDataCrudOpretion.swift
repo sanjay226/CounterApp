@@ -20,6 +20,7 @@ class databasehelper{
         user?.note = object.note
         user?.targetValue = Int16(object.targetValue ?? 0)
         user?.date = object.date ?? Date()
+        user?.isActive = object.isActive ?? false
         do{
             try context.save()
         }catch{

@@ -13,4 +13,5 @@ struct TaskModel{
     var targetValue: Int?
     var note: String?
     var date: Date?
+    var isActive : Bool?
 }

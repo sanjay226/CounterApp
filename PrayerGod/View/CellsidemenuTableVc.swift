@@ -9,15 +9,12 @@ import UIKit
 
 class CellsidemenuTableVc: UITableViewCell {
     //MARK: -   @IBOutlet
+    
+    @IBOutlet weak var img_likeStar: NSLayoutConstraint!
+    @IBOutlet weak var lbl_Enable_disable: UILabel!
+    @IBOutlet weak var lbl_notification: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-    
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-       
-    }
-
 }

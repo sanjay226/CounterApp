@@ -8,8 +8,6 @@
 import UIKit
 
 class ListViewController: UIViewController{
-  
-    
     //MARK: -   @IBOutlet
     @IBOutlet weak var img_Add_dismis: UIImageView!
     @IBOutlet weak var Tbl_list_of_malaEnding: UITableView!
@@ -25,21 +23,14 @@ class ListViewController: UIViewController{
     @IBOutlet weak var lbl_sort_value: UILabel!
     @IBOutlet weak var lbl_sort_Date: UILabel!
     @IBOutlet weak var View_Sorted_All_data_bottomview: UIView!
-    
     @IBOutlet weak var viewGesture_cover_bottom_sheet: UIView!
     @IBOutlet weak var img_continue_bottom_view: UIImageView!
-    
     @IBOutlet weak var img_sourt_bydate_bottomview: UIImageView!
-    
     @IBOutlet weak var view_continue_bottomview: UIView!
     @IBOutlet weak var img_Alphabetic_sort_bottomview: UIImageView!
-    
     @IBOutlet weak var img_cansal_bottomview: UIImageView!
-    
     @IBOutlet weak var img_sort_by_value_bottomview: UIImageView!
-    
     //MARK: - All veriable
-  //  var showFilterMenu = true
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
     var didselectIndex = -1
@@ -48,17 +39,13 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
     lazy var isnavigation_blank_or_fill = Bool()
-    lazy var index_firstVc_selected_index = Int()
- 
-    
-  
+    var view_nodata_lable_table = UIView()
 //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         Tbl_list_of_malaEnding.delegate = self
         Tbl_list_of_malaEnding.dataSource = self
         set_lefr_and_right_barButtonItem()
-      
         Ary_textfield_get_list = databasehelper.sharaintance.getdata()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(sender:)))
        viewGesture_cover_bottom_sheet.addGestureRecognizer(tapGesture)
@@ -74,10 +61,8 @@ class ListViewController: UIViewController{
     func set_lefr_and_right_barButtonItem(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoBackVc))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "list.bullet.indent"), style: .plain, target: self, action: #selector(show_Arrow_view))
         self.navigationItem.rightBarButtonItem?.tintColor = .white
-        
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
@@ -87,7 +72,6 @@ class ListViewController: UIViewController{
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         View_Sorted_All_data_bottomview.isHidden = true
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = false
-           
     }
     
     @objc func GoBackVc(){
@@ -98,7 +82,7 @@ class ListViewController: UIViewController{
             self.navigationController?.popViewController(animated: true)
         }
     }
-       // GlobalData.sharedInstance.isFromSaveTask = true
+       
   @objc func show_Arrow_view(){
         
         viewGesture_cover_bottom_sheet.isHidden = false
@@ -125,24 +109,15 @@ class ListViewController: UIViewController{
         is_Sort_all_ButtonClicked = Bool()
      }
     
-    func Animation_open_bottomview(_ view : UIView){
-        UIView.animate(withDuration: 0.5, delay: 0.1, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0,options:.curveEaseIn, animations: {
-            self.view.frame = CGRect(x: 0, y: 0, width: 353, height: 315)
-        }) { finished in
-            print("finish")
+    func getActiveTAskIndex_in_list() -> Int{
+        let taskList = databasehelper.sharaintance.getdata()
+        if let index = taskList.firstIndex(where: {$0.isActive == true}){
+            return index
+        }else{
+            return -1
         }
     }
-    
-    func Animation_hide_bottomview(){
-        UIView.animate(withDuration: 1.5, delay: 0.5, usingSpringWithDamping: 0.0, initialSpringVelocity: 0.0,options:.curveEaseIn, animations: {
-            self.view.frame = CGRect(x: 0, y: 527, width: 353, height: 315)
-        }) { finished in
-            if finished{
-                self.view.removeFromSuperview()
-            }
-            }
-        }
-   //gesture bottonview hide
+  //gesture bottonview hide
     func hide_mainbottom_view(){
         viewGesture_cover_bottom_sheet.isHidden = true
         btn_open_addlistVc.isHidden = false
@@ -170,10 +145,8 @@ class ListViewController: UIViewController{
             bottom_up()
             ispresen_tbottom_view.toggle()
         }else{
-
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: { [self] in
             self.View_Sorted_All_data_bottomview.isHidden = true
-            
             ispresen_tbottom_view.toggle()
         }) { [self] (finished) in
             if finished {
@@ -186,25 +159,21 @@ class ListViewController: UIViewController{
     func shortedAlphabetic(){
         let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
             Ary_textfield_get_list = sortedarry
-        //databasehelper.sharaintance.saveItems()
-        tblview_reload()
-        
-  }
+            tblview_reload()
+    }
+    
     func tblview_reload(){
         DispatchQueue.main.async {
             self.Tbl_list_of_malaEnding.reloadData()
         }
-        
     }
       
-
 @IBAction func btn_did_tapped_open_addVc(_ sender: UIButton) {
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
 
         let navigationControlr1 = UINavigationController(rootViewController: nav)
         navigationControlr1.modalPresentationStyle = .fullScreen
         nav.delegate_addVc = self
-    
         self.present(navigationControlr1, animated: true, completion: nil)
 }
     
@@ -222,12 +191,9 @@ class ListViewController: UIViewController{
         self.navigationItem.rightBarButtonItem?.isEnabled = true
        }
 
-    
-    @IBAction func btnPopupEvents(_ sender: UIButton){
-       
-        if is_Sort_all_ButtonClicked{
-        
-            switch sender.tag {
+@IBAction func btnPopupEvents(_ sender: UIButton){
+    if is_Sort_all_ButtonClicked{
+        switch sender.tag {
             case 1:
                 shortedAlphabetic()
                 View_Sorted_All_data_bottomview.isHidden = true
@@ -238,8 +204,7 @@ class ListViewController: UIViewController{
             case 2:
               let sorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
                 Ary_textfield_get_list = sorted
-               // databasehelper.sharaintance.saveItems()
-               tblview_reload()
+                tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
@@ -248,7 +213,6 @@ class ListViewController: UIViewController{
             case 3:
                 let sorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
                 Ary_textfield_get_list = sorted
-                //databasehelper.sharaintance.saveItems()
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
@@ -265,7 +229,6 @@ class ListViewController: UIViewController{
                 let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
                 
                 let navigationController = UINavigationController(rootViewController: nav)
-                
                 navigationController.setNavigationBarHidden(false, animated: true)
                 let navigationControlr1 = UINavigationController(rootViewController: nav)
                 navigationControlr1.modalPresentationStyle = .fullScreen
@@ -273,15 +236,12 @@ class ListViewController: UIViewController{
                 nav.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 nav.navigationController?.modalPresentationStyle = .fullScreen
                 nav.select_Index_list_Vc_database = didselectIndex
-                nav.is_selectIndex_bool_Dtabase = true
+                nav.is_selectIndex_bool_Dtabase_Edit = true
                 GlobalData.sharedInstance.isFromSaveTask = true
                 present(navigationControlr1, animated: true)
-                
                 View_Sorted_All_data_bottomview.isHidden = true
-                
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-                // GlobalData.sharedInstance.isFromSaveTask = false
             case 2:
                 Ary_textfield_get_list[didselectIndex].startValue = 0
                 databasehelper.sharaintance.saveItems()
@@ -290,9 +250,10 @@ class ListViewController: UIViewController{
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-                //GlobalData.sharedInstance.isFromSaveTask = false
             case 3:
-                if index_firstVc_selected_index == didselectIndex
+               let data_list = databasehelper.sharaintance.getdata()
+                let index = data_list.firstIndex(where: {$0.isActive == true})
+                if index == didselectIndex
                 {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
@@ -307,30 +268,32 @@ class ListViewController: UIViewController{
                         hide_mainbottom_view()
                     }))
                     present(alertController, animated: true, completion: nil)
-                    
                 }else{
                     Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
-                   // databasehelper.sharaintance.saveItems()
                     Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                     tblview_reload()
                     View_Sorted_All_data_bottomview.isHidden = true
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
-                    
                 }
             case 4:
+             let taskList = databasehelper.sharaintance.getdata()
+                if let index = taskList.firstIndex(where: {$0.isActive == true}){
+                            taskList[index].isActive = false
+                    taskList[didselectIndex].isActive = true
+                }else{
+                    taskList[didselectIndex].isActive = true
+                }
+                View_Sorted_All_data_bottomview.isHidden = true
+                is_Sort_all_ButtonClicked = Bool()
+                hide_mainbottom_view()
+                GlobalData.sharedInstance.isFromSaveTask = true
+                databasehelper.sharaintance.saveItems()
                 if self.presentingViewController != nil{
                     self.dismiss(animated: true, completion: nil)
                 }else{
                     self.navigationController?.popViewController(animated: true)
                 }
-                
-                GlobalData.sharedInstance.selectindex = didselectIndex
-                View_Sorted_All_data_bottomview.isHidden = true
-                is_Sort_all_ButtonClicked = Bool()
-                hide_mainbottom_view()
-                GlobalData.sharedInstance.isFromSaveTask = true
-                
             default:
                 return
             }
@@ -341,13 +304,18 @@ class ListViewController: UIViewController{
 //MARK: - UITableViewDelegate &  UITableViewDataSource Methode
 extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        Ary_textfield_get_list.count
+        if(Ary_textfield_get_list.count == 0 ){
+            Tbl_list_of_malaEnding.setEmptyMessage("No data found")
+        } else{
+            Tbl_list_of_malaEnding.restore()
+            view_nodata_lable_table.isHidden = true
+        }
+       return Ary_textfield_get_list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellShowCurrentList", for: indexPath) as! CellShowCurrentList
        let obj = Ary_textfield_get_list[indexPath.row]
-       
         let persent = (Float(obj.startValue) * 100) / Float(obj.targetValue)
         let formatted = String(format: "%.1f", persent)
         cell.progressView.setProgress(Float(obj.startValue)/Float(obj.targetValue), animated: true)
@@ -364,7 +332,6 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         view_continue_bottomview.isHidden = false
-        print(indexPath.row,"indexpath.row momomomoomomooooooooo   -------")
         is_Sort_all_ButtonClicked = false
         show_mainbottom_view()
         View_Sorted_All_data_bottomview.isHidden = false
@@ -377,10 +344,7 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         img_Alphabetic_sort_bottomview.image = UIImage(systemName: "repeat")
         img_sort_by_value_bottomview.image = UIImage(systemName: "10.square")
         self.navigationItem.rightBarButtonItem?.isEnabled = false
-        GlobalData.sharedInstance.isFromSaveTask = true
-       // GlobalData.sharedInstance.selectindex = indexPath.row
-       // didselectIndex = GlobalData.sharedInstance.selectindex!
-        
+      //  GlobalData.sharedInstance.isFromSaveTask = true
     }
     
     func getCreatDate(obj: Garland) -> String {
@@ -401,3 +365,20 @@ extension ListViewController: AddValueViewControllerDelegate{
             }
         }
 
+extension UITableView {
+func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .white
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont.systemFont(ofSize: 16)
+        messageLabel.sizeToFit()
+        self.backgroundView = messageLabel
+    }
+    
+    func restore() {
+        self.backgroundView = nil
+        self.separatorStyle = .singleLine
+    }
+}

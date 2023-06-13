@@ -23,6 +23,10 @@ class AddValyueViewController: UIViewController{
     @IBOutlet weak var lbl_reminders_six_digit: UILabel!
     @IBOutlet weak var lbl_target_Vllue: UILabel!
     @IBOutlet weak var txt_target_value: UITextField!
+    @IBOutlet weak var view_main_title: UIView!
+    @IBOutlet weak var view_main_StartValue: UIView!
+    @IBOutlet weak var view_main_Reminder: UIView!
+    @IBOutlet weak var view_main_targetVlue: UIView!
     @IBOutlet weak var lbl_target_six_digit_value: UILabel!
     @IBOutlet weak var lbl_note: UILabel!
     @IBOutlet weak var textView_Note: UITextView!
@@ -38,19 +42,22 @@ class AddValyueViewController: UIViewController{
     //MARK: - All veriable
     var delegate_addVc : AddValueViewControllerDelegate?
     var select_Index_list_Vc_database = Int()
-    var is_selectIndex_bool_Dtabase = Bool()
-    //var editGarland_firstVc_topview = Garland()
+    var is_selectIndex_bool_Dtabase_Edit = Bool()
     var isEdit_first_vc_topviewData = Bool()
+    var firstVc_ccurent_list_show_start_value = "0"
     //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         allmetodeAssignViewDidload()
+      txt_Start_value.text = firstVc_ccurent_list_show_start_value
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selected_index_list_on_listVc()
-    }
-//MARK: - Custum Function
+        
+}
+    //MARK: - Custum Function
     func allmetodeAssignViewDidload(){
         height_reminder.constant = 0
         height_title.constant = 0
@@ -68,7 +75,7 @@ class AddValyueViewController: UIViewController{
     }
     
     func selected_index_list_on_listVc(){
-        if is_selectIndex_bool_Dtabase{
+        if is_selectIndex_bool_Dtabase_Edit{
             let newdatabaseindex_data = databasehelper.sharaintance.getdata()
             let data = newdatabaseindex_data[select_Index_list_Vc_database]
             txt_reminder.text=String(data.reminder)
@@ -76,7 +83,6 @@ class AddValyueViewController: UIViewController{
             txt_Start_value.text = String(data.startValue)
             txt_target_value.text = String(data.targetValue)
             textView_Note.text = data.note
-            
         }else if isEdit_first_vc_topviewData{
             let editGarland_firstVc_topview = databasehelper.sharaintance.getdata()
             let newdata_first_vc = editGarland_firstVc_topview[select_Index_list_Vc_database]
@@ -96,7 +102,7 @@ class AddValyueViewController: UIViewController{
         newdatabaseindex_data[select_Index_list_Vc_database].targetValue = Int16(txt_target_value.text ?? "") ?? 0
         newdatabaseindex_data[select_Index_list_Vc_database].note = textView_Note.text ?? ""
     }
-
+    
     func set_lefr_and_right_barButtonItem_Add(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoRootVc))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
@@ -112,15 +118,12 @@ class AddValyueViewController: UIViewController{
         navigationController?.navigationBar.titleTextAttributes = textAttributes1
     }
     
-@objc func GoRootVc(){
+    @objc func GoRootVc(){
         if self.presentingViewController != nil{
-            
             self.dismiss(animated: true, completion: nil)
-            
         }else{
             self.navigationController?.popViewController(animated: true)
         }
-       // saveDataAndSetValueIfBlank()
     }
     
     @objc func GoFirst_view_controller(){
@@ -143,21 +146,21 @@ class AddValyueViewController: UIViewController{
             height_reminder.constant = 20
             View_Height_reminder.constant = 110
         }
-        else if is_selectIndex_bool_Dtabase{
-                if self.presentingViewController != nil{
-                    self.dismiss(animated: true, completion: nil)
-                }else{
-                    self.navigationController?.popViewController(animated: true)
-                }
-                updateName_Value_all_list()
-                databasehelper.sharaintance.saveItems()
-                is_selectIndex_bool_Dtabase = false
+        else if is_selectIndex_bool_Dtabase_Edit{
+            if self.presentingViewController != nil{
+                self.dismiss(animated: true, completion: nil)
+            }else{
+                self.navigationController?.popViewController(animated: true)
+            }
+            updateName_Value_all_list()
+            databasehelper.sharaintance.saveItems()
         }else if isEdit_first_vc_topviewData{
             if self.presentingViewController != nil{
                 self.dismiss(animated: true, completion: nil)
             }else{
                 self.navigationController?.popViewController(animated: true)
             }
+
             let newdatabaseindex_data = databasehelper.sharaintance.getdata()
             let updatedata = newdatabaseindex_data[select_Index_list_Vc_database]
             updatedata.title = txt_title.text
@@ -165,13 +168,13 @@ class AddValyueViewController: UIViewController{
             updatedata.startValue = Int16(txt_Start_value.text ?? "") ?? 0
             updatedata.reminder = Int16(txt_reminder.text ?? "") ?? 0
             updatedata.note = textView_Note.text ?? ""
-            self.presentingViewController?.dismiss(animated: false, completion: nil)
-            self.presentingViewController?.dismiss(animated: true, completion: nil)
+            updatedata.isActive = true
+//            self.presentingViewController?.dismiss(animated: false, completion: nil)
+//            self.presentingViewController?.dismiss(animated: true, completion: nil)
+         
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true
-            GlobalData.sharedInstance.selectindex = select_Index_list_Vc_database;
             databasehelper.sharaintance.saveItems()
-        
         }
         else {
             saveDataAndSetValueIfBlank()
@@ -188,15 +191,24 @@ class AddValyueViewController: UIViewController{
         self.delegate_addVc?.popupCloseEvent()
         GlobalData.sharedInstance.isFromSaveTask = true
         let data = databasehelper.sharaintance.getdata().last
-        let new = databasehelper.sharaintance.getdata()
+        var new = databasehelper.sharaintance.getdata()
         let newdata = new.firstIndex(where: {$0 == data})
-        GlobalData.sharedInstance.selectindex = newdata
-        }
-        
-func savedata(){
-        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date(), isActive: true)
-            databasehelper.sharaintance.dataSave(object: objTask)
+        var taskList = databasehelper.sharaintance.getdata()
+        let index = taskList.firstIndex(where: {$0.isActive == true})
+        taskList[index!] = taskList[newdata!]
     }
+    
+    func savedata(){
+        updateListTask()
+        let objTask = TaskModel(title: txt_title.text, startValue: Int(txt_Start_value.text ?? "") ?? 0,reminder: Int(txt_reminder.text ?? "") ?? 0, targetValue: Int(txt_target_value.text ?? "") ?? 0, note: textView_Note.text ?? "", date: Date(), isActive: true)
+        databasehelper.sharaintance.dataSave(object: objTask)
+        print(databasehelper.sharaintance.getdata())
+    }
+    
+    func updateListTask(){
+        let data = databasehelper.sharaintance.getdata()
+        var jio: [()] = data.map({$0.isActive = false})
+      }
 }
 
 extension AddValyueViewController : UITextFieldDelegate{

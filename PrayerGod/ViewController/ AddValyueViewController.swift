@@ -169,9 +169,6 @@ class AddValyueViewController: UIViewController{
             updatedata.reminder = Int16(txt_reminder.text ?? "") ?? 0
             updatedata.note = textView_Note.text ?? ""
             updatedata.isActive = true
-//            self.presentingViewController?.dismiss(animated: false, completion: nil)
-//            self.presentingViewController?.dismiss(animated: true, completion: nil)
-         
             self.delegate_addVc?.popupCloseEvent()
             GlobalData.sharedInstance.isFromSaveTask = true
             databasehelper.sharaintance.saveItems()
@@ -186,8 +183,11 @@ class AddValyueViewController: UIViewController{
         txt_reminder.text = txt_reminder.text == "" ? "0" : txt_reminder.text
         txt_target_value.text = txt_target_value.text == "" ? "0" : txt_target_value.text
         savedata()
-        self.presentingViewController?.dismiss(animated: false, completion: nil)
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
+        if self.presentingViewController != nil{
+            self.dismiss(animated: true, completion: nil)
+        }else{
+            self.navigationController?.popViewController(animated: true)
+        }
         self.delegate_addVc?.popupCloseEvent()
         GlobalData.sharedInstance.isFromSaveTask = true
         let data = databasehelper.sharaintance.getdata().last

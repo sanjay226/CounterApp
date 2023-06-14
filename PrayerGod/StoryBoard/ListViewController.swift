@@ -40,6 +40,7 @@ class ListViewController: UIViewController{
     lazy var ispresen_tbottom_view = true
     lazy var isnavigation_blank_or_fill = Bool()
     var view_nodata_lable_table = UIView()
+ 
 //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,6 +130,19 @@ class ListViewController: UIViewController{
         btn_open_addlistVc.isHidden = true
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
+//
+//    func shortedData_isactive_true(){
+//        let taskList = databasehelper.sharaintance.getdata()
+//           if let index = taskList.firstIndex(where: {$0.isActive == true}){
+//                       taskList[index].isActive = false
+//               GlobalData.sharedInstance.isFromSaveTask = true
+//               taskList[didselectIndex].isActive = true
+//           }
+//        else{
+//               taskList[didselectIndex].isActive = true
+//           }
+//
+//    }
     
     func bottom_up()  {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
@@ -196,14 +210,18 @@ class ListViewController: UIViewController{
         switch sender.tag {
             case 1:
                 shortedAlphabetic()
+          //  databasehelper.sharaintance.saveItems()
+                tblview_reload()
+            // Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
             case 2:
-              let sorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
-                Ary_textfield_get_list = sorted
+              let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
+                Ary_textfield_get_list = shorted
+              
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
@@ -211,15 +229,15 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
             case 3:
-                let sorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
-                Ary_textfield_get_list = sorted
+                let shorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
+                Ary_textfield_get_list = shorted
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
-                default:
+             default:
                 return
             }
         }else{
@@ -277,17 +295,21 @@ class ListViewController: UIViewController{
                     hide_mainbottom_view()
                 }
             case 4:
+            
              let taskList = databasehelper.sharaintance.getdata()
                 if let index = taskList.firstIndex(where: {$0.isActive == true}){
                             taskList[index].isActive = false
-                    taskList[didselectIndex].isActive = true
+                    if let indexdate = taskList.firstIndex(where: {$0.date == Ary_textfield_get_list[didselectIndex].date}){
+                        taskList[indexdate].isActive = true
+                        
+                    }
                 }else{
                     taskList[didselectIndex].isActive = true
                 }
-                View_Sorted_All_data_bottomview.isHidden = true
+              View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-                GlobalData.sharedInstance.isFromSaveTask = true
+             GlobalData.sharedInstance.isFromSaveTask = true
                 databasehelper.sharaintance.saveItems()
                 if self.presentingViewController != nil{
                     self.dismiss(animated: true, completion: nil)
@@ -344,10 +366,10 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         img_Alphabetic_sort_bottomview.image = UIImage(systemName: "repeat")
         img_sort_by_value_bottomview.image = UIImage(systemName: "10.square")
         self.navigationItem.rightBarButtonItem?.isEnabled = false
-      //  GlobalData.sharedInstance.isFromSaveTask = true
+       
     }
-    
-    func getCreatDate(obj: Garland) -> String {
+ 
+func getCreatDate(obj: Garland) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ssz"
         let date = dateFormatter.date(from: "\(obj.date ?? Date())")

@@ -67,7 +67,6 @@ class ViewController: UIViewController{
     var counterBorderColor = UIColor()
     var current_data_list_obj = Garland()
     var strtvalueofprogresview = Float()
-    var count_current_value = Bool()
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
     lazy var isnavigation_bar_coloure_change = Bool()
@@ -89,43 +88,36 @@ class ViewController: UIViewController{
     
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-     count_current_value = true
         view_End_Edit_btn.isHidden = true
         var isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
-        if newgetdata_of_database.count == 0 || !isFromSaveTask {
+        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
+    if newgetdata_of_database.isEmpty || index == nil{
             stackview.isHidden = true
-         }
-        
-        if isFromSaveTask || !is_bootom_EndMala{
-            count_current_value = false
-            let newgetdata_of_database = databasehelper.sharaintance.getdata()
-            if let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true}){
-                current_data_list_obj = newgetdata_of_database[index]
-                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-                btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
-                stackview.isHidden = false
-                stackview.backgroundColor = .clear
-                isnavigation_bar_coloure_change = true
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
-                lbl_title_topview.text = current_data_list_obj.title
-                lbl_target_topview.text = "Target : \(current_data_list_obj.targetValue)"
-                lbl_reminder_topview.text = "Reminder : \(current_data_list_obj.reminder)"
-                strtvalueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
-                self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
-                progressview.setProgress(strtvalueofprogresview, animated: true)
-                counting = Int(current_data_list_obj.startValue)
-                lbl_Show_counting_Value.text = "\(counting)"
-                view_reset_Counting_bottom_sheet.isHidden = true
-                view_gesture_reaset_counter.isHidden = true
-                lbl_title_topview.textColor = .white
-                lbl_target_topview.textColor = .white
-                lbl_reminder_topview.textColor = .white
-                databasehelper.sharaintance.saveItems()
-            }
-        }
-        else {
-         
+            GlobalData.sharedInstance.isFromSaveTask = false
+    }else if  newgetdata_of_database[index!].isActive == true || !is_bootom_EndMala || isFromSaveTask{
+        current_data_list_obj = newgetdata_of_database[index!]
+        btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
+        stackview.isHidden = false
+        stackview.backgroundColor = .clear
+        isnavigation_bar_coloure_change = true
+        btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
+        lbl_title_topview.text = current_data_list_obj.title
+        lbl_target_topview.text = "Target : \(current_data_list_obj.targetValue)"
+        lbl_reminder_topview.text = "Reminder : \(current_data_list_obj.reminder)"
+        strtvalueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+        progressview.setProgress(strtvalueofprogresview, animated: true)
+        counting = Int(current_data_list_obj.startValue)
+        lbl_Show_counting_Value.text = "\(counting)"
+        view_reset_Counting_bottom_sheet.isHidden = true
+        view_gesture_reaset_counter.isHidden = true
+        lbl_title_topview.textColor = .white
+        lbl_target_topview.textColor = .white
+        lbl_reminder_topview.textColor = .white
+        databasehelper.sharaintance.saveItems()
+    }else if isFromSaveTask == false{
             stackview.isHidden = true
             counting = 0
             lbl_Show_counting_Value.text = "\(counting)"
@@ -137,7 +129,6 @@ override func viewWillAppear(_ animated: Bool) {
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
         progressview.setProgress(0.0, animated: true)
     }
 //MARK: - Custem methode
@@ -164,7 +155,7 @@ override func viewWillAppear(_ animated: Bool) {
     
     func showalert(){
         let toastLabel = UILabel(frame: CGRectMake(self.view.frame.size.width/2-150, self.view.frame.size.height/9, 300, 35))
-        toastLabel.backgroundColor = .systemBrown
+        toastLabel.backgroundColor = .white
         toastLabel.textColor = .black
         toastLabel.textAlignment = NSTextAlignment.center;
         self.view.addSubview(toastLabel)
@@ -173,7 +164,7 @@ override func viewWillAppear(_ animated: Bool) {
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(2 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: {
-                   UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
+                   UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
                        toastLabel.alpha = 0
                    }, completion: { finished in
                        toastLabel.removeFromSuperview()
@@ -191,16 +182,18 @@ override func viewWillAppear(_ animated: Bool) {
         bgColor = self.colors.randomElement()!
         counterBgColor = self.colors.randomElement()!
         counterBorderColor = self.colors.randomElement()!
-        
         self.view_Main_Grediantcoloure.backgroundColor = bgColor
         self.img_coloure_convertore.backgroundColor = counterBgColor
-        
         btn_pluse_count.backgroundColor = counterBorderColor
         img_coloure_convertore.borderColor = counterBorderColor
         btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
         btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
-        btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
+        if stackview.isHidden == true{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
+        }else{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
         }
+    }
     
 func bottom(){
     UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
@@ -214,7 +207,7 @@ func bottom(){
     }
     func End_topView_Isactive_False(){
         let ArryList = databasehelper.sharaintance.getdata()
-        var newdata: [()] = ArryList.map({$0.isActive = false})
+        var _: [()] = ArryList.map({$0.isActive = false})
         
     }
 //MARK: -   @IBAction
@@ -225,15 +218,17 @@ func bottom(){
     }
   
     @IBAction func btn_did_Tapped_goaddVlyueVc_openEndEditBtn(_ sender: UIButton) {
-       // btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
-        if count_current_value || GlobalData.sharedInstance.isFromSaveTask == false{
+        let newgetdata_of_database = databasehelper.sharaintance.getdata()
+        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
+        if GlobalData.sharedInstance.isFromSaveTask == false {
             let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
             nav.modalPresentationStyle = .fullScreen
-            var convertInt_showcounting_lable = lbl_Show_counting_Value.text
+            let convertInt_showcounting_lable = lbl_Show_counting_Value.text
             nav.firstVc_ccurent_list_show_start_value =  convertInt_showcounting_lable!
            self.navigationController?.pushViewController(nav, animated: true)
-    }
-        else if !count_current_value{
+
+        }
+        else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             if isnavigation_bar_coloure_change{
                 view_End_Edit_btn.isHidden = false
                 stackview.backgroundColor = .systemBrown
@@ -259,7 +254,13 @@ func bottom(){
     }
     //btntapped pluse counting
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
-        if !count_current_value{
+        let newgetdata_of_database = databasehelper.sharaintance.getdata()
+        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
+        if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
+                counting = counting + 1
+                lbl_Show_counting_Value.text = "\(counting)"
+                  }
+        else if GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             lbl_Show_counting_Value.text = "\(counting)"
             counting = counting + 1
            let currentCount = (counting ) % Int(current_data_list_obj.reminder)
@@ -280,10 +281,7 @@ func bottom(){
                 current_data_list_obj.startValue = Int16(counting)
                 databasehelper.sharaintance.saveItems()
             }
-        else if count_current_value {
-            counting = counting + 1
-            lbl_Show_counting_Value.text = "\(counting)"
-        }
+       
         if selectedsound{
             audioPlayer.play()
         }
@@ -293,24 +291,26 @@ func bottom(){
     }
 //btntapped minus counting
     @IBAction func btn_click_minus_counting(_ sender: UIButton)  {
-        if !count_current_value{
+        let newgetdata_of_database = databasehelper.sharaintance.getdata()
+        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
+        if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
+                if counting > 0{
+                    counting = counting - 1
+                    lbl_Show_counting_Value.text = "\(counting)"
+                }else{
+                    counting = 0
+                }
+            }
+        else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true {
             if counting > 0{
                 counting = counting - 1
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
                 current_data_list_obj.startValue = Int16(counting)
-               // databasehelper.sharaintance.saveItems()
                 lbl_Show_counting_Value.text = "\(counting)"
-            }
-                else{
+                databasehelper.sharaintance.saveItems()
+            }else{
                     counting = 0
                 }
-        }else if count_current_value{
-            if counting > 0{
-                counting = counting - 1
-                lbl_Show_counting_Value.text = "\(counting)"
-            }else{
-                counting = 0
-            }
         }
     }
     //btntapped reload counting
@@ -326,10 +326,16 @@ func bottom(){
     }
            
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
-      
-        if !count_current_value{
+        let newgetdata_of_database = databasehelper.sharaintance.getdata()
+        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
+        if index == nil || GlobalData.sharedInstance.isFromSaveTask == false {
+            counting = 0
+            lbl_Show_counting_Value.text = "\(counting)"
+            view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
+            }
+        else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true {
             if is_bootom_EndMala{
-               
                 stackview.isHidden = true
                 view_reset_Counting_bottom_sheet.isHidden = true
                 view_gesture_reaset_counter.isHidden = true
@@ -343,10 +349,8 @@ func bottom(){
                 End_topView_Isactive_False()
                 is_bootom_EndMala = false
                 databasehelper.sharaintance.saveItems()
-            
-             //  count_current_value = true
-            }else if counting > 0
-            {
+                }
+            else if counting > 0 {
                 counting = counting - counting
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
                 current_data_list_obj.startValue = Int16(counting)
@@ -354,15 +358,8 @@ func bottom(){
                 view_reset_Counting_bottom_sheet.isHidden = true
                 view_gesture_reaset_counter.isHidden = true
                 stackview.isHidden = false
-             
                 databasehelper.sharaintance.saveItems()
-          }
-        }else{
-            
-            counting = 0
-            lbl_Show_counting_Value.text = "\(counting)"
-            view_reset_Counting_bottom_sheet.isHidden = true
-            view_gesture_reaset_counter.isHidden = true
+            }
         }
     }
     
@@ -395,10 +392,8 @@ func bottom(){
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
         let navigationControlr = UINavigationController(rootViewController: nav)
         navigationControlr.modalPresentationStyle = .fullScreen
-        let data = databasehelper.sharaintance.getdata()
-        let newIndex = data.firstIndex(where: {$0.isActive == true})
-        
-
+        //let data = databasehelper.sharaintance.getdata()
+      //  let newIndex = data.firstIndex(where: {$0.isActive == true})
         self.present(navigationControlr, animated: true, completion: nil)
         }
     
@@ -439,14 +434,14 @@ func bottom(){
    
    let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
         nav.modalPresentationStyle = .fullScreen
-       // databasehelper.sharaintance.saveItems()
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
-        let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
-        nav.is_selectIndex_bool_Dtabase_Edit = false
-        nav.select_Index_list_Vc_database = index!
-        nav.isEdit_first_vc_topviewData = true
-        self.navigationController?.pushViewController(nav, animated: true)
-    }
+        if let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true}){
+            nav.select_Index_list_Vc_database = index
+        }
+            nav.is_selectIndex_bool_Dtabase_Edit = false
+            nav.isEdit_first_vc_topviewData = true
+            self.navigationController?.pushViewController(nav, animated: true)
+        }
     
     func appears_Back_Graund_coloure(_ Sender : UIButton){
         Sender.backgroundColor = .systemBrown

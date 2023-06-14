@@ -130,6 +130,7 @@ override func viewWillAppear(_ animated: Bool) {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
+        
     }
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
@@ -155,10 +156,10 @@ override func viewWillAppear(_ animated: Bool) {
     
     func showalert(){
         let toastLabel = UILabel(frame: CGRectMake(self.view.frame.size.width/2-150, self.view.frame.size.height/9, 300, 35))
-        toastLabel.backgroundColor = .white
         toastLabel.textColor = .black
         toastLabel.textAlignment = NSTextAlignment.center;
         self.view.addSubview(toastLabel)
+        toastLabel.backgroundColor = counterBorderColor
         toastLabel.text = "Reminder has been reached."
         toastLabel.alpha = 1.0
         toastLabel.layer.cornerRadius = 10;

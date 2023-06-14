@@ -1287,6 +1287,21 @@
             </objects>
             <point key="canvasLocation" x="2489" y="-32"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="8mI-zz-Ad2">
+            <objects>
+                <viewController id="VFZ-JL-IZD" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6VC-NV-bHu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="wgE-OA-byP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gHE-1D-wi2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1154" y="-31"/>
+        </scene>
         <!--Side Menu View Controller-->
         <scene sceneID="Uwi-ai-9Hn">
             <objects>
@@ -1327,12 +1342,14 @@
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soccerball" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Lfs-gJ-h5J">
                                                             <rect key="frame" x="10" y="34.666666666666657" width="32" height="30.333333333333329"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Lfs-gJ-h5J" secondAttribute="height" multiplier="1:1" id="0Bv-Bg-9Xn"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k6W-E8-aWX">
-                                                            <rect key="frame" x="62.000000000000007" y="29" width="86.666666666666686" height="41"/>
+                                                        <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="k6W-E8-aWX">
+                                                            <rect key="frame" x="62.000000000000007" y="31.000000000000004" width="86.666666666666686" height="37.333333333333343"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6hT-iG-kSo">
                                                                     <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="18"/>
@@ -1342,7 +1359,7 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enabled" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q7-wm-Rvi">
-                                                                    <rect key="frame" x="0.0" y="23" width="86.666666666666671" height="18"/>
+                                                                    <rect key="frame" x="0.0" y="23" width="86.666666666666671" height="14.333333333333336"/>
                                                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1378,7 +1395,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="img_likeStar" destination="nvg-vP-QPV" id="fos-w8-7xe"/>
+                                            <outlet property="img_Star_rate" destination="Lfs-gJ-h5J" id="AOs-55-jNF"/>
                                             <outlet property="lbl_Enable_disable" destination="3Q7-wm-Rvi" id="uFE-Sw-4GC"/>
                                             <outlet property="lbl_notification" destination="6hT-iG-kSo" id="4XW-Xb-Jrk"/>
                                         </connections>
@@ -1405,7 +1422,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XkJ-eZ-pNx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-231" y="-32"/>
+            <point key="canvasLocation" x="-419" y="-32"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Tbu-jI-Nry">
@@ -1424,7 +1441,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5jv-Q2-UKT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="485" y="-32"/>
+            <point key="canvasLocation" x="308" y="-40"/>
         </scene>
     </scenes>
     <resources>

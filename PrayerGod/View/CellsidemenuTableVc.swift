@@ -9,8 +9,7 @@ import UIKit
 
 class CellsidemenuTableVc: UITableViewCell {
     //MARK: -   @IBOutlet
-    
-    @IBOutlet weak var img_likeStar: NSLayoutConstraint!
+    @IBOutlet weak var img_Star_rate: UIImageView!
     @IBOutlet weak var lbl_Enable_disable: UILabel!
     @IBOutlet weak var lbl_notification: UILabel!
     

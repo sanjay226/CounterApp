@@ -32,13 +32,12 @@ class ViewController: UIViewController{
     @IBOutlet weak var stackview: UIStackView!
     @IBOutlet weak var view_reminder: UIView!
     @IBOutlet weak var view_End_Edit_btn: UIView!
-    
     @IBOutlet weak var view_gesture_reaset_counter: UIView!
     @IBOutlet weak var btn_vnavigationItem_rightbar_BtnItem: UIButton!
-
     @IBOutlet weak var lbl_resetCounter_bottom_view: UILabel!
-    
     @IBOutlet weak var lbl_AreYou_sure_boomview: UILabel!
+    
+    @IBOutlet weak var btn_botoomview_topside_cansal: UIButton!
     
     //MARK: - All veriable
     var arry_panding_Image = ["volume.1","video.square","list.bullet.rectangle","paintpalette.fill","homekit"]
@@ -53,15 +52,26 @@ class ViewController: UIViewController{
     var colourevibrationcount = false
     var audioPlayer = AVAudioPlayer()
     let music = Bundle.main.path(forResource: "sound", ofType: "mp3")
-    let colors: [UIColor] = [
-        .systemYellow,
-        .systemGreen,
-        .systemPurple,
-        .systemPink,
-        .systemRed,
-        .systemBlue,
-        .systemOrange,
-        .gray]
+    let colors: [UIColor] = [UIColor(red: 255, green: 105/255, blue: 97/255, alpha: 1),
+                             UIColor(red: 255, green: 169/255, blue: 64/255, alpha: 1),
+                             UIColor(red: 255, green: 212/255, blue: 38/255, alpha: 1),
+                             UIColor(red: 48/255, green: 219/255, blue: 91/255, alpha: 1),
+                             UIColor(red: 102/255, green: 212/255, blue: 207/255, alpha: 1),
+                             UIColor(red: 93/255, green: 230/255, blue: 255/255, alpha: 1),
+                             UIColor(red: 112/255, green: 215/255, blue: 255, alpha:1),
+                             UIColor(red: 218/255, green: 143/255, blue: 255, alpha: 1),
+                             UIColor(red: 125/255, green: 122/255, blue: 255, alpha: 1),
+                             UIColor(red: 255/255, green: 100/255, blue: 130/255, alpha: 1),
+                             UIColor(red: 181/255, green: 148/255, blue: 105/255, alpha: 1),
+                             UIColor(red: 54/255, green: 52/255, blue: 163/255, alpha: 1),
+                             UIColor(red: 0/255, green: 130/255, blue: 153/255, alpha: 1),
+                             .systemGreen,
+                             .systemPurple,
+                             .systemPink,
+                             .systemRed,
+                             .systemBlue,
+                             .systemOrange,
+                             .gray]
     var bgColor = UIColor()
     var counterBgColor = UIColor()
     var counterBorderColor = UIColor()
@@ -70,13 +80,12 @@ class ViewController: UIViewController{
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
     lazy var isnavigation_bar_coloure_change = Bool()
-    lazy var isColore_top_btnNavigation = Bool()
-    var vnavigationcolore = UIColor()
-    var GlobalData_Save_Index = Int()
+    var Arry_diffrent_system_sound = ["1026","1113","1118","1115","1224","1158","1259","1300","1305","1290","1323","1158","1222","1215","1151"]
 //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         AllCutemMethoddeToSet_VIewLoad()
+        all_button_cornerRediuse()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handle_Tap_Gesture(sender:)))
        view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
         view_gesture_reaset_counter.isHidden = true
@@ -89,7 +98,7 @@ class ViewController: UIViewController{
 override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         view_End_Edit_btn.isHidden = true
-        var isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
+        let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
     if newgetdata_of_database.isEmpty || index == nil{
@@ -130,8 +139,15 @@ override func viewWillAppear(_ animated: Bool) {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
-        
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        btn_pluse_count.layer.cornerRadius = self.btn_pluse_count.bounds.width / 2
+        btn_pluse_count.clipsToBounds = true
+        print(btn_pluse_count.frame,"width")
+    }
+    
 //MARK: - Custem methode
     func AllCutemMethoddeToSet_VIewLoad(){
         lbl_Show_counting_Value.text = "\(counting)"
@@ -152,6 +168,21 @@ override func viewWillAppear(_ animated: Bool) {
         appears_Back_Graund_coloure(btn_change_Mode)
         appears_Back_Graund_coloure(btn_change_view_coloure)
         progressview.progressTintColor = .black
+    }
+    func all_button_cornerRediuse(){
+//        btn_pluse_count.layer.cornerRadius = self.btn_pluse_count.bounds.width / 2
+//        print(self.btn_pluse_count.bounds.width,"width")
+//        btn_pluse_count.clipsToBounds = true
+        btn_minus_count.layer.cornerRadius = self.btn_minus_count.bounds.width / 2
+        btn_minus_count.clipsToBounds = true
+        btn_Reload_count.layer.cornerRadius = self.btn_Reload_count.bounds.width / 2
+        btn_Reload_count.clipsToBounds = true
+        btn_botoomview_topside_cansal.layer.cornerRadius = self.btn_botoomview_topside_cansal.bounds.width / 2
+        btn_Sound.layer.cornerRadius = self.btn_Sound.bounds.width / 2
+        btn_vibration.layer.cornerRadius = self.btn_vibration.bounds.width / 2
+        btn_list.layer.cornerRadius = 25
+        btn_change_view_coloure.layer.cornerRadius = self.btn_change_view_coloure.bounds.width / 2
+        btn_change_Mode.layer.cornerRadius = self.btn_change_Mode.bounds.width / 2
     }
     
     func showalert(){
@@ -178,7 +209,7 @@ override func viewWillAppear(_ animated: Bool) {
         view_gesture_reaset_counter.isHidden = true
         resetBollian.toggle()
     }
-    
+
     func setupTheme(){
         bgColor = self.colors.randomElement()!
         counterBgColor = self.colors.randomElement()!
@@ -214,9 +245,12 @@ func bottom(){
 //MARK: -   @IBAction
     //btntapped go sidemenu
     @IBAction func btn_did_tapped_goSideMenu(_ sender: UIBarButtonItem) {
-        let nav = self.storyboard?.instantiateViewController(withIdentifier: "SideMenuViewController") as! SideMenuViewController
-        self.navigationController?.pushViewController(nav, animated: false)
-    }
+        let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SideMenuViewController") as! SideMenuViewController
+        let navigationControlr = UINavigationController(rootViewController: nav)
+        navigationControlr.modalPresentationStyle = .fullScreen
+        self.present(navigationControlr, animated: true, completion: nil)
+        }
+  
   
     @IBAction func btn_did_Tapped_goaddVlyueVc_openEndEditBtn(_ sender: UIButton) {
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
@@ -255,6 +289,12 @@ func bottom(){
     }
     //btntapped pluse counting
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
+        let indexof_Defoult  = UserDefaults.standard.integer(forKey: "index")
+        for i in 0...Arry_diffrent_system_sound.count{
+            if indexof_Defoult == i{
+                AudioServicesPlaySystemSound(SystemSoundID(Arry_diffrent_system_sound[i])!)
+              }
+        }
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
@@ -393,8 +433,6 @@ func bottom(){
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
         let navigationControlr = UINavigationController(rootViewController: nav)
         navigationControlr.modalPresentationStyle = .fullScreen
-        //let data = databasehelper.sharaintance.getdata()
-      //  let newIndex = data.firstIndex(where: {$0.isActive == true})
         self.present(navigationControlr, animated: true, completion: nil)
         }
     

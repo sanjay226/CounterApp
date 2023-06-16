@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+
 final class PersistantStorej {
     private init(){}
     static var shared = PersistantStorej()

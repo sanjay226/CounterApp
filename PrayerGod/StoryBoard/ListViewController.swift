@@ -38,8 +38,8 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_dilitrow = Bool()
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
-    lazy var isnavigation_blank_or_fill = Bool()
-    var view_nodata_lable_table = UIView()
+   // lazy var isnavigation_blank_or_fill = Bool()
+    var view_tableview_first_row = UIView()
  
 //MARK: - Application lifecycle
     override func viewDidLoad() {
@@ -130,21 +130,8 @@ class ListViewController: UIViewController{
         btn_open_addlistVc.isHidden = true
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
-//
-//    func shortedData_isactive_true(){
-//        let taskList = databasehelper.sharaintance.getdata()
-//           if let index = taskList.firstIndex(where: {$0.isActive == true}){
-//                       taskList[index].isActive = false
-//               GlobalData.sharedInstance.isFromSaveTask = true
-//               taskList[didselectIndex].isActive = true
-//           }
-//        else{
-//               taskList[didselectIndex].isActive = true
-//           }
-//
-//    }
-    
-    func bottom_up()  {
+
+func bottom_up()  {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
             self.View_Sorted_All_data_bottomview.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
         }) { [self] (finished) in
@@ -210,9 +197,7 @@ class ListViewController: UIViewController{
         switch sender.tag {
             case 1:
                 shortedAlphabetic()
-          //  databasehelper.sharaintance.saveItems()
                 tblview_reload()
-            // Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
@@ -221,7 +206,6 @@ class ListViewController: UIViewController{
             case 2:
               let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
                 Ary_textfield_get_list = shorted
-              
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
@@ -245,7 +229,6 @@ class ListViewController: UIViewController{
             switch sender.tag {
             case 1:
                 let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
-                
                 let navigationController = UINavigationController(rootViewController: nav)
                 navigationController.setNavigationBarHidden(false, animated: true)
                 let navigationControlr1 = UINavigationController(rootViewController: nav)
@@ -330,7 +313,7 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
             Tbl_list_of_malaEnding.setEmptyMessage("No data found")
         } else{
             Tbl_list_of_malaEnding.restore()
-            view_nodata_lable_table.isHidden = true
+            view_tableview_first_row.isHidden = true
         }
        return Ary_textfield_get_list.count
     }

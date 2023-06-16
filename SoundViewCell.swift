@@ -1,0 +1,26 @@
+//
+//  SoundViewCell.swift
+//  PrayerGod
+//
+//  Created by macOS on 15/06/23.
+//
+
+import UIKit
+
+
+class SoundViewCell: UITableViewCell {
+
+    @IBOutlet weak var lbl_sound_name_list: UILabel!
+    @IBOutlet weak var switch_true_false_cell: UISwitch!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+       
+    }
+
+}

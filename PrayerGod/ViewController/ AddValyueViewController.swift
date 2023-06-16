@@ -106,7 +106,6 @@ class AddValyueViewController: UIViewController{
     func set_lefr_and_right_barButtonItem_Add(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoRootVc))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle.fill"), style: .plain, target: self, action: #selector(GoFirst_view_controller))
         self.navigationItem.rightBarButtonItem?.tintColor = .green
         let backButton1 = UIBarButtonItem()

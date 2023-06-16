@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+
 extension UIView {
 @IBInspectable
     var cornerRadius: CGFloat {
@@ -45,17 +46,14 @@ extension UIView {
             return layer.shadowRadius
         }
         set {
-
             layer.shadowRadius = newValue
         }
     }
     @IBInspectable
     var shadowOffset : CGSize{
-
         get{
             return layer.shadowOffset
         }set{
-
             layer.shadowOffset = newValue
         }
     }
@@ -71,14 +69,11 @@ extension UIView {
     }
     @IBInspectable
     var shadowOpacity : Float {
-
         get{
             return layer.shadowOpacity
         }
         set {
-
             layer.shadowOpacity = newValue
-
         }
     }
 }
@@ -88,6 +83,4 @@ final class GlobalData: NSObject {
 
    private override init() { }
     var isFromSaveTask: Bool?
-//    var selectindex : Int?
-  //  var isfromsavevalue : Bool?
 }

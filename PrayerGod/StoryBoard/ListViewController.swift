@@ -38,7 +38,6 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_dilitrow = Bool()
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
-   // lazy var isnavigation_blank_or_fill = Bool()
     var view_tableview_first_row = UIView()
  
 //MARK: - Application lifecycle
@@ -196,30 +195,32 @@ func bottom_up()  {
     if is_Sort_all_ButtonClicked{
         switch sender.tag {
             case 1:
+                GlobalData.sharedInstance.isFromSaveTask = true
                 shortedAlphabetic()
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
-                is_Sort_all_ButtonClicked = Bool()
             case 2:
-              let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
+                GlobalData.sharedInstance.isFromSaveTask = true
+                let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
                 Ary_textfield_get_list = shorted
                 tblview_reload()
+                
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
-                is_Sort_all_ButtonClicked = Bool()
             case 3:
+                GlobalData.sharedInstance.isFromSaveTask = true
                 let shorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
                 Ary_textfield_get_list = shorted
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
-                is_Sort_all_ButtonClicked = Bool()
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
+               
                 hide_mainbottom_view()
              default:
                 return
@@ -254,15 +255,12 @@ func bottom_up()  {
             case 3:
                let data_list = databasehelper.sharaintance.getdata()
                 let index = data_list.firstIndex(where: {$0.isActive == true})
-                if index == didselectIndex
+                if index == didselectIndex || is_Sort_all_ButtonClicked == true
                 {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
                     alertController.setValue(NSAttributedString(string: "This data couldn't be deleted because it is active.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedMessage")
                     let backView = alertController.view.subviews.last?.subviews.last
-                    backView?.layer.cornerRadius = 5
-                    alertController.view.layer.cornerRadius = 5
-                    backView?.backgroundColor = .systemBrown
                     alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (action: UIAlertAction!) in
                         View_Sorted_All_data_bottomview.isHidden = true
                         is_Sort_all_ButtonClicked = Bool()
@@ -278,13 +276,11 @@ func bottom_up()  {
                     hide_mainbottom_view()
                 }
             case 4:
-            
-             let taskList = databasehelper.sharaintance.getdata()
+            let taskList = databasehelper.sharaintance.getdata()
                 if let index = taskList.firstIndex(where: {$0.isActive == true}){
                             taskList[index].isActive = false
                     if let indexdate = taskList.firstIndex(where: {$0.date == Ary_textfield_get_list[didselectIndex].date}){
                         taskList[indexdate].isActive = true
-                        
                     }
                 }else{
                     taskList[didselectIndex].isActive = true
@@ -360,7 +356,7 @@ func getCreatDate(obj: Garland) -> String {
         return dateFormatter.string(from: date ?? Date())
     }
 }
-
+//MARK:- All extension
 extension ListViewController: AddValueViewControllerDelegate{
     func popupCloseEvent() {
             Ary_textfield_get_list = databasehelper.sharaintance.getdata()

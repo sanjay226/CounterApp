@@ -12,32 +12,40 @@ class SideMenuViewController: UIViewController {
 //MARK: - All  @IBOutlet
     @IBOutlet weak var view_Addremove: UIView!
     @IBOutlet weak var tbl_Side_Menu: UITableView!
+//MARK:- Custum veriable
     var Arry_menu_list = [String]()
     var arry_Disablelist  = [String]()
     var image = [String]()
+    var IsSwitchBool = true
     var didselectIndexSound = -1
     let image_greterthen = UIImage(systemName: "greaterthan")
+    var save_SaveswitchData_Disabled_in_UserDefaultst = Bool()
+   // let runIpod_Bar_button_item_shareapp = uibarbuttonsy
+   
 //MARK: - Custem veriable
     override func viewDidLoad() {
         super.viewDidLoad()
         tbl_Side_Menu.delegate = self
         tbl_Side_Menu.dataSource = self
         Arry_menu_list = ["Appearance","Share App","Rate Us","Counter Sounds","Dynamic Touch"]
-        arry_Disablelist = ["Neon","","","Default Click","Enabled"]
+        arry_Disablelist = ["Neon","","","Default Click",""]
         image = ["square.split.bottomrightquarter.fill","scale.3d","hand.thumbsup.fill","music.note","dot.circle.and.hand.point.up.left.fill"]
         barButtonItem()
-       
+        
     }
+    
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SoundViewController" {
             _ = segue.destination as? SoundViewController
+        }else if segue.identifier == "AppearanceViewController"{
+            _ = segue.destination as? AppearanceViewController
         }
     }
     //MARK: - All Custum method
     func barButtonItem(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoBackVcRoot))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.2.fill"), style: .plain, target: self, action: #selector(GoRootFirst))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.2.fill"), style: .plain, target: self, action: #selector(CountingTappGescher_Go_root_save))
         self.navigationItem.rightBarButtonItem?.tintColor = .white
         let backButton = UIBarButtonItem()
         backButton.title = ""
@@ -46,11 +54,9 @@ class SideMenuViewController: UIViewController {
         title = "Menu"
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-
     }
     
     @objc func GoBackVcRoot(){
-        
         if self.presentingViewController != nil{
             self.dismiss(animated: true, completion: nil)
         }else{
@@ -58,12 +64,13 @@ class SideMenuViewController: UIViewController {
         }
     }
     
-    @objc func GoRootFirst(){
+    @objc func CountingTappGescher_Go_root_save(){
         if self.presentingViewController != nil{
             self.dismiss(animated: true, completion: nil)
         }else{
             self.navigationController?.popViewController(animated: true)
         }
+       UserDefaults.standard.set(save_SaveswitchData_Disabled_in_UserDefaultst, forKey: "mySwitch")
     }
 }
 //MARK: - UITableViewDelegate, && UITableViewDataSource
@@ -74,57 +81,74 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tbl_Side_Menu.dequeueReusableCell(withIdentifier: "CellsidemenuTableVc", for: indexPath) as! CellsidemenuTableVc
-//        var imageView = UIImageView(image: image_greterthen!)
-//       // imageView = UIImageView(frame: CGRectMake(304, , 25, 25))
-//        imageView.clipsToBounds = true
-//        imageView.backgroundColor = .white
-//        cell.cell_view_contentview.addSubview(imageView)
-//       // imageView.center = CGPointMake(,cell.cell_view_contentview.bounds.size.height/2);
+        cell.Indicatore_when_NotOpenApp.isHidden = true
         cell.switch_true_false_dynamicTuch.isHidden = true
         cell.img_arrrow_next.isHidden = true
         cell.lbl_notification.text = Arry_menu_list[indexPath.row]
         cell.lbl_Enable_disable.text = arry_Disablelist[indexPath.row]
         cell.img_Star_rate.image = UIImage(systemName: image[indexPath.row])
+        cell.lbl_Enable_disable.text = "Disabled"
         if indexPath.row == 4{
             cell.switch_true_false_dynamicTuch.isHidden = false
-            //imageView.removeFromSuperview()
+            cell.switch_true_false_dynamicTuch.isUserInteractionEnabled = false
         }else{
             cell.img_arrrow_next.isHidden = false
-           // cell.cell_view_contentview.addSubview(imageView)
-           
         }
-
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tbl_Side_Menu.dequeueReusableCell(withIdentifier: "CellsidemenuTableVc") as! CellsidemenuTableVc
+        let cell = tableView.cellForRow(at: indexPath) as? CellsidemenuTableVc
+     
         if indexPath.row == 0{
-            
+            performSegue(withIdentifier: "AppearanceViewController", sender: self)
         }else  if indexPath.row == 1{
+          //  cell?.Indicatore_when_NotOpenApp.isHidden = false
             shareapp()
+         // ActivityIndicatorView()
+            //shareapp()
+           // dismiss(animated: false, completion: nil)
         }else  if indexPath.row == 2{
+            cell?.Indicatore_when_NotOpenApp.isHidden = false
+            ActivityIndicatorView()
             rateApp()
+           // cell?.Indicatore_when_NotOpenApp.removeFromSuperview()
+           dismiss(animated: false, completion: nil)
         }else if indexPath.row == 3{
             performSegue(withIdentifier: "SoundViewController", sender: self)
+        }else if indexPath.row == 4{
+            if IsSwitchBool{
+                cell?.switch_true_false_dynamicTuch.isOn = true
+                save_SaveswitchData_Disabled_in_UserDefaultst = true
+                cell?.lbl_Enable_disable.text = "Enabled"
+                IsSwitchBool.toggle()
+            }else{
+                cell?.switch_true_false_dynamicTuch.isOn = false
+               cell?.lbl_Enable_disable.text = "Disabled"
+               IsSwitchBool.toggle()
+            }
         }
-      
     }
-    func playVideoButtonDidSelect() {
-        let nav = SoundViewController()
-        let navigationControlr = UINavigationController(rootViewController: nav)
-        navigationControlr.modalPresentationStyle = .fullScreen
-        self.present(navigationControlr, animated: true, completion: nil)
-       }
-
     
-    func rateApp() {
-        
+    func ActivityIndicatorView(){
+        let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+
+        alert.view.tintColor = UIColor.black
+        let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.medium
+        loadingIndicator.startAnimating();
+
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
+    }
+                                                          
+func rateApp() {
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         } else {
@@ -138,10 +162,10 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func shareapp(){
-        if !Open_share_url!.absoluteString.isEmpty {
-            let objectsToShare = [Open_share_url]
-            let activityVC = UIActivityViewController(activityItems: objectsToShare as [Any], applicationActivities: nil)
-            self.present(activityVC, animated: true, completion: nil)
+        if !Open_share_url.isEmpty {
+     let objectsToShare = [Open_share_url]
+           let activityVC = UIActivityViewController(activityItems: objectsToShare as [Any], applicationActivities: nil)
+          self.present(activityVC, animated: true, completion: nil)
         } else {
             // show alert for not available
         }

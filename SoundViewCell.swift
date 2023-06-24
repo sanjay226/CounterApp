@@ -9,9 +9,9 @@ import UIKit
 
 
 class SoundViewCell: UITableViewCell {
-
+//MARK-> All @IBOutlet
     @IBOutlet weak var lbl_sound_name_list: UILabel!
-    @IBOutlet weak var switch_true_false_cell: UISwitch!
+   @IBOutlet weak var Cell_content_view: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
     
@@ -19,8 +19,6 @@ class SoundViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-       
     }
 
 }

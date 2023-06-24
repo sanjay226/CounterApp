@@ -182,11 +182,8 @@ class AddValyueViewController: UIViewController{
         txt_reminder.text = txt_reminder.text == "" ? "0" : txt_reminder.text
         txt_target_value.text = txt_target_value.text == "" ? "0" : txt_target_value.text
         savedata()
-        if self.presentingViewController != nil{
-            self.dismiss(animated: true, completion: nil)
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
+        self.presentingViewController?.dismiss(animated: false, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
         self.delegate_addVc?.popupCloseEvent()
         GlobalData.sharedInstance.isFromSaveTask = true
         let data = databasehelper.sharaintance.getdata().last
@@ -209,7 +206,7 @@ class AddValyueViewController: UIViewController{
         var jio: [()] = data.map({$0.isActive = false})
       }
 }
-
+//MARK:- UITextFieldDelegat
 extension AddValyueViewController : UITextFieldDelegate{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

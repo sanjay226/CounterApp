@@ -8,7 +8,7 @@
 import UIKit
 
 class CellShowCurrentList: UITableViewCell {
-    
+    //MARK: -   @IBOutlet
     @IBOutlet weak var lbl_mala_Count: UILabel!
     @IBOutlet weak var lbl_prabhuji_name: UILabel!
     @IBOutlet weak var lbl_Days_ago: UILabel!

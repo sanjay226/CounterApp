@@ -16,6 +16,8 @@
 		2262FB042A3B0C90002B000E /* SoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262FB032A3B0C90002B000E /* SoundViewController.swift */; };
 		2262FB082A3B146A002B000E /* SoundViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2262FB072A3B146A002B000E /* SoundViewCell.swift */; };
 		226352DD2A050FD600D42636 /* CellShowCurrentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226352DC2A050FD600D42636 /* CellShowCurrentList.swift */; };
+		226365562A4043C500395B2C /* AppearanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226365552A4043C500395B2C /* AppearanceViewController.swift */; };
+		226365582A4056A500395B2C /* CellAppearanceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226365572A4056A500395B2C /* CellAppearanceCollectionViewCell.swift */; };
 		22636D5A29EE9E1300C50F80 /* CellFiltextTableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22636D5929EE9E1300C50F80 /* CellFiltextTableVc.swift */; };
 		22636D6729EEAFF800C50F80 /* PersistantStorej.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22636D6629EEAFF800C50F80 /* PersistantStorej.swift */; };
 		22636D6929EEB3DE00C50F80 /* CoreDataCrudOpretion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22636D6829EEB3DE00C50F80 /* CoreDataCrudOpretion.swift */; };
@@ -45,6 +47,8 @@
 		2262FB032A3B0C90002B000E /* SoundViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SoundViewController.swift; path = PrayerGod/StoryBoard/SoundViewController.swift; sourceTree = SOURCE_ROOT; };
 		2262FB072A3B146A002B000E /* SoundViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundViewCell.swift; sourceTree = SOURCE_ROOT; };
 		226352DC2A050FD600D42636 /* CellShowCurrentList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellShowCurrentList.swift; sourceTree = "<group>"; };
+		226365552A4043C500395B2C /* AppearanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppearanceViewController.swift; path = PrayerGod/StoryBoard/AppearanceViewController.swift; sourceTree = SOURCE_ROOT; };
+		226365572A4056A500395B2C /* CellAppearanceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CellAppearanceCollectionViewCell.swift; path = PrayerGod/StoryBoard/CellAppearanceCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
 		22636D5929EE9E1300C50F80 /* CellFiltextTableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CellFiltextTableVc.swift; path = PrayerGod/View/CellFiltextTableVc.swift; sourceTree = SOURCE_ROOT; };
 		22636D6629EEAFF800C50F80 /* PersistantStorej.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistantStorej.swift; sourceTree = "<group>"; };
 		22636D6829EEB3DE00C50F80 /* CoreDataCrudOpretion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCrudOpretion.swift; sourceTree = "<group>"; };
@@ -147,6 +151,7 @@
 		228334F429ED101C0071FADB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				226365572A4056A500395B2C /* CellAppearanceCollectionViewCell.swift */,
 				2262FB072A3B146A002B000E /* SoundViewCell.swift */,
 				2264D1A129ED52FC0043E5CD /* CollectionViewCell.swift */,
 				22636D5929EE9E1300C50F80 /* CellFiltextTableVc.swift */,
@@ -176,6 +181,7 @@
 		228334F729ED106E0071FADB /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				226365552A4043C500395B2C /* AppearanceViewController.swift */,
 				2262FB032A3B0C90002B000E /* SoundViewController.swift */,
 				2215D3262A0503C500DC1129 /* ListViewController.swift */,
 				2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */,
@@ -323,6 +329,7 @@
 				2264D1A629ED731D0043E5CD /* SideMenuViewController.swift in Sources */,
 				22636D6729EEAFF800C50F80 /* PersistantStorej.swift in Sources */,
 				2262FB042A3B0C90002B000E /* SoundViewController.swift in Sources */,
+				226365562A4043C500395B2C /* AppearanceViewController.swift in Sources */,
 				2264D1A429ED72840043E5CD /*  AddValyueViewController.swift in Sources */,
 				22636D6929EEB3DE00C50F80 /* CoreDataCrudOpretion.swift in Sources */,
 				223413E42B43468C001ED0E9 /* AllStrMOdel.swift in Sources */,
@@ -334,6 +341,7 @@
 				228334DC29ED047A0071FADB /* AppDelegate.swift in Sources */,
 				226B93052A3073DF000F429C /* Garland+CoreDataClass.swift in Sources */,
 				2262FB082A3B146A002B000E /* SoundViewCell.swift in Sources */,
+				226365582A4056A500395B2C /* CellAppearanceCollectionViewCell.swift in Sources */,
 				220FB29B2A11ED44002601AC /* CoreDataModel.xcdatamodeld in Sources */,
 				228334DE29ED047A0071FADB /* SceneDelegate.swift in Sources */,
 				226B93062A3073DF000F429C /* Garland+CoreDataProperties.swift in Sources */,
@@ -486,12 +494,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WVT85AW2HJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerGod/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -513,12 +523,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WVT85AW2HJ;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PrayerGod/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

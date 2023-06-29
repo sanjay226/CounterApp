@@ -37,6 +37,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     @IBOutlet weak var lbl_resetCounter_bottom_view: UILabel!
     @IBOutlet weak var lbl_AreYou_sure_boomview: UILabel!
     
+    @IBOutlet weak var img_counter_inside_counterImg: UIImageView!
     @IBOutlet weak var btn_botoomview_topside_cansal: UIButton!
     
     //MARK: - All veriable
@@ -46,7 +47,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     var selectedvibration = false
     var selectedlist = false
     var selectedcoloure = false
-    var selectedmode = false
+    var isDarkMode = false
+    
     var resetBollian = true
     var colourevibrationcount = false
     var audioPlayer = AVAudioPlayer()
@@ -62,55 +64,58 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     var End_progresscount = Float()
     var is_bootom_EndMala = Bool()
     lazy var isnavigation_bar_coloure_change = Bool()
-    var Arry_diffrent_system_sound = ["sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound"]
-//MARK: - Application lifecycle
+    var Arry_diffrent_system_sound = Array(repeating: "sound", count: 15)
+    
+    //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         AllCutemMethoddeToSet_VIewLoad()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handle_Tap_Gesture(sender:)))
         let Switch_tuch = UITapGestureRecognizer(target: self, action: #selector(Handal_swich_On(sender:)))
-       view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
+        view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
         view_Main_Grediantcoloure.addGestureRecognizer(Switch_tuch)
         view_gesture_reaset_counter.isHidden = true
         
-       // bgColor = self.colors.randomElement()!
+        img_coloure_convertore.image = img_coloure_convertore.image?.withRenderingMode(.alwaysTemplate)
+        img_counter_inside_counterImg.image =  img_counter_inside_counterImg.image?.withRenderingMode(.alwaysTemplate)
+    
         counterBgColor = self.colors.randomElement()!
         counterBorderColor = self.colors.randomElement()!
     }
     
-override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-  
+        
         view_End_Edit_btn.isHidden = true
         let isFromSaveTask = GlobalData.sharedInstance.isFromSaveTask ?? false
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
-    if newgetdata_of_database.isEmpty || index == nil{
+        if newgetdata_of_database.isEmpty || index == nil{
             stackview.isHidden = true
             GlobalData.sharedInstance.isFromSaveTask = false
-    }else if  newgetdata_of_database[index!].isActive == true || !is_bootom_EndMala || isFromSaveTask{
-        current_data_list_obj = newgetdata_of_database[index!]
-        btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
-        stackview.isHidden = false
-        stackview.backgroundColor = .clear
-        isnavigation_bar_coloure_change = true
-        btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
-        lbl_title_topview.text = current_data_list_obj.title
-        lbl_target_topview.text = "Target : \(current_data_list_obj.targetValue)"
-        lbl_reminder_topview.text = "Reminder : \(current_data_list_obj.reminder)"
-        strtvalueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
-        progressview.setProgress(strtvalueofprogresview, animated: true)
-        counting = Int(current_data_list_obj.startValue)
-        lbl_Show_counting_Value.text = "\(counting)"
-        view_reset_Counting_bottom_sheet.isHidden = true
-        view_gesture_reaset_counter.isHidden = true
-        lbl_title_topview.textColor = .white
-        lbl_target_topview.textColor = .white
-        lbl_reminder_topview.textColor = .white
-        databasehelper.sharaintance.saveItems()
-    }else if isFromSaveTask == false{
+        }else if  newgetdata_of_database[index!].isActive == true || !is_bootom_EndMala || isFromSaveTask{
+            current_data_list_obj = newgetdata_of_database[index!]
+            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            btn_vnavigationItem_rightbar_BtnItem.tintColor = .black
+            stackview.isHidden = false
+            stackview.backgroundColor = .clear
+            isnavigation_bar_coloure_change = true
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = counterBorderColor
+            lbl_title_topview.text = current_data_list_obj.title
+            lbl_target_topview.text = "Target : \(current_data_list_obj.targetValue)"
+            lbl_reminder_topview.text = "Reminder : \(current_data_list_obj.reminder)"
+            strtvalueofprogresview = (Float(current_data_list_obj.startValue) / Float(current_data_list_obj.targetValue))
+            self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.clear]
+            progressview.setProgress(strtvalueofprogresview, animated: true)
+            counting = Int(current_data_list_obj.startValue)
+            lbl_Show_counting_Value.text = "\(counting)"
+            view_reset_Counting_bottom_sheet.isHidden = true
+            view_gesture_reaset_counter.isHidden = true
+            lbl_title_topview.textColor = .white
+            lbl_target_topview.textColor = .white
+            lbl_reminder_topview.textColor = .white
+            databasehelper.sharaintance.saveItems()
+        }else if isFromSaveTask == false{
             stackview.isHidden = true
             counting = 0
             lbl_Show_counting_Value.text = "\(counting)"
@@ -124,7 +129,7 @@ override func viewWillAppear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
         let newvalyue = ""
-            UserDefaults.standard.set( newvalyue , forKey: "obj_colore_thim")
+        UserDefaults.standard.set( newvalyue , forKey: "obj_colore_thim")
     }
     
     override func viewWillLayoutSubviews() {
@@ -133,20 +138,23 @@ override func viewWillAppear(_ animated: Bool) {
         let IsBoolAppereance_colore = UserDefaults.standard.bool(forKey: "isslectApperwanceColore")
         if IsBoolAppereance_colore {
             if let stroe_colore_apppreance = UserDefaults.standard.color(forKey: "obj_colore_thim"){
-                print("123456879",UserDefaults.standard.color(forKey: "obj_colore_thim"))
                 view_Main_Grediantcoloure.backgroundColor = stroe_colore_apppreance
-                }
             }
+            img_counter_inside_counterImg.tintColor = counterBgColor
+            isDarkMode = false
         }
-  
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
     }
-//MARK: - Custem methode
+    //MARK: - Custem methode
+    
     func AllCutemMethoddeToSet_VIewLoad(){
         lbl_Show_counting_Value.text = "\(counting)"
-        lbl_Show_counting_Value.textColor = .white
-    let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
+        lbl_Show_counting_Value.textColor = .black
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: music! ))
@@ -190,28 +198,34 @@ override func viewWillAppear(_ animated: Bool) {
         toastLabel.layer.cornerRadius = 10;
         toastLabel.clipsToBounds  =  true
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double((Int64)(2 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC), execute: {
-                   UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                       toastLabel.alpha = 0
-                   }, completion: { finished in
-                       toastLabel.removeFromSuperview()
-                   })
-               })
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
+                toastLabel.alpha = 0
+            }, completion: { finished in
+                toastLabel.removeFromSuperview()
+            })
+        })
     }
     
     @objc func handle_Tap_Gesture(sender: UITapGestureRecognizer){
-            view_reset_Counting_bottom_sheet.isHidden = true
-            view_gesture_reaset_counter.isHidden = true
-            resetBollian.toggle()
-           }
+        view_reset_Counting_bottom_sheet.isHidden = true
+        view_gesture_reaset_counter.isHidden = true
+        resetBollian.toggle()
+    }
     
     @objc func Handal_swich_On(sender: UITapGestureRecognizer){
         let myswitchBoolValuefrom_SideMevuVc : Bool = UserDefaults.standard.bool(forKey: "mySwitch")
-            if myswitchBoolValuefrom_SideMevuVc == true{
-                add_counting_button()
-            }else{
-                return
-            }
+        print(myswitchBoolValuefrom_SideMevuVc,"myswitchBoolValuefrom_SideMevuVc ,switch")
+        if myswitchBoolValuefrom_SideMevuVc == true{
+            add_counting_button()
+                if selectedsound{
+                 audioPlayer.play()
+                }
+            btn_pluse_count.isUserInteractionEnabled = false
+        }else{
+            btn_pluse_count.isUserInteractionEnabled = true
+            return
         }
+    }
     
     func set_rendem_colorearry(_ infoArray : [UIColor],_ view : UIView){
         if i >= 0 && i < infoArray.count{
@@ -225,16 +239,16 @@ override func viewWillAppear(_ animated: Bool) {
             }
         }
     }
-
+    
     func setupTheme(){
         let dataisnotSave = false
         UserDefaults.standard.set(dataisnotSave, forKey:  "isslectApperwanceColore")
         counterBgColor = self.colors.randomElement()!
         counterBorderColor = self.colors.randomElement()!
         set_rendem_colorearry(colors, self.view_Main_Grediantcoloure)
-        self.img_coloure_convertore.backgroundColor = counterBgColor
+        self.img_counter_inside_counterImg.tintColor = counterBgColor
         btn_pluse_count.backgroundColor = counterBorderColor
-        img_coloure_convertore.borderColor = counterBorderColor
+        img_coloure_convertore.tintColor = counterBorderColor
         btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
         btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
         if stackview.isHidden == true{
@@ -244,15 +258,15 @@ override func viewWillAppear(_ animated: Bool) {
         }
     }
     
-func bottom(){
-    UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
+    func bottom(){
+        UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
             self.view_reset_Counting_bottom_sheet.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
         }) { (finished) in
             if finished {
                 print("finished")
             }
-      }
-  
+        }
+        
     }
     func End_topView_Isactive_False(){
         let ArryList = databasehelper.sharaintance.getdata()
@@ -264,34 +278,34 @@ func bottom(){
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
-                counting = counting + 1
-                lbl_Show_counting_Value.text = "\(counting)"
-                  }
+            counting = counting + 1
+            lbl_Show_counting_Value.text = "\(counting)"
+        }
         else if GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             lbl_Show_counting_Value.text = "\(counting)"
             counting = counting + 1
-           let currentCount = (counting ) % Int(current_data_list_obj.reminder)
+            let currentCount = (counting ) % Int(current_data_list_obj.reminder)
             let objDtabase = current_data_list_obj
-                if counting  >= current_data_list_obj.targetValue{
-                    view_gesture_reaset_counter.isHidden = false
-                    view_reset_Counting_bottom_sheet.isHidden = false
-                    bottom()
-                    lbl_resetCounter_bottom_view.text = "Target Reached"
-                    lbl_AreYou_sure_boomview.text = "The target value has been reached.Would you like to reset the counter?"
-                    counting = Int(current_data_list_obj.targetValue)
-                }else if currentCount == 0
-                    {
-                      showalert()
-                    }
-                progressview.progress = Float(counting) / Float((objDtabase.targetValue))
-                lbl_Show_counting_Value.text = "\(counting)"
-                current_data_list_obj.startValue = Int16(counting)
-                databasehelper.sharaintance.saveItems()
+            if counting  >= current_data_list_obj.targetValue{
+                view_gesture_reaset_counter.isHidden = false
+                view_reset_Counting_bottom_sheet.isHidden = false
+                bottom()
+                lbl_resetCounter_bottom_view.text = "Target Reached"
+                lbl_AreYou_sure_boomview.text = "The target value has been reached.Would you like to reset the counter?"
+                counting = Int(current_data_list_obj.targetValue)
+            }else if currentCount == 0
+            {
+                showalert()
             }
-       
-        if selectedsound{
-            audioPlayer.play()
+            progressview.progress = Float(counting) / Float((objDtabase.targetValue))
+            lbl_Show_counting_Value.text = "\(counting)"
+            current_data_list_obj.startValue = Int32(counting)
+            databasehelper.sharaintance.saveItems()
         }
+        
+//        if selectedsound{
+//            audioPlayer.play()
+//        }
         
         if selectedvibration{
             setHeptic_FeedBack(feedbackStyle: .medium)
@@ -303,7 +317,7 @@ func bottom(){
         impactMed.impactOccurred()
     }
     
-//MARK: -   @IBAction
+    //MARK: -   @IBAction
     //btntapped go sidemenu
     @IBAction func btn_did_tapped_goSideMenu(_ sender: UIBarButtonItem) {
         setHeptic_FeedBack()
@@ -311,9 +325,9 @@ func bottom(){
         let navigationControlr = UINavigationController(rootViewController: nav)
         navigationControlr.modalPresentationStyle = .fullScreen
         self.present(navigationControlr, animated: true, completion: nil)
-        }
-  
-  
+    }
+    
+    
     @IBAction func btn_did_Tapped_goaddVlyueVc_openEndEditBtn(_ sender: UIButton) {
         setHeptic_FeedBack()
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
@@ -323,8 +337,8 @@ func bottom(){
             nav.modalPresentationStyle = .fullScreen
             let convertInt_showcounting_lable = lbl_Show_counting_Value.text
             nav.firstVc_ccurent_list_show_start_value =  convertInt_showcounting_lable!
-           self.navigationController?.pushViewController(nav, animated: true)
-
+            self.navigationController?.pushViewController(nav, animated: true)
+            
         }
         else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             if isnavigation_bar_coloure_change{
@@ -354,7 +368,7 @@ func bottom(){
     @IBAction func btn_click_addCountind(_ sender: UIButton) {
         if (UserDefaults.standard.integer(forKey: "index") != -1){
             selectedsound = false
-            var indexof_Defoult  = UserDefaults.standard.integer(forKey: "index")
+            let indexof_Defoult  = UserDefaults.standard.integer(forKey: "index")
             for i in 0...Arry_diffrent_system_sound.count{
                 if indexof_Defoult == i{
                     playAudio(Arry_diffrent_system_sound[i])
@@ -363,61 +377,65 @@ func bottom(){
             }
         }else{
             add_counting_button()
+            if selectedsound{
+                audioPlayer.play()
+            }
+            
         }
     }
     
- func playAudio(_ audioName : String){
+    func playAudio(_ audioName : String){
         let url = NSURL.fileURL(
             withPath: Bundle.main.path(forResource: audioName,
-                                                  ofType: "mp3")!)
+                                       ofType: "mp3")!)
         let audioPlayer = try? AVAudioPlayer(contentsOf: url)
         audioPlayer?.delegate = self
         audioPlayer?.prepareToPlay()
-
+        
         if let player = audioPlayer {
             player.play()
         }
     }
-//btntapped minus counting
+    //btntapped minus counting
     @IBAction func btn_click_minus_counting(_ sender: UIButton)  {
         setHeptic_FeedBack()
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
-                if counting > 0{
-                    counting = counting - 1
-                    lbl_Show_counting_Value.text = "\(counting)"
-                }else{
-                    counting = 0
-                }
+            if counting > 0{
+                counting = counting - 1
+                lbl_Show_counting_Value.text = "\(counting)"
+            }else{
+                counting = 0
             }
+        }
         else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true {
             if counting > 0{
                 counting = counting - 1
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
-                current_data_list_obj.startValue = Int16(counting)
+                current_data_list_obj.startValue = Int32(counting)
                 lbl_Show_counting_Value.text = "\(counting)"
                 databasehelper.sharaintance.saveItems()
             }else{
-                    counting = 0
-                }
+                counting = 0
+            }
         }
     }
     //btntapped reload counting
     @IBAction func btn_click_reload_conting(_ sender: UIButton) {
-                setHeptic_FeedBack()
-                if lbl_Show_counting_Value.text != "0" {
-                view_gesture_reaset_counter.isHidden = false
-                view_reset_Counting_bottom_sheet.isHidden = false
-                bottom()
-                lbl_resetCounter_bottom_view.text = "Reaset counter"
-                lbl_AreYou_sure_boomview.text = "Are you sure reaset you want to reaset counter?"
-                resetBollian.toggle()
-                }
+        setHeptic_FeedBack()
+        if lbl_Show_counting_Value.text != "0" {
+            view_gesture_reaset_counter.isHidden = false
+            view_reset_Counting_bottom_sheet.isHidden = false
+            bottom()
+            lbl_resetCounter_bottom_view.text = "Reaset counter"
+            lbl_AreYou_sure_boomview.text = "Are you sure reaset you want to reaset counter?"
+            resetBollian.toggle()
+        }
     }
-           
-    @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
     
+    @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
+        
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false {
@@ -425,7 +443,7 @@ func bottom(){
             lbl_Show_counting_Value.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
-            }
+        }
         else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true {
             if is_bootom_EndMala{
                 stackview.isHidden = true
@@ -441,11 +459,11 @@ func bottom(){
                 End_topView_Isactive_False()
                 is_bootom_EndMala = false
                 databasehelper.sharaintance.saveItems()
-                }
+            }
             else if counting > 0 {
                 counting = counting - counting
                 progressview.progress = Float(counting) / Float(current_data_list_obj.targetValue)
-                current_data_list_obj.startValue = Int16(counting)
+                current_data_list_obj.startValue = Int32((counting))
                 lbl_Show_counting_Value.text = "\(counting)"
                 view_reset_Counting_bottom_sheet.isHidden = true
                 view_gesture_reaset_counter.isHidden = true
@@ -488,33 +506,38 @@ func bottom(){
         let navigationControlr = UINavigationController(rootViewController: nav)
         navigationControlr.modalPresentationStyle = .fullScreen
         self.present(navigationControlr, animated: true, completion: nil)
-        }
+    }
     
     @IBAction func btn_colourefull_paint(_ sender: UIButton) {
         setHeptic_FeedBack()
         selectedcoloure = true
         setupTheme()
-        selectedmode = true
-        }
+        isDarkMode = false
+    }
     
     @IBAction func btn_mode_dark(_ sender: UIButton) {
+        isDarkMode = !isDarkMode
+        
         setHeptic_FeedBack()
-        if selectedmode{
-   //       view_Main_Grediantcoloure.backgroundColor = UIColor(named: "dark")
-//          img_coloure_convertore.backgroundColor = UIColor(named: "dark")
-//           btn_pluse_count.backgroundColor  = UIColor(named: "dark")
-            view_Main_Grediantcoloure.overrideUserInterfaceStyle = .dark
-            img_coloure_convertore.overrideUserInterfaceStyle = .dark
-            btn_pluse_count.overrideUserInterfaceStyle = .dark
-            selectedmode.toggle()
-        }else{
-            view_Main_Grediantcoloure.backgroundColor = selected_rendom_colore_use_darkmode
-            self.img_coloure_convertore.backgroundColor = counterBgColor
+        
+        if (isDarkMode) {
+            view_Main_Grediantcoloure.backgroundColor = UIColor(named: "dark")
+            img_counter_inside_counterImg.tintColor = UIColor(named: "dark")
+            btn_pluse_count.backgroundColor  = UIColor(named: "dark")
+        } else {
+            let IsBoolAppereance_colore = UserDefaults.standard.bool(forKey: "isslectApperwanceColore")
+            if (IsBoolAppereance_colore) {
+                if let stroe_colore_apppreance = UserDefaults.standard.color(forKey: "obj_colore_thim"){
+                    view_Main_Grediantcoloure.backgroundColor = stroe_colore_apppreance
+                }
+            } else {
+                view_Main_Grediantcoloure.backgroundColor = selected_rendom_colore_use_darkmode
+            }
+            img_counter_inside_counterImg.tintColor = counterBgColor
             btn_pluse_count.backgroundColor = counterBorderColor
-            img_coloure_convertore.borderColor = counterBorderColor
+            img_coloure_convertore.tintColor = counterBorderColor
             btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
             btn_vibration.backgroundColor = selectedvibration ? counterBorderColor  : .systemBrown
-            selectedmode.toggle()
         }
     }
     
@@ -527,19 +550,19 @@ func bottom(){
         lbl_AreYou_sure_boomview.text = "Are you sure you want to end this counting?"
     }
     
-@IBAction func btn_Preyer_Edit_topview(_ sender: UIButton) {
-    GlobalData.sharedInstance.isFromSaveTask = true
-   
-   let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
+    @IBAction func btn_Preyer_Edit_topview(_ sender: UIButton) {
+        GlobalData.sharedInstance.isFromSaveTask = true
+        
+        let nav = self.storyboard?.instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
         nav.modalPresentationStyle = .fullScreen
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         if let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true}){
             nav.select_Index_list_Vc_database = index
         }
-            nav.is_selectIndex_bool_Dtabase_Edit = false
-            nav.isEdit_first_vc_topviewData = true
-            self.navigationController?.pushViewController(nav, animated: true)
-        }
+        nav.is_selectIndex_bool_Dtabase_Edit = false
+        nav.isEdit_first_vc_topviewData = true
+        self.navigationController?.pushViewController(nav, animated: true)
+    }
     
     func appears_Back_Graund_coloure(_ Sender : UIButton){
         Sender.backgroundColor = .systemBrown
@@ -555,15 +578,15 @@ extension CGFloat {
 extension UIColor {
     static func random() -> UIColor {
         return UIColor(
-           red:   .random(),
-           green: .random(),
-           blue:  .random(),
-           alpha: 0.0
+            red:   .random(),
+            green: .random(),
+            blue:  .random(),
+            alpha: 0.0
         )
     }
 }
 
- extension UIAlertController {
+extension UIAlertController {
     func show() {
         let win = UIWindow(frame: UIScreen.main.bounds)
         let vc = UIViewController()

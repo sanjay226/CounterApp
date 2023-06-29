@@ -15,10 +15,10 @@ class databasehelper{
     func dataSave(object: TaskModel){
         let user =  NSEntityDescription.insertNewObject(forEntityName: "Garland" , into: context) as? Garland
         user?.title = object.title
-        user?.reminder = Int16(object.reminder ?? 0)
-        user?.startValue = Int16(object.startValue ?? 0)
+        user?.reminder = Int32(object.reminder ?? 0)
+        user?.startValue = Int32(object.startValue ?? 0)
         user?.note = object.note
-        user?.targetValue = Int16(object.targetValue ?? 0)
+        user?.targetValue = Int32(object.targetValue ?? 0)
         user?.date = object.date ?? Date()
         user?.isActive = object.isActive ?? false
         do{

@@ -16,10 +16,10 @@ class SideMenuViewController: UIViewController {
     var Arry_menu_list = [String]()
     var arry_Disablelist  = [String]()
     var image = [String]()
-    var IsSwitchBool = true
+    var IsSwitchBool = false
     var didselectIndexSound = -1
     let image_greterthen = UIImage(systemName: "greaterthan")
-    var save_SaveswitchData_Disabled_in_UserDefaultst = Bool()
+  //  var save_SaveswitchData_Disabled_in_UserDefaultst = false
    // let runIpod_Bar_button_item_shareapp = uibarbuttonsy
    
 //MARK: - Custem veriable
@@ -31,6 +31,8 @@ class SideMenuViewController: UIViewController {
         arry_Disablelist = ["Neon","","","Default Click",""]
         image = ["square.split.bottomrightquarter.fill","scale.3d","hand.thumbsup.fill","music.note","dot.circle.and.hand.point.up.left.fill"]
         barButtonItem()
+        
+            IsSwitchBool = UserDefaults.standard.bool(forKey: "mySwitch")
         
     }
     
@@ -70,7 +72,7 @@ class SideMenuViewController: UIViewController {
         }else{
             self.navigationController?.popViewController(animated: true)
         }
-       UserDefaults.standard.set(save_SaveswitchData_Disabled_in_UserDefaultst, forKey: "mySwitch")
+      // UserDefaults.standard.set(save_SaveswitchData_Disabled_in_UserDefaultst, forKey: "mySwitch")
     }
 }
 //MARK: - UITableViewDelegate, && UITableViewDataSource
@@ -88,10 +90,14 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         cell.lbl_notification.text = Arry_menu_list[indexPath.row]
         cell.lbl_Enable_disable.text = arry_Disablelist[indexPath.row]
         cell.img_Star_rate.image = UIImage(systemName: image[indexPath.row])
-        cell.lbl_Enable_disable.text = "Disabled"
+       
         if indexPath.row == 4{
             cell.switch_true_false_dynamicTuch.isHidden = false
             cell.switch_true_false_dynamicTuch.isUserInteractionEnabled = false
+            
+            let status = UserDefaults.standard.bool(forKey: "mySwitch")
+            cell.switch_true_false_dynamicTuch.isOn = status
+            cell.lbl_Enable_disable.text = status ? "Enabled" : "Disabled"
         }else{
             cell.img_arrrow_next.isHidden = false
         }
@@ -122,16 +128,23 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         }else if indexPath.row == 3{
             performSegue(withIdentifier: "SoundViewController", sender: self)
         }else if indexPath.row == 4{
+            IsSwitchBool = !IsSwitchBool
+            print(IsSwitchBool,"isSwitch")
             if IsSwitchBool{
                 cell?.switch_true_false_dynamicTuch.isOn = true
-                save_SaveswitchData_Disabled_in_UserDefaultst = true
                 cell?.lbl_Enable_disable.text = "Enabled"
-                IsSwitchBool.toggle()
             }else{
                 cell?.switch_true_false_dynamicTuch.isOn = false
-               cell?.lbl_Enable_disable.text = "Disabled"
-               IsSwitchBool.toggle()
+                cell?.lbl_Enable_disable.text = "Disabled"
+                }
+            if cell?.switch_true_false_dynamicTuch.isOn  == true{
+                   
+                UserDefaults.standard.set(true, forKey: "mySwitch")
+            } else {
+                   
+                UserDefaults.standard.set(false, forKey: "mySwitch")
             }
+            UserDefaults.standard.synchronize()
         }
     }
     

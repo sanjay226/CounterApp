@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class ListViewController: UIViewController{
     //MARK: -   @IBOutlet
     @IBOutlet weak var img_Add_dismis: UIImageView!
@@ -30,6 +31,12 @@ class ListViewController: UIViewController{
     @IBOutlet weak var img_Alphabetic_sort_bottomview: UIImageView!
     @IBOutlet weak var img_cansal_bottomview: UIImageView!
     @IBOutlet weak var img_sort_by_value_bottomview: UIImageView!
+    @IBOutlet weak var imgCheckByDate: UIImageView!
+    @IBOutlet weak var imgCheckByABC: UIImageView!
+    @IBOutlet weak var imgCheckByValue: UIImageView!
+    
+    
+    
     //MARK: - All veriable
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
@@ -39,8 +46,9 @@ class ListViewController: UIViewController{
     lazy var is_btn_bottomview_Edit = Bool()
     lazy var ispresen_tbottom_view = true
     var view_tableview_first_row = UIView()
- 
-//MARK: - Application lifecycle
+    var sortBy = 0 // 0=sort by Date//1 = sort By Abc/ 2 = sortBy valyue
+    
+    //MARK: - Application lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         Tbl_list_of_malaEnding.delegate = self
@@ -48,14 +56,13 @@ class ListViewController: UIViewController{
         set_lefr_and_right_barButtonItem()
         Ary_textfield_get_list = databasehelper.sharaintance.getdata()
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(sender:)))
-       viewGesture_cover_bottom_sheet.addGestureRecognizer(tapGesture)
+        viewGesture_cover_bottom_sheet.addGestureRecognizer(tapGesture)
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewGesture_cover_bottom_sheet.isHidden = true
-        DispatchQueue.main.async { [self] in
-            Tbl_list_of_malaEnding.reloadData()
-        }
+        sortByType()
     }
     //MARK: - Custem methode
     func set_lefr_and_right_barButtonItem(){
@@ -82,8 +89,8 @@ class ListViewController: UIViewController{
             self.navigationController?.popViewController(animated: true)
         }
     }
-       
-  @objc func show_Arrow_view(){
+    
+    @objc func show_Arrow_view(){
         
         viewGesture_cover_bottom_sheet.isHidden = false
         lbl_Alphabetic_sort_value.text = "Alphabetic Sort"
@@ -97,7 +104,12 @@ class ListViewController: UIViewController{
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = true
         Tbl_list_of_malaEnding.isUserInteractionEnabled = false
         ispresen_tbottom_view.toggle()
-          }
+        
+        imgCheckByABC.isHidden = sortBy != 1
+        imgCheckByDate.isHidden = sortBy != 0
+        imgCheckByValue.isHidden = sortBy != 2
+
+    }
     
     @objc func handleTapGesture(sender: UITapGestureRecognizer) {
         viewGesture_cover_bottom_sheet.isHidden = true
@@ -107,7 +119,7 @@ class ListViewController: UIViewController{
         ispresen_tbottom_view.toggle()
         hide_mainbottom_view()
         is_Sort_all_ButtonClicked = Bool()
-     }
+    }
     
     func getActiveTAskIndex_in_list() -> Int{
         let taskList = databasehelper.sharaintance.getdata()
@@ -117,7 +129,7 @@ class ListViewController: UIViewController{
             return -1
         }
     }
-  //gesture bottonview hide
+    //gesture bottonview hide
     func hide_mainbottom_view(){
         viewGesture_cover_bottom_sheet.isHidden = true
         btn_open_addlistVc.isHidden = false
@@ -129,8 +141,8 @@ class ListViewController: UIViewController{
         btn_open_addlistVc.isHidden = true
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
-
-func bottom_up()  {
+    
+    func bottom_up()  {
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut], animations: {
             self.View_Sorted_All_data_bottomview.frame = CGRect(x: 0, y: 0, width: 393, height: 20)
         }) { [self] (finished) in
@@ -145,12 +157,12 @@ func bottom_up()  {
             bottom_up()
             ispresen_tbottom_view.toggle()
         }else{
-        UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: { [self] in
-            self.View_Sorted_All_data_bottomview.isHidden = true
-            ispresen_tbottom_view.toggle()
-        }) { [self] (finished) in
-            if finished {
-               hide_mainbottom_view()
+            UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: { [self] in
+                self.View_Sorted_All_data_bottomview.isHidden = true
+                ispresen_tbottom_view.toggle()
+            }) { [self] (finished) in
+                if finished {
+                    hide_mainbottom_view()
                 }
             }
         }
@@ -158,8 +170,10 @@ func bottom_up()  {
     
     func shortedAlphabetic(){
         let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
-            Ary_textfield_get_list = sortedarry
-            tblview_reload()
+        Ary_textfield_get_list = sortedarry
+        tblview_reload()
+        databasehelper.sharaintance.saveItems()
+        
     }
     
     func tblview_reload(){
@@ -167,52 +181,70 @@ func bottom_up()  {
             self.Tbl_list_of_malaEnding.reloadData()
         }
     }
-      
-@IBAction func btn_did_tapped_open_addVc(_ sender: UIButton) {
+    
+    func sortByType() {
+        if sortBy == 1{
+            let sortedarry = Ary_textfield_get_list.sorted() { $0.title!.lowercased() < $1.title!.lowercased() }
+            Ary_textfield_get_list = sortedarry
+        }else if sortBy == 2{
+            let shorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
+            Ary_textfield_get_list = shorted
+        }else{
+            let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
+            Ary_textfield_get_list = shorted
+        }
+        DispatchQueue.main.async { [self] in
+            Tbl_list_of_malaEnding.reloadData()
+        }
+    }
+    
+    @IBAction func btn_did_tapped_open_addVc(_ sender: UIButton) {
         let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
-
+        
         let navigationControlr1 = UINavigationController(rootViewController: nav)
         navigationControlr1.modalPresentationStyle = .fullScreen
         nav.delegate_addVc = self
         self.present(navigationControlr1, animated: true, completion: nil)
-}
+    }
     
     @IBAction func btn_cencal_didtapped_go_rootVc(_ sender: UIButton) {
         UIView.animate(withDuration: 1.0, delay: 0, options: [.curveEaseInOut], animations: { [self] in
             self.View_Sorted_All_data_bottomview.isHidden = true
-          
+            
         }) { [self] (finished) in
             if finished {
-               hide_mainbottom_view()
-               }
+                hide_mainbottom_view()
             }
+        }
         Tbl_list_of_malaEnding.isUserInteractionEnabled = true
         is_Sort_all_ButtonClicked = Bool()
         self.navigationItem.rightBarButtonItem?.isEnabled = true
-       }
-
-@IBAction func btnPopupEvents(_ sender: UIButton){
-    if is_Sort_all_ButtonClicked{
-        switch sender.tag {
+    }
+    
+    @IBAction func btnPopupEvents(_ sender: UIButton){
+        if is_Sort_all_ButtonClicked{
+            switch sender.tag {
             case 1:
+                sortBy = 1
                 GlobalData.sharedInstance.isFromSaveTask = true
                 shortedAlphabetic()
-                tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
             case 2:
+                sortBy = 0
                 GlobalData.sharedInstance.isFromSaveTask = true
                 let shorted = Ary_textfield_get_list.sorted(by: { ($0.date ?? Date()) > ($1.date ?? Date())})
                 Ary_textfield_get_list = shorted
                 tblview_reload()
-                
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
+                is_Sort_all_ButtonClicked = Bool()
             case 3:
+                sortBy = 2
                 GlobalData.sharedInstance.isFromSaveTask = true
                 let shorted = Ary_textfield_get_list.sorted(by: { ($0.startValue ) > ($1.startValue)})
                 Ary_textfield_get_list = shorted
@@ -220,9 +252,10 @@ func bottom_up()  {
                 View_Sorted_All_data_bottomview.isHidden = true
                 Tbl_list_of_malaEnding.isUserInteractionEnabled = true
                 ispresen_tbottom_view.toggle()
-               
                 hide_mainbottom_view()
-             default:
+                is_Sort_all_ButtonClicked = Bool()
+                let newdataindex = databasehelper.sharaintance.getdata()
+            default:
                 return
             }
         }else{
@@ -237,26 +270,26 @@ func bottom_up()  {
                 nav.delegate_addVc = self
                 nav.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 nav.navigationController?.modalPresentationStyle = .fullScreen
-                nav.select_Index_list_Vc_database = didselectIndex
+                var date = Ary_textfield_get_list[didselectIndex].date
+                nav.selectdate_list_Vc = date!
                 nav.is_selectIndex_bool_Dtabase_Edit = true
                 GlobalData.sharedInstance.isFromSaveTask = true
                 present(navigationControlr1, animated: true)
                 View_Sorted_All_data_bottomview.isHidden = true
-                is_Sort_all_ButtonClicked = Bool()
+                is_Sort_all_ButtonClicked = true
                 hide_mainbottom_view()
             case 2:
                 Ary_textfield_get_list[didselectIndex].startValue = 0
-                databasehelper.sharaintance.saveItems()
                 Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                 tblview_reload()
                 View_Sorted_All_data_bottomview.isHidden = true
                 is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
+                sortByType()
             case 3:
-               let data_list = databasehelper.sharaintance.getdata()
-                let index = data_list.firstIndex(where: {$0.isActive == true})
-                if index == didselectIndex || is_Sort_all_ButtonClicked == true
-                {
+                let data_list = databasehelper.sharaintance.getdata()
+                let index = Ary_textfield_get_list.firstIndex(where: {$0.isActive == true})
+                if  let i = index, i == didselectIndex {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
                     alertController.setValue(NSAttributedString(string: "This data couldn't be deleted because it is active.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedMessage")
@@ -269,26 +302,29 @@ func bottom_up()  {
                     present(alertController, animated: true, completion: nil)
                 }else{
                     Ary_textfield_get_list = databasehelper.sharaintance.allDelit(didselectIndex, objUser: Ary_textfield_get_list[didselectIndex])
+                    databasehelper.sharaintance.saveItems()
                     Ary_textfield_get_list = databasehelper.sharaintance.getdata()
                     tblview_reload()
                     View_Sorted_All_data_bottomview.isHidden = true
                     is_Sort_all_ButtonClicked = Bool()
                     hide_mainbottom_view()
+                    
+                    sortByType()
                 }
             case 4:
-            let taskList = databasehelper.sharaintance.getdata()
+                let taskList = databasehelper.sharaintance.getdata()
                 if let index = taskList.firstIndex(where: {$0.isActive == true}){
-                            taskList[index].isActive = false
+                    taskList[index].isActive = false
                     if let indexdate = taskList.firstIndex(where: {$0.date == Ary_textfield_get_list[didselectIndex].date}){
                         taskList[indexdate].isActive = true
                     }
                 }else{
                     taskList[didselectIndex].isActive = true
                 }
-              View_Sorted_All_data_bottomview.isHidden = true
-                is_Sort_all_ButtonClicked = Bool()
+                View_Sorted_All_data_bottomview.isHidden = true
+                // is_Sort_all_ButtonClicked = Bool()
                 hide_mainbottom_view()
-             GlobalData.sharedInstance.isFromSaveTask = true
+                GlobalData.sharedInstance.isFromSaveTask = true
                 databasehelper.sharaintance.saveItems()
                 if self.presentingViewController != nil{
                     self.dismiss(animated: true, completion: nil)
@@ -301,7 +337,6 @@ func bottom_up()  {
         }
     }
 }
-
 //MARK: - UITableViewDelegate &  UITableViewDataSource Methode
 extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -311,12 +346,12 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
             Tbl_list_of_malaEnding.restore()
             view_tableview_first_row.isHidden = true
         }
-       return Ary_textfield_get_list.count
+        return Ary_textfield_get_list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellShowCurrentList", for: indexPath) as! CellShowCurrentList
-       let obj = Ary_textfield_get_list[indexPath.row]
+        let obj = Ary_textfield_get_list[indexPath.row]
         let persent = (Float(obj.startValue) * 100) / Float(obj.targetValue)
         let formatted = String(format: "%.1f", persent)
         cell.progressView.setProgress(Float(obj.startValue)/Float(obj.targetValue), animated: true)
@@ -345,10 +380,13 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         img_Alphabetic_sort_bottomview.image = UIImage(systemName: "repeat")
         img_sort_by_value_bottomview.image = UIImage(systemName: "10.square")
         self.navigationItem.rightBarButtonItem?.isEnabled = false
-       
+        
+        imgCheckByABC.isHidden = true
+        imgCheckByDate.isHidden = true
+        imgCheckByValue.isHidden = true
     }
- 
-func getCreatDate(obj: Garland) -> String {
+    
+    func getCreatDate(obj: Garland) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ssz"
         let date = dateFormatter.date(from: "\(obj.date ?? Date())")
@@ -359,15 +397,15 @@ func getCreatDate(obj: Garland) -> String {
 //MARK:- All extension
 extension ListViewController: AddValueViewControllerDelegate{
     func popupCloseEvent() {
-            Ary_textfield_get_list = databasehelper.sharaintance.getdata()
-                DispatchQueue.main.async {
-                        self.Tbl_list_of_malaEnding.reloadData()
-                }
-            }
+        Ary_textfield_get_list = databasehelper.sharaintance.getdata()
+        DispatchQueue.main.async { [self] in
+            self.Tbl_list_of_malaEnding.reloadData()
         }
+    }
+}
 
 extension UITableView {
-func setEmptyMessage(_ message: String) {
+    func setEmptyMessage(_ message: String) {
         let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
         messageLabel.text = message
         messageLabel.textColor = .white

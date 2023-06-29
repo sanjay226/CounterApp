@@ -10,20 +10,20 @@ import Foundation
 import AVFoundation
 
 class SoundViewController: UIViewController, AVAudioPlayerDelegate{
-  
-@IBOutlet weak var tbl_sound_list: UITableView!
+    
+    @IBOutlet weak var tbl_sound_list: UITableView!
     //MARK: - All veriable
     var selectedindex = -1
     var Arrysound = ["sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound","sound"]
     //MARK: - view controller lifeccycle
-override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
         tbl_sound_list.delegate = self
         tbl_sound_list.dataSource = self
         left_and_right_barButtonItem_Add()
-        }
+    }
     //MARK: - Custum methode
-   func left_and_right_barButtonItem_Add(){
+    func left_and_right_barButtonItem_Add(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoRootVc))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "checkmark.circle.fill"), style: .plain, target: self, action: #selector(selected_sound))
@@ -35,7 +35,7 @@ override func viewDidLoad() {
         title = "Counter Sounds"
         let textAttributes1 = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes1
-       
+        
     }
     
     @objc func GoRootVc(){
@@ -72,15 +72,15 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell  = tbl_sound_list.dequeueReusableCell(withIdentifier: "SoundViewCell") as! SoundViewCell
-        cell.Cell_content_view.layer.borderWidth = 2.0
-        cell.Cell_content_view.layer.borderColor = UIColor.black.cgColor
+        let cell = tbl_sound_list.cellForRow(at: indexPath) as! SoundViewCell
+        cell.Cell_content_view.layer.borderWidth = 3
+        cell.Cell_content_view.layer.borderColor = UIColor.white.cgColor
         selectedindex = indexPath.row
         playAudio(Arrysound[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell  = tbl_sound_list.dequeueReusableCell(withIdentifier: "SoundViewCell") as! SoundViewCell
+        let cell = tbl_sound_list.cellForRow(at: indexPath) as! SoundViewCell
         cell.Cell_content_view.layer.borderWidth = 0.0
         cell.Cell_content_view.layer.borderColor = UIColor.clear.cgColor
     }
@@ -90,19 +90,39 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
     }
     
     func playAudio(_ audioName : String){
-           let url = NSURL.fileURL(
-               withPath: Bundle.main.path(forResource: audioName,
-                                                     ofType: "mp3")!)
-           let audioPlayer = try? AVAudioPlayer(contentsOf: url)
-           audioPlayer?.delegate = self
-           audioPlayer?.prepareToPlay()
+        if let url = Bundle.main.url(forResource: audioName, withExtension: "mp3"){
+            //        NSURL.fileURL(withPath: Bundle.main.path(forResource: audioName, ofType: "mp3")!)
+            
+            do{
+                let audioPlayer = try AVAudioPlayer(contentsOf: url)
+                //        audioPlayer?.delegate = self
+                // audioPlayer?.prepareToPlay()
+                
+//                DispatchQueue.main.async {
+//                    if let player = audioPlayer {
+                audioPlayer.play()
+                print("play sound")
+//                    }
+//                }
+                
+            }catch{
+                print(error.localizedDescription)
+            }
+          //  let audioPlayer = try? AVAudioPlayer(contentsOf: url)
+            //        audioPlayer?.delegate = self
+            // audioPlayer?.prepareToPlay()
+//
+//            DispatchQueue.main.async {
+//                if let player = audioPlayer {
+//                    player.play()
+//                    print("play sound")
+//                }
+//            }
+        }
         
-           if let player = audioPlayer {
-               player.play()
-           }
-       }
-
- 
+    }
+    
+    
 }
 
 

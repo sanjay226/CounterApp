@@ -24,8 +24,6 @@
 		2264D1A229ED52FC0043E5CD /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2264D1A129ED52FC0043E5CD /* CollectionViewCell.swift */; };
 		2264D1A429ED72840043E5CD /*  AddValyueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */; };
 		2264D1A629ED731D0043E5CD /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2264D1A529ED731D0043E5CD /* SideMenuViewController.swift */; };
-		226B93052A3073DF000F429C /* Garland+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */; };
-		226B93062A3073DF000F429C /* Garland+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */; };
 		228334DC29ED047A0071FADB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334DB29ED047A0071FADB /* AppDelegate.swift */; };
 		228334DE29ED047A0071FADB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334DD29ED047A0071FADB /* SceneDelegate.swift */; };
 		228334E329ED047A0071FADB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228334E129ED047A0071FADB /* Main.storyboard */; };
@@ -33,6 +31,9 @@
 		228334EB29ED047B0071FADB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228334E929ED047B0071FADB /* LaunchScreen.storyboard */; };
 		228334FA29ED11D90071FADB /* AllExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334F929ED11D90071FADB /* AllExtention.swift */; };
 		22D49B7A2A09AB7900C5F15B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D49B792A09AB7900C5F15B /* ViewController.swift */; };
+		8841D4572A4D513800146ABA /* Garland+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841D4552A4D513800146ABA /* Garland+CoreDataClass.swift */; };
+		8841D4582A4D513800146ABA /* Garland+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841D4562A4D513800146ABA /* Garland+CoreDataProperties.swift */; };
+		885932A22A4C42D20074F6C2 /* zikirmatik_digits.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */; };
 		CD8AF26ABF1128615476FC7E /* Pods_PrayerGod.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD7200A4272A13A85813916 /* Pods_PrayerGod.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,8 +56,6 @@
 		2264D1A129ED52FC0043E5CD /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		2264D1A329ED72840043E5CD /*  AddValyueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " AddValyueViewController.swift"; sourceTree = "<group>"; };
 		2264D1A529ED731D0043E5CD /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
-		226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		228334D829ED047A0071FADB /* PrayerGod.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerGod.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		228334DB29ED047A0071FADB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		228334DD29ED047A0071FADB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +65,9 @@
 		228334EC29ED047B0071FADB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		228334F929ED11D90071FADB /* AllExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtention.swift; sourceTree = "<group>"; };
 		22D49B792A09AB7900C5F15B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8841D4552A4D513800146ABA /* Garland+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		8841D4562A4D513800146ABA /* Garland+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zikirmatik_digits.ttf; sourceTree = "<group>"; };
 		BA2B626C8BE77D723CD3F2B8 /* Pods-PrayerGod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PrayerGod.debug.xcconfig"; path = "Target Support Files/Pods-PrayerGod/Pods-PrayerGod.debug.xcconfig"; sourceTree = "<group>"; };
 		EBD7200A4272A13A85813916 /* Pods_PrayerGod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PrayerGod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -101,8 +103,8 @@
 		22636D5B29EEAE2000C50F80 /* CoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				226B93032A3073DF000F429C /* Garland+CoreDataClass.swift */,
-				226B93042A3073DF000F429C /* Garland+CoreDataProperties.swift */,
+				8841D4552A4D513800146ABA /* Garland+CoreDataClass.swift */,
+				8841D4562A4D513800146ABA /* Garland+CoreDataProperties.swift */,
 				220FB2992A11ED44002601AC /* CoreDataModel.xcdatamodeld */,
 				22636D6629EEAFF800C50F80 /* PersistantStorej.swift */,
 				22636D6829EEB3DE00C50F80 /* CoreDataCrudOpretion.swift */,
@@ -172,6 +174,7 @@
 		228334F629ED10570071FADB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */,
 				2220B2EB409B26E3009AE513 /* sound.mp3 */,
 				223413E32B43468C001ED0E9 /* AllStrMOdel.swift */,
 			);
@@ -273,6 +276,7 @@
 				2220B2EC409B26E3009AE513 /* sound.mp3 in Resources */,
 				228334E829ED047B0071FADB /* Assets.xcassets in Resources */,
 				228334E329ED047A0071FADB /* Main.storyboard in Resources */,
+				885932A22A4C42D20074F6C2 /* zikirmatik_digits.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,19 +336,19 @@
 				226365562A4043C500395B2C /* AppearanceViewController.swift in Sources */,
 				2264D1A429ED72840043E5CD /*  AddValyueViewController.swift in Sources */,
 				22636D6929EEB3DE00C50F80 /* CoreDataCrudOpretion.swift in Sources */,
+				8841D4572A4D513800146ABA /* Garland+CoreDataClass.swift in Sources */,
 				223413E42B43468C001ED0E9 /* AllStrMOdel.swift in Sources */,
 				222882A22A3B010000FD9CF4 /* ConstantString.swift in Sources */,
 				2237CB5929EE5EA200B06899 /* CellsidemenuTableVc.swift in Sources */,
 				228334FA29ED11D90071FADB /* AllExtention.swift in Sources */,
 				2264D1A229ED52FC0043E5CD /* CollectionViewCell.swift in Sources */,
 				226352DD2A050FD600D42636 /* CellShowCurrentList.swift in Sources */,
+				8841D4582A4D513800146ABA /* Garland+CoreDataProperties.swift in Sources */,
 				228334DC29ED047A0071FADB /* AppDelegate.swift in Sources */,
-				226B93052A3073DF000F429C /* Garland+CoreDataClass.swift in Sources */,
 				2262FB082A3B146A002B000E /* SoundViewCell.swift in Sources */,
 				226365582A4056A500395B2C /* CellAppearanceCollectionViewCell.swift in Sources */,
 				220FB29B2A11ED44002601AC /* CoreDataModel.xcdatamodeld in Sources */,
 				228334DE29ED047A0071FADB /* SceneDelegate.swift in Sources */,
-				226B93062A3073DF000F429C /* Garland+CoreDataProperties.swift in Sources */,
 				22D49B7A2A09AB7900C5F15B /* ViewController.swift in Sources */,
 				22636D5A29EE9E1300C50F80 /* CellFiltextTableVc.swift in Sources */,
 			);

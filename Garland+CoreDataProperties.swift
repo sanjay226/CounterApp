@@ -2,7 +2,7 @@
 //  Garland+CoreDataProperties.swift
 //  PrayerGod
 //
-//  Created by macOS on 07/06/23.
+//  Created by iMac on 29/06/23.
 //
 //
 
@@ -17,12 +17,12 @@ extension Garland {
     }
 
     @NSManaged public var date: Date?
-    @NSManaged public var note: String?
-    @NSManaged public var reminder: Int16
-    @NSManaged public var startValue: Int16
-    @NSManaged public var targetValue: Int16
-    @NSManaged public var title: String?
     @NSManaged public var isActive: Bool
+    @NSManaged public var note: String?
+    @NSManaged public var reminder: Int32
+    @NSManaged public var startValue: Int32
+    @NSManaged public var targetValue: Int32
+    @NSManaged public var title: String?
 
 }
 

@@ -37,6 +37,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     @IBOutlet weak var lbl_resetCounter_bottom_view: UILabel!
     @IBOutlet weak var lbl_AreYou_sure_boomview: UILabel!
     
+    @IBOutlet weak var btn_yes_bottomview: UIButton!
+    @IBOutlet weak var btn_no_bottom_view: UIButton!
+    @IBOutlet weak var lbl_sixZero: UILabel!
     @IBOutlet weak var img_counter_inside_counterImg: UIImageView!
     @IBOutlet weak var btn_botoomview_topside_cansal: UIButton!
     
@@ -56,7 +59,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     var i = 0
     var selected_rendom_colore_use_darkmode = UIColor()
     var colors : [UIColor] =
-    [.systemRed,.blue,.gray,.brown,.orange,.cyan,.systemBrown,.systemRed,.systemBlue,.systemPink,.magenta,.systemTeal,.green,.lightGray]
+    [#colorLiteral(red: 1, green: 0.537254902, blue: 0.8470588235, alpha: 1),  #colorLiteral(red: 0, green: 0.9909999967, blue: 1, alpha: 1), #colorLiteral(red: 0, green: 0.3289999962, blue: 0.5749999881, alpha: 1), #colorLiteral(red: 1, green: 0.8320000172, blue: 0.47299999, alpha: 1), #colorLiteral(red: 0.7540000081, green: 0.7540000081, blue: 0.7540000081, alpha: 1), #colorLiteral(red: 1, green: 0.1490000039, blue: 0, alpha: 1), #colorLiteral(red: 0.824000001, green: 0.5910000205, blue: 0.3670000136, alpha: 1), #colorLiteral(red: 0.4440000057, green: 0.1340000033, blue: 0.3079999983, alpha: 1), #colorLiteral(red: 1, green: 0.5759999752, blue: 0, alpha: 1), #colorLiteral(red: 0.1294117647, green: 0.1294117647, blue: 0.1294117647, alpha: 1), #colorLiteral(red: 0.5529411765, green: 0.9764705882, blue: 0, alpha: 1), #colorLiteral(red: 0.9977686405, green: 0.8496080637, blue: 0.9562239647, alpha: 1), #colorLiteral(red: 0.4768145084, green: 0.5168155432, blue: 0.5, alpha: 1)]
     var counterBgColor = UIColor()
     var counterBorderColor = UIColor()
     var current_data_list_obj = Garland()
@@ -75,12 +78,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         view_gesture_reaset_counter.addGestureRecognizer(tapGesture)
         view_Main_Grediantcoloure.addGestureRecognizer(Switch_tuch)
         view_gesture_reaset_counter.isHidden = true
-        
-        img_coloure_convertore.image = img_coloure_convertore.image?.withRenderingMode(.alwaysTemplate)
-        img_counter_inside_counterImg.image =  img_counter_inside_counterImg.image?.withRenderingMode(.alwaysTemplate)
-    
-        counterBgColor = self.colors.randomElement()!
-        counterBorderColor = self.colors.randomElement()!
+        allbtn_Give_tintColor_progarametically()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +119,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             lbl_Show_counting_Value.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
         }
     }
     
@@ -143,11 +141,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             img_counter_inside_counterImg.tintColor = counterBgColor
             isDarkMode = false
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
+        if self.navigationItem.title == "Prathna"{
+            let newcolorebutton = UIColor(hex: "#2E2E2E")
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = newcolorebutton
+            btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
+            btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "plus"), for: .normal)
+        }
     }
     //MARK: - Custem methode
     
@@ -170,6 +169,15 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         appears_Back_Graund_coloure(btn_change_Mode)
         appears_Back_Graund_coloure(btn_change_view_coloure)
         progressview.progressTintColor = .black
+    }
+    
+    func allbtn_Give_tintColor_progarametically(){
+        img_coloure_convertore.image = img_coloure_convertore.image?.withRenderingMode(.alwaysTemplate)
+        img_counter_inside_counterImg.image =  img_counter_inside_counterImg.image?.withRenderingMode(.alwaysTemplate)
+        let image = UIImage(named: "circle")
+        btn_pluse_count.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
+        counterBgColor = self.colors.randomElement()!
+        counterBorderColor = self.colors.randomElement()!
     }
     
     func all_button_cornerRediuse(){
@@ -233,6 +241,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
                 self.view_Main_Grediantcoloure.backgroundColor = infoArray[i]
                 selected_rendom_colore_use_darkmode = infoArray[i]
                 i = i+1
+                if i == 7{
+                    btn_minus_count.backgroundColor = counterBorderColor
+                    btn_Reload_count.backgroundColor = counterBorderColor
+                }else{
+                    btn_minus_count.backgroundColor = .systemBrown
+                    btn_Reload_count.backgroundColor = .systemBrown
+                }
                 if i == infoArray.count{
                     i = 0
                 }
@@ -247,12 +262,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         counterBorderColor = self.colors.randomElement()!
         set_rendem_colorearry(colors, self.view_Main_Grediantcoloure)
         self.img_counter_inside_counterImg.tintColor = counterBgColor
-        btn_pluse_count.backgroundColor = counterBorderColor
+        btn_pluse_count.tintColor = counterBorderColor
         img_coloure_convertore.tintColor = counterBorderColor
         btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
         btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
         if stackview.isHidden == true{
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
         }else{
             btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
         }
@@ -344,7 +359,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             if isnavigation_bar_coloure_change{
                 view_End_Edit_btn.isHidden = false
                 stackview.backgroundColor = .systemBrown
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .systemBrown
+               btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .systemBrown
                 btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
                 btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "chevron.up"), for: .normal)
                 lbl_title_topview.textColor = .black
@@ -449,9 +464,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
                 stackview.isHidden = true
                 view_reset_Counting_bottom_sheet.isHidden = true
                 view_gesture_reaset_counter.isHidden = true
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = .clear
+                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
                 btn_vnavigationItem_rightbar_BtnItem.tintColor = .white
-                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "doc.plaintext.fill"), for: .normal)
+                btn_vnavigationItem_rightbar_BtnItem.setImage(UIImage(systemName: "plus"), for: .normal)
                 self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 counting = 0
                 lbl_Show_counting_Value.text = "\(counting)"
@@ -517,14 +532,16 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     
     @IBAction func btn_mode_dark(_ sender: UIButton) {
         isDarkMode = !isDarkMode
-        
         setHeptic_FeedBack()
-        
         if (isDarkMode) {
             view_Main_Grediantcoloure.backgroundColor = UIColor(named: "dark")
             img_counter_inside_counterImg.tintColor = UIColor(named: "dark")
             btn_pluse_count.backgroundColor  = UIColor(named: "dark")
-        } else {
+        }else if !selectedcoloure{
+            view_Main_Grediantcoloure.backgroundColor =  UIColor(hex: "#383838")
+            img_counter_inside_counterImg.tintColor = UIColor(hex: "#006FFF")
+            btn_pluse_count.backgroundColor = UIColor(hex: "£04082A")
+        }else {
             let IsBoolAppereance_colore = UserDefaults.standard.bool(forKey: "isslectApperwanceColore")
             if (IsBoolAppereance_colore) {
                 if let stroe_colore_apppreance = UserDefaults.standard.color(forKey: "obj_colore_thim"){
@@ -534,7 +551,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
                 view_Main_Grediantcoloure.backgroundColor = selected_rendom_colore_use_darkmode
             }
             img_counter_inside_counterImg.tintColor = counterBgColor
-            btn_pluse_count.backgroundColor = counterBorderColor
+            btn_pluse_count.tintColor = counterBorderColor
             img_coloure_convertore.tintColor = counterBorderColor
             btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
             btn_vibration.backgroundColor = selectedvibration ? counterBorderColor  : .systemBrown
@@ -572,17 +589,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
 extension CGFloat {
     static func random() -> CGFloat {
         return CGFloat(arc4random()) / CGFloat(UInt32.max)
-    }
-}
-
-extension UIColor {
-    static func random() -> UIColor {
-        return UIColor(
-            red:   .random(),
-            green: .random(),
-            blue:  .random(),
-            alpha: 0.0
-        )
     }
 }
 

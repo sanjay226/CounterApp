@@ -21,6 +21,7 @@ class SoundViewController: UIViewController, AVAudioPlayerDelegate{
         tbl_sound_list.delegate = self
         tbl_sound_list.dataSource = self
         left_and_right_barButtonItem_Add()
+        navigationController?.navigationBar.barTintColor = UIColor(hex: "#222222")
     }
     //MARK: - Custum methode
     func left_and_right_barButtonItem_Add(){
@@ -73,16 +74,16 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tbl_sound_list.cellForRow(at: indexPath) as! SoundViewCell
-        cell.Cell_content_view.layer.borderWidth = 3
-        cell.Cell_content_view.layer.borderColor = UIColor.white.cgColor
+        cell.Cell_content_view.borderWidth = 3.0
+        cell.Cell_content_view.borderColor = .white
         selectedindex = indexPath.row
         playAudio(Arrysound[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         let cell = tbl_sound_list.cellForRow(at: indexPath) as! SoundViewCell
-        cell.Cell_content_view.layer.borderWidth = 0.0
-        cell.Cell_content_view.layer.borderColor = UIColor.clear.cgColor
+        cell.Cell_content_view.borderWidth = 0.0
+        cell.Cell_content_view.borderColor = .clear
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

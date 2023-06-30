@@ -19,9 +19,7 @@ class SideMenuViewController: UIViewController {
     var IsSwitchBool = false
     var didselectIndexSound = -1
     let image_greterthen = UIImage(systemName: "greaterthan")
-  //  var save_SaveswitchData_Disabled_in_UserDefaultst = false
-   // let runIpod_Bar_button_item_shareapp = uibarbuttonsy
-   
+ 
 //MARK: - Custem veriable
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,16 +112,11 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         if indexPath.row == 0{
             performSegue(withIdentifier: "AppearanceViewController", sender: self)
         }else  if indexPath.row == 1{
-          //  cell?.Indicatore_when_NotOpenApp.isHidden = false
             shareapp()
-         // ActivityIndicatorView()
-            //shareapp()
-           // dismiss(animated: false, completion: nil)
         }else  if indexPath.row == 2{
             cell?.Indicatore_when_NotOpenApp.isHidden = false
             ActivityIndicatorView()
             rateApp()
-           // cell?.Indicatore_when_NotOpenApp.removeFromSuperview()
            dismiss(animated: false, completion: nil)
         }else if indexPath.row == 3{
             performSegue(withIdentifier: "SoundViewController", sender: self)
@@ -138,7 +131,6 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
                 cell?.lbl_Enable_disable.text = "Disabled"
                 }
             if cell?.switch_true_false_dynamicTuch.isOn  == true{
-                   
                 UserDefaults.standard.set(true, forKey: "mySwitch")
             } else {
                    

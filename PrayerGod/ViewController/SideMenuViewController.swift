@@ -112,7 +112,7 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         if indexPath.row == 0{
             performSegue(withIdentifier: "AppearanceViewController", sender: self)
         }else  if indexPath.row == 1{
-            shareapp()
+            shareapp(cell!)
         }else  if indexPath.row == 2{
             cell?.Indicatore_when_NotOpenApp.isHidden = false
             ActivityIndicatorView()
@@ -148,7 +148,6 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.style = UIActivityIndicatorView.Style.medium
         loadingIndicator.startAnimating();
-
         alert.view.addSubview(loadingIndicator)
         present(alert, animated: true, completion: nil)
     }
@@ -166,15 +165,26 @@ func rateApp() {
         }
     }
     
-    func shareapp(){
+    func shareapp(_ sender : UIView){
         if !Open_share_url.isEmpty {
      let objectsToShare = [Open_share_url]
            let activityVC = UIActivityViewController(activityItems: objectsToShare as [Any], applicationActivities: nil)
+            activityVC.popoverPresentationController?.sourceView = sender
           self.present(activityVC, animated: true, completion: nil)
         } else {
             // show alert for not available
         }
     }
-    
-    
+
+}
+
+extension SideMenuViewController : UIPopoverPresentationControllerDelegate {
+
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        if let popController = viewControllerToPresent.popoverPresentationController,
+            popController.sourceView == nil{
+            return
+        }
+        super.present(viewControllerToPresent, animated: flag, completion: completion)
+    }
 }

@@ -193,7 +193,7 @@ class AddValyueViewController: UIViewController{
         self.delegate_addVc?.popupCloseEvent()
         GlobalData.sharedInstance.isFromSaveTask = true
         let data = databasehelper.sharaintance.getdata().last
-        var new = databasehelper.sharaintance.getdata()
+        let new = databasehelper.sharaintance.getdata()
         let newdata = new.firstIndex(where: {$0 == data})
         var taskList = databasehelper.sharaintance.getdata()
         let index = taskList.firstIndex(where: {$0.isActive == true})
@@ -209,7 +209,7 @@ class AddValyueViewController: UIViewController{
     
     func updateListTask(){
         let data = databasehelper.sharaintance.getdata()
-        var jio: [()] = data.map({$0.isActive = false})
+        var _: [()] = data.map({$0.isActive = false})
       }
 }
 //MARK:- UITextFieldDelegat

@@ -91,7 +91,6 @@ class ListViewController: UIViewController{
     }
     
     @objc func show_Arrow_view(){
-        
         viewGesture_cover_bottom_sheet.isHidden = false
         lbl_Alphabetic_sort_value.text = "Alphabetic Sort"
         lbl_sort_Date.text = "Sort By Date"
@@ -99,16 +98,13 @@ class ListViewController: UIViewController{
         view_continue_bottomview.isHidden = true
         is_Sort_all_ButtonClicked = true
         btn_open_addlistVc.isHidden = true
-        
         View_Sorted_All_data_bottomview.isHidden = false
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = true
         Tbl_list_of_malaEnding.isUserInteractionEnabled = false
         ispresen_tbottom_view.toggle()
-        
         imgCheckByABC.isHidden = sortBy != 1
         imgCheckByDate.isHidden = sortBy != 0
         imgCheckByValue.isHidden = sortBy != 2
-
     }
     
     @objc func handleTapGesture(sender: UITapGestureRecognizer) {
@@ -254,7 +250,6 @@ class ListViewController: UIViewController{
                 ispresen_tbottom_view.toggle()
                 hide_mainbottom_view()
                 is_Sort_all_ButtonClicked = Bool()
-                let newdataindex = databasehelper.sharaintance.getdata()
             default:
                 return
             }
@@ -270,7 +265,7 @@ class ListViewController: UIViewController{
                 nav.delegate_addVc = self
                 nav.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
                 nav.navigationController?.modalPresentationStyle = .fullScreen
-                var date = Ary_textfield_get_list[didselectIndex].date
+                let date = Ary_textfield_get_list[didselectIndex].date
                 nav.selectdate_list_Vc = date!
                 nav.is_selectIndex_bool_Dtabase_Edit = true
                 GlobalData.sharedInstance.isFromSaveTask = true
@@ -287,13 +282,13 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
                 sortByType()
             case 3:
-                let data_list = databasehelper.sharaintance.getdata()
+               // let data_list = databasehelper.sharaintance.getdata()
                 let index = Ary_textfield_get_list.firstIndex(where: {$0.isActive == true})
                 if  let i = index, i == didselectIndex {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
                     alertController.setValue(NSAttributedString(string: "This data couldn't be deleted because it is active.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedMessage")
-                    let backView = alertController.view.subviews.last?.subviews.last
+                  //  let backView = alertController.view.subviews.last?.subviews.last
                     alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (action: UIAlertAction!) in
                         View_Sorted_All_data_bottomview.isHidden = true
                         is_Sort_all_ButtonClicked = Bool()

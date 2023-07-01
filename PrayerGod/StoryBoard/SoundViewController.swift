@@ -99,11 +99,11 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
                 //        audioPlayer?.delegate = self
                 // audioPlayer?.prepareToPlay()
                 
-//                DispatchQueue.main.async {
+               DispatchQueue.main.async {
 //                    if let player = audioPlayer {
                 audioPlayer.play()
                 print("play sound")
-//                    }
+                  }
 //                }
                 
             }catch{

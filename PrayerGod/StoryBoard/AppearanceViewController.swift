@@ -88,7 +88,7 @@ extension AppearanceViewController : UICollectionViewDelegateFlowLayout,UICollec
         isbool = false
     }
     
-    func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
+    private func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
 }

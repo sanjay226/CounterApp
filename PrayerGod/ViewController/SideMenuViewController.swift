@@ -9,18 +9,17 @@ import UIKit
 import StoreKit
 
 class SideMenuViewController: UIViewController {
-//MARK: - All  @IBOutlet
+    //MARK: - All  @IBOutlet
     @IBOutlet weak var view_Addremove: UIView!
     @IBOutlet weak var tbl_Side_Menu: UITableView!
-//MARK:- Custum veriable
+    //MARK:- Custum veriable
     var Arry_menu_list = [String]()
     var arry_Disablelist  = [String]()
     var image = [String]()
     var IsSwitchBool = false
     var didselectIndexSound = -1
     let image_greterthen = UIImage(systemName: "greaterthan")
- 
-//MARK: - Custem veriable
+    //MARK: - Custem veriable
     override func viewDidLoad() {
         super.viewDidLoad()
         tbl_Side_Menu.delegate = self
@@ -29,12 +28,10 @@ class SideMenuViewController: UIViewController {
         arry_Disablelist = ["Neon","","","Default Click",""]
         image = ["square.split.bottomrightquarter.fill","scale.3d","hand.thumbsup.fill","music.note","dot.circle.and.hand.point.up.left.fill"]
         barButtonItem()
-        
-            IsSwitchBool = UserDefaults.standard.bool(forKey: "mySwitch")
-        
+        IsSwitchBool = UserDefaults.standard.bool(forKey: "mySwitch")
     }
     
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "SoundViewController" {
             _ = segue.destination as? SoundViewController
         }else if segue.identifier == "AppearanceViewController"{
@@ -70,7 +67,6 @@ class SideMenuViewController: UIViewController {
         }else{
             self.navigationController?.popViewController(animated: true)
         }
-      // UserDefaults.standard.set(save_SaveswitchData_Disabled_in_UserDefaultst, forKey: "mySwitch")
     }
 }
 //MARK: - UITableViewDelegate, && UITableViewDataSource
@@ -88,7 +84,7 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         cell.lbl_notification.text = Arry_menu_list[indexPath.row]
         cell.lbl_Enable_disable.text = arry_Disablelist[indexPath.row]
         cell.img_Star_rate.image = UIImage(systemName: image[indexPath.row])
-       
+        
         if indexPath.row == 4{
             cell.switch_true_false_dynamicTuch.isHidden = false
             cell.switch_true_false_dynamicTuch.isUserInteractionEnabled = false
@@ -108,7 +104,7 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as? CellsidemenuTableVc
-     
+        
         if indexPath.row == 0{
             performSegue(withIdentifier: "AppearanceViewController", sender: self)
         }else  if indexPath.row == 1{
@@ -117,7 +113,7 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
             cell?.Indicatore_when_NotOpenApp.isHidden = false
             ActivityIndicatorView()
             rateApp()
-           dismiss(animated: false, completion: nil)
+            dismiss(animated: false, completion: nil)
         }else if indexPath.row == 3{
             performSegue(withIdentifier: "SoundViewController", sender: self)
         }else if indexPath.row == 4{
@@ -129,11 +125,11 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
             }else{
                 cell?.switch_true_false_dynamicTuch.isOn = false
                 cell?.lbl_Enable_disable.text = "Disabled"
-                }
+            }
             if cell?.switch_true_false_dynamicTuch.isOn  == true{
                 UserDefaults.standard.set(true, forKey: "mySwitch")
             } else {
-                   
+                
                 UserDefaults.standard.set(false, forKey: "mySwitch")
             }
             UserDefaults.standard.synchronize()
@@ -142,7 +138,6 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
     
     func ActivityIndicatorView(){
         let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
-
         alert.view.tintColor = UIColor.black
         let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(frame: CGRectMake(10, 5, 50, 50)) as UIActivityIndicatorView
         loadingIndicator.hidesWhenStopped = true
@@ -151,8 +146,8 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
         alert.view.addSubview(loadingIndicator)
         present(alert, animated: true, completion: nil)
     }
-                                                          
-func rateApp() {
+    
+    func rateApp() {
         if #available(iOS 10.3, *) {
             SKStoreReviewController.requestReview()
         } else {
@@ -167,22 +162,19 @@ func rateApp() {
     
     func shareapp(_ sender : UIView){
         if !Open_share_url.isEmpty {
-     let objectsToShare = [Open_share_url]
-           let activityVC = UIActivityViewController(activityItems: objectsToShare as [Any], applicationActivities: nil)
+            let objectsToShare = [Open_share_url]
+            let activityVC = UIActivityViewController(activityItems: objectsToShare as [Any], applicationActivities: nil)
             activityVC.popoverPresentationController?.sourceView = sender
-          self.present(activityVC, animated: true, completion: nil)
-        } else {
-            // show alert for not available
+            self.present(activityVC, animated: true, completion: nil)
         }
     }
-
 }
 
 extension SideMenuViewController : UIPopoverPresentationControllerDelegate {
-
+    
     override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
         if let popController = viewControllerToPresent.popoverPresentationController,
-            popController.sourceView == nil{
+           popController.sourceView == nil{
             return
         }
         super.present(viewControllerToPresent, animated: flag, completion: completion)

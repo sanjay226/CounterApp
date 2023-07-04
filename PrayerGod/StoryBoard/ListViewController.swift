@@ -282,13 +282,11 @@ class ListViewController: UIViewController{
                 hide_mainbottom_view()
                 sortByType()
             case 3:
-               // let data_list = databasehelper.sharaintance.getdata()
                 let index = Ary_textfield_get_list.firstIndex(where: {$0.isActive == true})
                 if  let i = index, i == didselectIndex {
                     let alertController = UIAlertController(title: "Delete Failed", message: "This data couldn't be deleted because it is active.", preferredStyle: UIAlertController.Style.alert)
                     alertController.setValue(NSAttributedString(string: "Delete Failed", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedTitle")
                     alertController.setValue(NSAttributedString(string: "This data couldn't be deleted because it is active.", attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 17),NSAttributedString.Key.foregroundColor : UIColor.black]), forKey: "attributedMessage")
-                  //  let backView = alertController.view.subviews.last?.subviews.last
                     alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: { [self] (action: UIAlertAction!) in
                         View_Sorted_All_data_bottomview.isHidden = true
                         is_Sort_all_ButtonClicked = Bool()

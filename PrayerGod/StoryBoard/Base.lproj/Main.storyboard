@@ -52,13 +52,18 @@
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egf-Tf-rOG">
                                         <rect key="frame" x="127.66666666666669" y="390.66666666666669" width="120" height="120"/>
-                                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                        <color key="backgroundColor" systemColor="labelColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="120" id="DT2-j2-msg"/>
                                             <constraint firstAttribute="height" constant="120" id="lCl-ej-hqX"/>
                                         </constraints>
                                         <color key="tintColor" red="0.015686274509803921" green="0.031372549019607843" blue="0.16470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="btn_click_addCountind:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ibS-D8-T4C"/>
                                         </connections>
@@ -97,7 +102,7 @@
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4FS-wh-gPy">
                                         <rect key="frame" x="102.66666666666669" y="211.33333333333334" width="170" height="70.000000000000028"/>
-                                        <color key="backgroundColor" white="1" alpha="0.096780233825279394" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.096780233825279394" colorSpace="calibratedRGB"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="10"/>
@@ -123,7 +128,7 @@
                                         <color key="shadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="guq-Uk-ptb">
-                                        <rect key="frame" x="10" y="722" width="355" height="50"/>
+                                        <rect key="frame" x="10" y="752" width="355" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-Uk-kTK">
                                                 <rect key="frame" x="0.0" y="1.3333333333333712" width="47.666666666666664" height="47.333333333333336"/>
@@ -428,7 +433,7 @@
                                     <constraint firstItem="kIk-6k-3Qv" firstAttribute="height" secondItem="A3L-hN-Fke" secondAttribute="height" constant="-20" id="8PQ-7U-ywx"/>
                                     <constraint firstItem="dXI-OB-ymY" firstAttribute="centerX" secondItem="A3L-hN-Fke" secondAttribute="centerX" id="Bpg-mR-fAN"/>
                                     <constraint firstItem="Ibs-od-eN3" firstAttribute="centerX" secondItem="CYb-8W-lfi" secondAttribute="centerX" id="Ffb-vR-JzE"/>
-                                    <constraint firstAttribute="bottom" secondItem="guq-Uk-ptb" secondAttribute="bottom" constant="40" id="HPC-hG-SD5"/>
+                                    <constraint firstAttribute="bottom" secondItem="guq-Uk-ptb" secondAttribute="bottom" constant="10" id="HPC-hG-SD5"/>
                                     <constraint firstItem="kIk-6k-3Qv" firstAttribute="width" secondItem="A3L-hN-Fke" secondAttribute="width" constant="-18" id="I5p-cC-jgw"/>
                                     <constraint firstItem="tFX-TR-cMf" firstAttribute="centerX" secondItem="A3L-hN-Fke" secondAttribute="centerX" id="IEe-fc-y3t"/>
                                     <constraint firstItem="uDm-L6-fui" firstAttribute="centerX" secondItem="A3L-hN-Fke" secondAttribute="centerX" constant="-70" id="Kue-4s-jaF"/>
@@ -520,6 +525,7 @@
                         <outlet property="view_End_Edit_btn" destination="wsE-7f-4N4" id="JYj-C7-i5o"/>
                         <outlet property="view_Main_Grediantcoloure" destination="CYb-8W-lfi" id="0TO-Yi-YUK"/>
                         <outlet property="view_gesture_reaset_counter" destination="vKk-n6-xVP" id="bbA-3H-Xgu"/>
+                        <outlet property="view_lable_zero" destination="4FS-wh-gPy" id="FNc-Lp-oEs"/>
                         <outlet property="view_reminder" destination="ju8-9Z-RFr" id="kVk-mX-WKP"/>
                         <outlet property="view_reset_Counting_bottom_sheet" destination="Ibs-od-eN3" id="mbZ-F4-7oX"/>
                     </connections>
@@ -1771,9 +1777,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

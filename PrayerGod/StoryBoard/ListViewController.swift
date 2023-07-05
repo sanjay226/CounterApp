@@ -195,12 +195,13 @@ class ListViewController: UIViewController{
     }
     
     @IBAction func btn_did_tapped_open_addVc(_ sender: UIButton) {
-        let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as! AddValyueViewController
-        
-        let navigationControlr1 = UINavigationController(rootViewController: nav)
-        navigationControlr1.modalPresentationStyle = .fullScreen
-        nav.delegate_addVc = self
-        self.present(navigationControlr1, animated: true, completion: nil)
+        if let nav = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AddValyueViewController") as? AddValyueViewController{
+            
+            let navigationControlr1 = UINavigationController(rootViewController: nav)
+            navigationControlr1.modalPresentationStyle = .fullScreen
+            nav.delegate_addVc = self
+            self.present(navigationControlr1, animated: true, completion: nil)
+        }
     }
     
     @IBAction func btn_cencal_didtapped_go_rootVc(_ sender: UIButton) {
@@ -343,16 +344,18 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellShowCurrentList", for: indexPath) as! CellShowCurrentList
-        let obj = Ary_textfield_get_list[indexPath.row]
-        let persent = (Float(obj.startValue) * 100) / Float(obj.targetValue)
-        let formatted = String(format: "%.1f", persent)
-        cell.progressView.setProgress(Float(obj.startValue)/Float(obj.targetValue), animated: true)
-        cell.lbl_Days_ago.text = getCreatDate(obj: obj)
-        cell.lbl_prabhuji_name.text = obj.title
-        cell.lbl_mala_Count.text = String(obj.startValue)
-        cell.lbl_persenteg.text = "\(formatted)%"
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "CellShowCurrentList", for: indexPath) as? CellShowCurrentList{
+            let obj = Ary_textfield_get_list[indexPath.row]
+            let persent = (Float(obj.startValue) * 100) / Float(obj.targetValue)
+            let formatted = String(format: "%.1f", persent)
+            cell.progressView.setProgress(Float(obj.startValue)/Float(obj.targetValue), animated: true)
+            cell.lbl_Days_ago.text = getCreatDate(obj: obj)
+            cell.lbl_prabhuji_name.text = obj.title
+            cell.lbl_mala_Count.text = String(obj.startValue)
+            cell.lbl_persenteg.text = "\(formatted)%"
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

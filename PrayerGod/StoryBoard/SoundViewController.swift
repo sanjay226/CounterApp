@@ -65,16 +65,18 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell  = tbl_sound_list.dequeueReusableCell(withIdentifier: "SoundViewCell", for: indexPath) as! SoundViewCell
-        cell.lbl_sound_name_list.text = Arrysound[indexPath.row]
-        if selectedindex == indexPath.row{
-            cell.Cell_content_view.borderWidth = 3.0
-            cell.Cell_content_view.borderColor = .white
-        }else{
-            cell.Cell_content_view.borderWidth = 0.0
-            cell.Cell_content_view.borderColor = .clear
+        if let cell  = tbl_sound_list.dequeueReusableCell(withIdentifier: "SoundViewCell", for: indexPath) as? SoundViewCell{
+            cell.lbl_sound_name_list.text = Arrysound[indexPath.row]
+            if selectedindex == indexPath.row{
+                cell.Cell_content_view.borderWidth = 3.0
+                cell.Cell_content_view.borderColor = .white
+            }else{
+                cell.Cell_content_view.borderWidth = 0.0
+                cell.Cell_content_view.borderColor = .clear
+            }
+            return cell
         }
-        return cell
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -104,41 +106,6 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
-    func playAudio(_ audioName : String, _ type : String){
-        //        if let url = Bundle.main.url(forResource: audioName, withExtension: "mp3"){
-        //            //        NSURL.fileURL(withPath: Bundle.main.path(forResource: audioName, ofType: "mp3")!)
-        //
-        //            do{
-        //                let audioPlayer = try AVAudioPlayer(contentsOf: url)
-        //                //        audioPlayer?.delegate = self
-        //                // audioPlayer?.prepareToPlay()
-        //
-        //               DispatchQueue.main.async {
-        ////                    if let player = audioPlayer {
-        //                audioPlayer.play()
-        //                print("play sound")
-        //                  }
-        ////                }
-        //
-        //            }catch{
-        //                print(error.localizedDescription)
-        //            }
-        //  let audioPlayer = try? AVAudioPlayer(contentsOf: url)
-        //        audioPlayer?.delegate = self
-        // audioPlayer?.prepareToPlay()
-        //
-        //            DispatchQueue.main.async {
-        //                if let player = audioPlayer {
-        //                    player.play()
-        //                    print("play sound")
-        //                }
-        //            }
-        //
-        
-    }
-    
-    
 }
 
 

@@ -52,12 +52,14 @@ extension AppearanceViewController : UICollectionViewDelegateFlowLayout,UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellAppearanceCollectionViewCell", for: indexPath) as!
-        CellAppearanceCollectionViewCell
-        cell.img_only_counter_border.image = cell.img_only_counter_border.image?.withRenderingMode(.alwaysTemplate)
-        cell.view_content_in_cell_inside.backgroundColor = Arr_of_color[indexPath.row]
-        cell.img_only_counter_border.tintColor = .black
-        return cell
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellAppearanceCollectionViewCell", for: indexPath) as?
+            CellAppearanceCollectionViewCell{
+            cell.img_only_counter_border.image = cell.img_only_counter_border.image?.withRenderingMode(.alwaysTemplate)
+            cell.view_content_in_cell_inside.backgroundColor = Arr_of_color[indexPath.row]
+            cell.img_only_counter_border.tintColor = .black
+            return cell
+        }
+        return UICollectionViewCell()
     }
    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{

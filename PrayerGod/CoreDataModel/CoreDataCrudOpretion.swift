@@ -13,7 +13,7 @@ class databasehelper{
     static let sharaintance = databasehelper()
     let context = PersistantStorej.shared.persistentContainer.viewContext
     func dataSave(object: TaskModel){
-        let user =  NSEntityDescription.insertNewObject(forEntityName: "Garland" , into: context) as? Garland
+        let user = NSEntityDescription.insertNewObject(forEntityName: "Garland" , into: context) as? Garland
         user?.title = object.title
         user?.reminder = Int32(object.reminder ?? 0)
         user?.startValue = Int32(object.startValue ?? 0)

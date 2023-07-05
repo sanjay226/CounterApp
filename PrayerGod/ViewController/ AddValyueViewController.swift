@@ -198,6 +198,7 @@ class AddValyueViewController: UIViewController{
         var taskList = databasehelper.sharaintance.getdata()
         let index = taskList.firstIndex(where: {$0.isActive == true})
         taskList[index!] = taskList[newdata!]
+        
     }
     
     func savedata(){

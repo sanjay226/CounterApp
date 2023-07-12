@@ -10,13 +10,13 @@ import Foundation
 import AVFoundation
 
 class SoundViewController: UIViewController, AVAudioPlayerDelegate{
-    
+    //MARK: -   @IBOutlet
     @IBOutlet weak var tbl_sound_list: UITableView!
     //MARK: - All veriable
     var selectedindex = 0
     var Arrysound = Array(repeating: "sound", count: 15)
     var audioPlayer = AVAudioPlayer()
-    //MARK: - view controller lifeccycle
+    //MARK: - view controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tbl_sound_list.delegate = self
@@ -38,7 +38,6 @@ class SoundViewController: UIViewController, AVAudioPlayerDelegate{
         title = "Counter Sounds"
         let textAttributes1 = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes1
-        
     }
     
     @objc func GoRootVc(){
@@ -90,7 +89,7 @@ extension SoundViewController  : UITableViewDelegate, UITableViewDataSource{
                 audioPlayer = try AVAudioPlayer(contentsOf: url)
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient)
                 try AVAudioSession.sharedInstance().setActive(true)
-                audioPlayer.play()                
+                audioPlayer.play()
             }
         }
         catch{

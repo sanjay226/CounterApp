@@ -15,3 +15,10 @@ struct TaskModel{
     var date: Date?
     var isActive : Bool?
 }
+
+
+struct color_Theme{
+    var Color_background: String
+    var Color_Border: String
+    var Color_img_inside: String
+}

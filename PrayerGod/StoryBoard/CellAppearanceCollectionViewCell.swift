@@ -9,10 +9,18 @@ import UIKit
 
 class CellAppearanceCollectionViewCell: UICollectionViewCell {
     //MARK: -   @IBOutlet
-    @IBOutlet weak var view_content_in_cell_inside: UIView!
-    @IBOutlet weak var img_only_counter_border: UIImageView!
-    @IBOutlet weak var btn_Add: UIButton!
-    @IBOutlet weak var btn_minus: UIButton!
-    @IBOutlet weak var btn_reaset: UIButton!
-    
+    @IBOutlet weak var vwBackGround: UIView!
+    @IBOutlet weak var imgBorder: UIImageView!
+    @IBOutlet weak var imgInside: UIImageView!
+    @IBOutlet weak var vw1: UIView!
+    @IBOutlet weak var vw2: UIView!
+    @IBOutlet weak var vw3: UIView!
+    @IBOutlet weak var vw4: UIView!
+    @IBOutlet weak var vw5: UIView!
+    @IBOutlet weak var vwBtnPlus: UIView!
+    @IBOutlet weak var vwBtnMinus: UIView!
+    @IBOutlet weak var vwBtnReset: UIView!
+    @IBOutlet weak var lblZero: UILabel!
+   
+
 }

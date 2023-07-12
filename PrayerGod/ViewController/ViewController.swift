@@ -8,6 +8,8 @@
 import UIKit
 import AVFoundation
 import CoreData
+
+var ThemeIndex = 0
 //todayscode
 class ViewController: UIViewController, AVAudioPlayerDelegate{
     //MARK: -   @IBOutlet
@@ -36,7 +38,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     @IBOutlet weak var btn_vnavigationItem_rightbar_BtnItem: UIButton!
     @IBOutlet weak var lbl_resetCounter_bottom_view: UILabel!
     @IBOutlet weak var lbl_AreYou_sure_boomview: UILabel!
-    
     @IBOutlet weak var view_lable_zero: UIView!
     @IBOutlet weak var btn_yes_bottomview: UIButton!
     @IBOutlet weak var btn_no_bottom_view: UIButton!
@@ -58,8 +59,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     let music = Bundle.main.path(forResource: "sound", ofType: "mp3")
     var i = 1
     var selected_rendom_colore_use_darkmode = UIColor()
-    var colors : [UIColor] =
-    [#colorLiteral(red: 1, green: 0.537254902, blue: 0.8470588235, alpha: 1),  #colorLiteral(red: 0, green: 0.9909999967, blue: 1, alpha: 1), #colorLiteral(red: 0, green: 0.3289999962, blue: 0.5749999881, alpha: 1), #colorLiteral(red: 1, green: 0.8320000172, blue: 0.47299999, alpha: 1), #colorLiteral(red: 0.7540000081, green: 0.7540000081, blue: 0.7540000081, alpha: 1), #colorLiteral(red: 1, green: 0.1490000039, blue: 0, alpha: 1), #colorLiteral(red: 0.824000001, green: 0.5910000205, blue: 0.3670000136, alpha: 1), #colorLiteral(red: 0.4440000057, green: 0.1340000033, blue: 0.3079999983, alpha: 1), #colorLiteral(red: 1, green: 0.5759999752, blue: 0, alpha: 1), #colorLiteral(red: 0.1294117647, green: 0.1294117647, blue: 0.1294117647, alpha: 1), #colorLiteral(red: 0.5529411765, green: 0.9764705882, blue: 0, alpha: 1), #colorLiteral(red: 0.9977686405, green: 0.8496080637, blue: 0.9562239647, alpha: 1), #colorLiteral(red: 0.4768145084, green: 0.5168155432, blue: 0.5, alpha: 1)]
     var counterBgColor = UIColor()
     var counterBorderColor = UIColor()
     var current_data_list_obj = Garland()
@@ -79,14 +78,13 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         view_Main_Grediantcoloure.addGestureRecognizer(Switch_tuch)
         view_gesture_reaset_counter.isHidden = true
         allbtn_Give_tintColor_progarametically()
-       
+        
         if  UserDefaults.standard.object(forKey: "is_selected_sound") == nil{
             UserDefaults.standard.set(true, forKey: "is_selected_sound")
         }
         if  UserDefaults.standard.object(forKey: "is_selected_vibration") == nil{
             UserDefaults.standard.set(true, forKey: "is_selected_vibration")
         }
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,27 +126,24 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             lbl_Show_counting_Value.text = "\(counting)"
             view_reset_Counting_bottom_sheet.isHidden = true
             view_gesture_reaset_counter.isHidden = true
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
         }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         progressview.setProgress(0.0, animated: true)
-        let newvalyue = ""
-        UserDefaults.standard.set( newvalyue , forKey: "obj_colore_thim")
+        
     }
     
     override func viewWillLayoutSubviews() {
         super.viewDidLayoutSubviews()
         all_button_cornerRediuse()
         isDarkMode =  UserDefaults.standard.bool(forKey: "isSelectedDarkModeViewWillAppeare")
-        let IsBoolAppereance_colore = UserDefaults.standard.bool(forKey: "isslectApperwanceColore")
-        if IsBoolAppereance_colore {
-            allMethode_SidemenuAppreance_While_viewWillAppear()
-        } else if (isDarkMode) {
+        ThemeIndex = UserDefaults.standard.integer(forKey: "ThimIndex")
+        if (isDarkMode) {
             setIs_selected()
             allMethode_DarkMode_While_viewWillAppear()
+            view_lable_zero.backgroundColor = isDarkMode ? .green :  UIColor(white: 2, alpha: 0.10)
         }else {
             allMethode_colorefull_paint_While_viewWillAppear()
         }
@@ -178,10 +173,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     func allbtn_Give_tintColor_progarametically(){
         img_coloure_convertore.image = img_coloure_convertore.image?.withRenderingMode(.alwaysTemplate)
         img_counter_inside_counterImg.image =  img_counter_inside_counterImg.image?.withRenderingMode(.alwaysTemplate)
-        counterBgColor = self.colors.randomElement()!
-        counterBorderColor = self.colors.randomElement()!
+        counterBgColor = UIColor(named: Theme_Arry[ThemeIndex].Color_img_inside)!
+        counterBorderColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)!
+        view_Main_Grediantcoloure.backgroundColor = UIColor(named: Theme_Arry[ThemeIndex].Color_background)
     }
-    
     func all_button_cornerRediuse(){
         btn_pluse_count.layer.cornerRadius = self.btn_pluse_count.bounds.width / 2
         btn_pluse_count.clipsToBounds = true
@@ -195,6 +190,9 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         btn_list.layer.cornerRadius = 25
         btn_change_view_coloure.layer.cornerRadius = self.btn_change_view_coloure.bounds.width / 2
         btn_change_Mode.layer.cornerRadius = self.btn_change_Mode.bounds.width / 2
+        counterBgColor = UIColor(named: Theme_Arry[ThemeIndex].Color_img_inside)!
+        counterBorderColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)!
+        view_Main_Grediantcoloure.backgroundColor = UIColor(named: Theme_Arry[ThemeIndex].Color_background)
     }
     
     func showalert(){
@@ -222,50 +220,38 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         btn_Sound.backgroundColor = selectedsound ?  UIColor(hex: "#FED8F3") : .systemBrown
         btn_vibration.backgroundColor = selectedvibration ?  UIColor(hex: "#FED8F3") : .systemBrown
     }
-        
+    
     func allMethode_colorefull_paint_While_viewWillAppear(){
         setIs_selected()
-        if UserDefaults.standard.object(forKey: "IsColrpaintVc_counterBorderColor") != nil || UserDefaults.standard.object( forKey: "IsColrpaintVc_counterBgColr") != nil {
-            var bordercolore = UserDefaults.standard.color(forKey: "IsColrpaintVc_counterBorderColor")
-            let counterBgcolor =  UserDefaults.standard.color( forKey: "IsColrpaintVc_counterBgColr")
-            if bordercolore == counterBgcolor{
-                bordercolore = self.colors.randomElement()!
-            }
-            btn_Sound.backgroundColor = selectedsound ? bordercolore : .systemBrown
-            btn_vibration.backgroundColor = selectedvibration ? bordercolore : .systemBrown
-            self.img_counter_inside_counterImg.tintColor = counterBgcolor
-            btn_pluse_count.backgroundColor = bordercolore
-            img_coloure_convertore.tintColor = bordercolore
-            if stackview.isHidden == true{
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
-            }else{
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? bordercolore : .gray
-            }
-            let grediantColor =  UserDefaults.standard.color(forKey: "UserSelectedColorViewGrediant")
-            view_Main_Grediantcoloure.backgroundColor = grediantColor
-            }
+        btn_Sound.backgroundColor = selectedsound ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border): .systemBrown
+        btn_vibration.backgroundColor = selectedvibration ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border) : .systemBrown
+        self.img_counter_inside_counterImg.tintColor = UIColor(named: Theme_Arry[ThemeIndex].Color_img_inside)
+        btn_pluse_count.backgroundColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)
+        img_coloure_convertore.tintColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)
+        if stackview.isHidden == true{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
+        }else{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border) : .gray
         }
+    }
     
     func allMethode_DarkMode_While_viewWillAppear(){
         view_Main_Grediantcoloure.backgroundColor = UIColor(named: "dark")
         img_counter_inside_counterImg.tintColor = UIColor(named: "dark")
-        btn_Sound.backgroundColor = selectedsound ? .white : .systemBrown
-        btn_vibration.backgroundColor = selectedvibration ? .white : .systemBrown
         btn_pluse_count.backgroundColor = .gray
         img_coloure_convertore.tintColor = .gray
         btn_change_Mode.backgroundColor = .white
+        btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .white : .systemBrown
+        btn_Sound.backgroundColor = selectedsound ? .white : .systemBrown
+        btn_vibration.backgroundColor = selectedvibration ? .white : .systemBrown
     }
     
-    func allMethode_SidemenuAppreance_While_viewWillAppear(){
-        
-        if var stroe_colore_apppreance = UserDefaults.standard.color(forKey: "obj_colore_thim"){
-            if stroe_colore_apppreance == counterBorderColor{
-                btn_Sound.backgroundColor = selectedsound ? colors.randomElement() : .systemBrown
-                btn_vibration.backgroundColor = selectedvibration ? colors.randomElement() : .systemBrown
-            }
-            view_Main_Grediantcoloure.backgroundColor = stroe_colore_apppreance
-        }
-        img_counter_inside_counterImg.tintColor = counterBgColor
+    func  allMethode_SidemenuAppreance_While_viewWillAppear(){
+        ThemeIndex = UserDefaults.standard.integer(forKey: "ThimIndex")
+        btn_Sound.backgroundColor = selectedsound ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border) : .systemBrown
+        btn_vibration.backgroundColor = selectedvibration ? UIColor(named:Theme_Arry[ThemeIndex].Color_Border) : .systemBrown
+        view_Main_Grediantcoloure.backgroundColor = UIColor(named:Theme_Arry[ThemeIndex].Color_background)
+        img_counter_inside_counterImg.tintColor = UIColor(named:Theme_Arry[ThemeIndex].Color_img_inside)
         isDarkMode = false
         btn_change_Mode.backgroundColor = .systemBrown
     }
@@ -291,60 +277,22 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         }
     }
     
-    func set_rendem_colorearry(_ infoArray : [UIColor],_ view : UIView){
-        var color_Arry = infoArray
-        if i >= 0 && i < color_Arry.count{
-            if i >= 0 {
-                if infoArray[i] == counterBorderColor || infoArray[i] == counterBgColor{
-                    color_Arry[i] = color_Arry[i == color_Arry.count - 1 ? 0 : i+1]
-                    self.view_Main_Grediantcoloure.backgroundColor = color_Arry[i]
-                }else{
-                    self.view_Main_Grediantcoloure.backgroundColor = color_Arry[i]
-                    selected_rendom_colore_use_darkmode = color_Arry[i]
-                }
-                i = i+1
-                if i == 7{
-                    btn_minus_count.backgroundColor = counterBorderColor
-                    btn_Reload_count.backgroundColor = counterBorderColor
-                }else{
-                    btn_minus_count.backgroundColor = .systemBrown
-                    btn_Reload_count.backgroundColor = .systemBrown
-                }
-                
-                if i == color_Arry.count{
-                    i = 0
-                }
-            }
-        }
-    }
-    
     func setupTheme(){
-      
-        lazy var dataisnotSave = false
-        UserDefaults.standard.set(dataisnotSave, forKey:  "isslectApperwanceColore")
-        counterBgColor = self.colors.randomElement()!
-        counterBorderColor = self.colors.randomElement()!
-        if counterBgColor == counterBorderColor{
-                counterBorderColor = self.colors.randomElement()!
-            }
-            set_rendem_colorearry(colors, self.view_Main_Grediantcoloure)
-            self.img_counter_inside_counterImg.tintColor = counterBgColor
-            btn_pluse_count.backgroundColor = counterBorderColor
-            img_coloure_convertore.tintColor = counterBorderColor
-            btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
-            btn_vibration.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
-            if stackview.isHidden == true{
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
-            }else{
-                btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .gray
-            }
-            UserDefaults.standard.set(counterBgColor, forKey:  "IsColrpaintVc_counterBgColr")
-            UserDefaults.standard.set(counterBorderColor, forKey:  "IsColrpaintVc_counterBorderColor")
-            UserDefaults.standard.set(false, forKey:  "isSelectedDarkModeViewWillAppeare")
-            let colordata : Data = NSKeyedArchiver.archivedData(withRootObject: view_Main_Grediantcoloure.backgroundColor! as UIColor)
-            UserDefaults.standard.set(colordata, forKey: "UserSelectedColorViewGrediant")
-            UserDefaults.standard.synchronize()
+        view_Main_Grediantcoloure.backgroundColor = UIColor(named: Theme_Arry[ThemeIndex].Color_background)
+        self.img_counter_inside_counterImg.tintColor =  UIColor(named: Theme_Arry[ThemeIndex].Color_img_inside)
+        btn_pluse_count.backgroundColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)
+        img_coloure_convertore.tintColor = UIColor(named: Theme_Arry[ThemeIndex].Color_Border)
+        btn_Sound.backgroundColor = selectedsound ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border) : .systemBrown
+        btn_vibration.backgroundColor = selectedvibration ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border): .systemBrown
+        view_lable_zero.backgroundColor = isDarkMode ? .green :  UIColor(white: 2, alpha: 0.10)
+        if stackview.isHidden == true{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = UIColor(hex: "#2E2E2E")
+        }else{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? UIColor(named: Theme_Arry[ThemeIndex].Color_Border) : .gray
         }
+        UserDefaults.standard.set(ThemeIndex, forKey: "ThimIndex")
+        
+    }
     
     func bottom(){
         UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseInOut], animations: {
@@ -367,8 +315,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false{
             counting = counting + 1
             lbl_Show_counting_Value.text = "\(counting)"
-        }
-        else if GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
+        }else if GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             lbl_Show_counting_Value.text = "\(counting)"
             counting = counting + 1
             let currentCount = (counting ) % Int(current_data_list_obj.reminder)
@@ -398,7 +345,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         let impactMed = UIImpactFeedbackGenerator(style: feedbackStyle)
         impactMed.impactOccurred()
     }
-    
     //MARK: -   @IBAction
     //btntapped go sidemenu
     @IBAction func btn_did_tapped_goSideMenu(_ sender: UIBarButtonItem) {
@@ -421,8 +367,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
                 nav.firstVc_ccurent_list_show_start_value =  convertInt_showcounting_lable!
                 self.navigationController?.pushViewController(nav, animated: true)
             }
-        }
-        else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
+        }else if  GlobalData.sharedInstance.isFromSaveTask == true || newgetdata_of_database[index!].isActive == true{
             if isnavigation_bar_coloure_change{
                 view_End_Edit_btn.isHidden = false
                 stackview.backgroundColor = .systemBrown
@@ -522,7 +467,6 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     }
     
     @IBAction func btn_resetcount_Yes(_ sender: UIButton) {
-        
         let newgetdata_of_database = databasehelper.sharaintance.getdata()
         let index = newgetdata_of_database.firstIndex(where: {$0.isActive == true})
         if index == nil || GlobalData.sharedInstance.isFromSaveTask == false {
@@ -611,6 +555,12 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
     }
     
     @IBAction func btn_colourefull_paint(_ sender: UIButton) {
+        
+        if ThemeIndex == Theme_Arry.count-1{
+            ThemeIndex = 0
+        }else{
+            ThemeIndex = ThemeIndex + 1
+        }
         setHeptic_FeedBack()
         isDarkMode = false
         btn_change_Mode.backgroundColor = .systemBrown
@@ -631,26 +581,23 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             img_coloure_convertore.tintColor = .gray
         }
         else if !selectedcoloure{
-            view_Main_Grediantcoloure.backgroundColor =  UIColor(hex: "#383838")
-            img_counter_inside_counterImg.tintColor = UIColor(hex: "#006FFF")
-            btn_pluse_count.backgroundColor = UIColor(hex: "#04082A")
-        }else {
-            let IsBoolAppereance_colore = UserDefaults.standard.bool(forKey: "isslectApperwanceColore")
-            if (IsBoolAppereance_colore) {
-                if let stroe_colore_apppreance = UserDefaults.standard.color(forKey: "obj_colore_thim"){
-                    view_Main_Grediantcoloure.backgroundColor = stroe_colore_apppreance
-                }
-            } else {
-                view_Main_Grediantcoloure.backgroundColor = selected_rendom_colore_use_darkmode
-            }
-            img_counter_inside_counterImg.tintColor = counterBgColor
-            btn_pluse_count.backgroundColor = counterBorderColor
-            img_coloure_convertore.tintColor = counterBorderColor
-            btn_Sound.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
-            btn_vibration.backgroundColor = selectedvibration ? counterBorderColor  : .systemBrown
+            view_Main_Grediantcoloure.backgroundColor =  UIColor(named: Theme_Arry[ThemeIndex].Color_background)
+            img_counter_inside_counterImg.tintColor =  UIColor(named: Theme_Arry[ThemeIndex].Color_img_inside)
+            btn_pluse_count.backgroundColor =  UIColor(named: Theme_Arry[ThemeIndex].Color_Border)
+        }else if selectedcoloure{
+            ThemeIndex = UserDefaults.standard.integer(forKey: "ThimIndex")
+            setupTheme()
         }
         btn_change_Mode.backgroundColor = isDarkMode ? .white : .systemBrown
-        view_lable_zero.backgroundColor = isDarkMode ? .green :  UIColor(white: 0, alpha: 0.10)
+        view_lable_zero.backgroundColor = isDarkMode ? .green :  UIColor(white: 2, alpha: 0.10)
+        if isDarkMode {
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .white : .systemBrown
+        }else if !isDarkMode{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .systemBrown
+        }else{
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? UIColor(hex: "£2E2E2E") : .systemBrown
+        }
+        var index = UserDefaults.standard.integer(forKey: "ThimIndex")
     }
     
     @IBAction func btn_Preyer_End_topview(_ sender: UIButton) {

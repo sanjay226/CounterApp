@@ -19,13 +19,6 @@ class CellsidemenuTableVc: UITableViewCell {
     @IBOutlet weak var Indicatore_when_NotOpenApp: UIActivityIndicatorView!
     //MARK:- Custum Veriable
     var save_SaveswitchData_Disabled_in_userDifoult = Bool()
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        Indicatore_when_NotOpenApp.hidesWhenStopped = true
-    }
-    
     @IBAction func switchChanged_true_false(_ sender: UISwitch) {
         print("done")
    }

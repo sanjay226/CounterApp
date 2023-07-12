@@ -11,10 +11,5 @@ import AVFoundation
 class CollectionViewCell: UICollectionViewCell {
     //MARK: -   @IBOutlet
     @IBOutlet weak var img_convertore: UIImageView!
-   
-  override func awakeFromNib() {
-        super.awakeFromNib()
-       
-    }
-    
+
 }

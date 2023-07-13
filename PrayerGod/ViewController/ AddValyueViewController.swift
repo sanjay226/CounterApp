@@ -50,14 +50,14 @@ class AddValyueViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         allmetodeAssignViewDidload()
-      txt_Start_value.text = firstVc_ccurent_list_show_start_value
+        txt_Start_value.text = firstVc_ccurent_list_show_start_value
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         selected_index_list_on_listVc()
         
-}
+    }
     //MARK: - Custum Function
     func allmetodeAssignViewDidload(){
         height_reminder.constant = 0
@@ -211,14 +211,14 @@ class AddValyueViewController: UIViewController{
     func updateListTask(){
         let data = databasehelper.sharaintance.getdata()
         var _: [()] = data.map({$0.isActive = false})
-      }
+    }
 }
 //MARK:- UITextFieldDelegat
 extension AddValyueViewController : UITextFieldDelegate{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-            self.view.endEditing(true)
-        }
+        self.view.endEditing(true)
+    }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentCharacterCount = textField.text?.count
@@ -255,7 +255,7 @@ extension AddValyueViewController : UITextFieldDelegate{
         return true
     }
 }
-       
 
-    
+
+
 

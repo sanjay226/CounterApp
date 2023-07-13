@@ -35,8 +35,6 @@ class ListViewController: UIViewController{
     @IBOutlet weak var imgCheckByABC: UIImageView!
     @IBOutlet weak var imgCheckByValue: UIImageView!
     
-    
-    
     //MARK: - All veriable
     var Ary_textfield_get_list = [Garland]()
     var progressTarget = Float()
@@ -95,6 +93,9 @@ class ListViewController: UIViewController{
         lbl_Alphabetic_sort_value.text = "Alphabetic Sort"
         lbl_sort_Date.text = "Sort By Date"
         lbl_sort_value.text = "Sort by Value"
+        img_sourt_bydate_bottomview.image = UIImage(systemName: "calendar")
+        img_Alphabetic_sort_bottomview.image = UIImage(systemName: "character.textbox")
+        img_sort_by_value_bottomview.image = UIImage(systemName: "123.rectangle")
         view_continue_bottomview.isHidden = true
         is_Sort_all_ButtonClicked = true
         btn_open_addlistVc.isHidden = true
@@ -117,14 +118,14 @@ class ListViewController: UIViewController{
         is_Sort_all_ButtonClicked = Bool()
     }
     
-    func getActiveTAskIndex_in_list() -> Int{
-        let taskList = databasehelper.sharaintance.getdata()
-        if let index = taskList.firstIndex(where: {$0.isActive == true}){
-            return index
-        }else{
-            return -1
-        }
-    }
+//    func getActiveTAskIndex_in_list() -> Int{
+//        let taskList = databasehelper.sharaintance.getdata()
+//        if let index = taskList.firstIndex(where: {$0.isActive == true}){
+//            return index
+//        }else{
+//            return -1
+//        }
+//    }
     //gesture bottonview hide
     func hide_mainbottom_view(){
         viewGesture_cover_bottom_sheet.isHidden = true
@@ -363,20 +364,23 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        didselectIndex = indexPath.row
+        didselec_row_methode()
+    }
+    
+    func didselec_row_methode(){
         view_continue_bottomview.isHidden = false
         is_Sort_all_ButtonClicked = false
         show_mainbottom_view()
         View_Sorted_All_data_bottomview.isHidden = false
         View_Sorted_All_data_bottomview.isUserInteractionEnabled = true
-        didselectIndex = indexPath.row
         lbl_sort_Date.text =  "Reset Counter"
         lbl_Alphabetic_sort_value.text = "Edit"
         lbl_sort_value.text = "Delete"
-        img_sourt_bydate_bottomview.image = UIImage(systemName: "calendar.badge.plus")
-        img_Alphabetic_sort_bottomview.image = UIImage(systemName: "repeat")
-        img_sort_by_value_bottomview.image = UIImage(systemName: "10.square")
+        img_sourt_bydate_bottomview.image = UIImage(systemName: "repeat")
+        img_Alphabetic_sort_bottomview.image = UIImage(systemName: "pencil")
+        img_sort_by_value_bottomview.image = UIImage(systemName: "trash.fill")
         self.navigationItem.rightBarButtonItem?.isEnabled = false
-        
         imgCheckByABC.isHidden = true
         imgCheckByDate.isHidden = true
         imgCheckByValue.isHidden = true
@@ -386,7 +390,6 @@ extension ListViewController : UITableViewDelegate,UITableViewDataSource{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ssz"
         let date = dateFormatter.date(from: "\(obj.date ?? Date())")
-        dateFormatter.dateFormat = "dd MMM, yyyy hh:mm a"
         return dateFormatter.string(from: date ?? Date())
     }
 }

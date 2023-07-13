@@ -42,7 +42,6 @@ class SideMenuViewController: UIViewController {
     func barButtonItem(){
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "multiply"), style: .plain, target: self, action: #selector(GoBackVcRoot))
         self.navigationItem.leftBarButtonItem?.tintColor = .white
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.2.fill"), style: .plain, target: self, action: #selector(CountingTappGescher_Go_root_save))
         self.navigationItem.rightBarButtonItem?.tintColor = .white
         let backButton = UIBarButtonItem()
         backButton.title = ""
@@ -54,14 +53,6 @@ class SideMenuViewController: UIViewController {
     }
     
     @objc func GoBackVcRoot(){
-        if self.presentingViewController != nil{
-            self.dismiss(animated: true, completion: nil)
-        }else{
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc func CountingTappGescher_Go_root_save(){
         if self.presentingViewController != nil{
             self.dismiss(animated: true, completion: nil)
         }else{
@@ -113,6 +104,8 @@ extension SideMenuViewController : UITableViewDelegate,UITableViewDataSource{
             cell?.Indicatore_when_NotOpenApp.isHidden = false
             ActivityIndicatorView()
             rateApp()
+            cell?.Indicatore_when_NotOpenApp.hidesWhenStopped = true
+            
             dismiss(animated: false, completion: nil)
         }else if indexPath.row == 3{
             performSegue(withIdentifier: "SoundViewController", sender: self)

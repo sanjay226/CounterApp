@@ -31,6 +31,15 @@
 		228334EB29ED047B0071FADB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228334E929ED047B0071FADB /* LaunchScreen.storyboard */; };
 		228334FA29ED11D90071FADB /* AllExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228334F929ED11D90071FADB /* AllExtention.swift */; };
 		22D49B7A2A09AB7900C5F15B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D49B792A09AB7900C5F15B /* ViewController.swift */; };
+		882ACFA32A5E863000FA7790 /* CensorBeep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFA22A5E863000FA7790 /* CensorBeep.mp3 */; };
+		882ACFA52A5E869F00FA7790 /* soundThriller.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFA42A5E869F00FA7790 /* soundThriller.mp3 */; };
+		882ACFA72A5E872500FA7790 /* Beep.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFA62A5E872500FA7790 /* Beep.mp3 */; };
+		882ACFA92A5E8D8300FA7790 /* dropBottel.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFA82A5E8D8300FA7790 /* dropBottel.mp3 */; };
+		882ACFAB2A5E8D8E00FA7790 /* GunShuter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFAA2A5E8D8E00FA7790 /* GunShuter.mp3 */; };
+		882ACFAD2A5E8DB900FA7790 /* Knock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFAC2A5E8DB900FA7790 /* Knock.mp3 */; };
+		882ACFAF2A5E8DD600FA7790 /* DropingWench.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFAE2A5E8DD600FA7790 /* DropingWench.mp3 */; };
+		882ACFB12A5E8E0F00FA7790 /* FastKnock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFB02A5E8E0F00FA7790 /* FastKnock.mp3 */; };
+		882ACFB32A5E8E1400FA7790 /* MidiumCnock.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 882ACFB22A5E8E1400FA7790 /* MidiumCnock.mp3 */; };
 		8841D4572A4D513800146ABA /* Garland+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841D4552A4D513800146ABA /* Garland+CoreDataClass.swift */; };
 		8841D4582A4D513800146ABA /* Garland+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841D4562A4D513800146ABA /* Garland+CoreDataProperties.swift */; };
 		885932A22A4C42D20074F6C2 /* zikirmatik_digits.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */; };
@@ -65,6 +74,15 @@
 		228334EC29ED047B0071FADB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		228334F929ED11D90071FADB /* AllExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllExtention.swift; sourceTree = "<group>"; };
 		22D49B792A09AB7900C5F15B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		882ACFA22A5E863000FA7790 /* CensorBeep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CensorBeep.mp3; sourceTree = "<group>"; };
+		882ACFA42A5E869F00FA7790 /* soundThriller.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soundThriller.mp3; sourceTree = "<group>"; };
+		882ACFA62A5E872500FA7790 /* Beep.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Beep.mp3; sourceTree = "<group>"; };
+		882ACFA82A5E8D8300FA7790 /* dropBottel.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dropBottel.mp3; sourceTree = "<group>"; };
+		882ACFAA2A5E8D8E00FA7790 /* GunShuter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = GunShuter.mp3; sourceTree = "<group>"; };
+		882ACFAC2A5E8DB900FA7790 /* Knock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Knock.mp3; sourceTree = "<group>"; };
+		882ACFAE2A5E8DD600FA7790 /* DropingWench.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = DropingWench.mp3; sourceTree = "<group>"; };
+		882ACFB02A5E8E0F00FA7790 /* FastKnock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = FastKnock.mp3; sourceTree = "<group>"; };
+		882ACFB22A5E8E1400FA7790 /* MidiumCnock.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = MidiumCnock.mp3; sourceTree = "<group>"; };
 		8841D4552A4D513800146ABA /* Garland+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		8841D4562A4D513800146ABA /* Garland+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Garland+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = zikirmatik_digits.ttf; sourceTree = "<group>"; };
@@ -174,8 +192,8 @@
 		228334F629ED10570071FADB /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				882ACF992A5E809200FA7790 /* AllSoundEfectClick */,
 				885932A12A4C42D20074F6C2 /* zikirmatik_digits.ttf */,
-				2220B2EB409B26E3009AE513 /* sound.mp3 */,
 				223413E32B43468C001ED0E9 /* AllStrMOdel.swift */,
 			);
 			path = Model;
@@ -210,6 +228,23 @@
 				00553C58A852E2560BDAFF26 /* Pods-PrayerGod.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		882ACF992A5E809200FA7790 /* AllSoundEfectClick */ = {
+			isa = PBXGroup;
+			children = (
+				2220B2EB409B26E3009AE513 /* sound.mp3 */,
+				882ACFA62A5E872500FA7790 /* Beep.mp3 */,
+				882ACFA82A5E8D8300FA7790 /* dropBottel.mp3 */,
+				882ACFAA2A5E8D8E00FA7790 /* GunShuter.mp3 */,
+				882ACFAC2A5E8DB900FA7790 /* Knock.mp3 */,
+				882ACFB02A5E8E0F00FA7790 /* FastKnock.mp3 */,
+				882ACFA42A5E869F00FA7790 /* soundThriller.mp3 */,
+				882ACFB22A5E8E1400FA7790 /* MidiumCnock.mp3 */,
+				882ACFAE2A5E8DD600FA7790 /* DropingWench.mp3 */,
+				882ACFA22A5E863000FA7790 /* CensorBeep.mp3 */,
+			);
+			path = AllSoundEfectClick;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,9 +309,18 @@
 			files = (
 				228334EB29ED047B0071FADB /* LaunchScreen.storyboard in Resources */,
 				2220B2EC409B26E3009AE513 /* sound.mp3 in Resources */,
+				882ACFAF2A5E8DD600FA7790 /* DropingWench.mp3 in Resources */,
+				882ACFA32A5E863000FA7790 /* CensorBeep.mp3 in Resources */,
+				882ACFAB2A5E8D8E00FA7790 /* GunShuter.mp3 in Resources */,
+				882ACFA72A5E872500FA7790 /* Beep.mp3 in Resources */,
 				228334E829ED047B0071FADB /* Assets.xcassets in Resources */,
+				882ACFA52A5E869F00FA7790 /* soundThriller.mp3 in Resources */,
+				882ACFB32A5E8E1400FA7790 /* MidiumCnock.mp3 in Resources */,
+				882ACFA92A5E8D8300FA7790 /* dropBottel.mp3 in Resources */,
+				882ACFB12A5E8E0F00FA7790 /* FastKnock.mp3 in Resources */,
 				228334E329ED047A0071FADB /* Main.storyboard in Resources */,
 				885932A22A4C42D20074F6C2 /* zikirmatik_digits.ttf in Resources */,
+				882ACFAD2A5E8DB900FA7790 /* Knock.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

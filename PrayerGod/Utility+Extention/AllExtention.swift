@@ -9,16 +9,6 @@ import Foundation
 import UIKit
 
 extension UIView {
-@IBInspectable
-    var cornerRadius: CGFloat {
-        get {
-            return layer.cornerRadius
-        }
-        set {
-            layer.cornerRadius = newValue
-        }
-    }
-
     @IBInspectable
     var borderWidth: CGFloat {
         get {
@@ -118,4 +108,35 @@ extension UIColor {
 
     self.init(red: r, green: g, blue: b, alpha: a)
 }
+    
+}
+
+extension UIView {
+
+    @IBInspectable var cornerRadius:Double {
+        get {
+            return Double(layer.cornerRadius)
+        }
+        set {
+            layer.cornerRadius = CGFloat(newValue)
+            layer.masksToBounds = newValue > 0
+        }
+    }
+
+    @IBInspectable var circleView:Bool {
+        get {
+            return layer.cornerRadius == min(self.frame.width, self.frame.height) / CGFloat(2.0) ? true : false
+        }
+        set {
+            if newValue {
+                layer.cornerRadius = min(self.frame.width, self.frame.height) / CGFloat(2.0)
+                layer.masksToBounds = true
+            }
+            else{
+                layer.cornerRadius = 0.0
+                layer.masksToBounds = false
+            }
+        }
+    }
+
 }

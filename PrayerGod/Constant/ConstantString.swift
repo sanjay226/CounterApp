@@ -18,7 +18,7 @@ var Theme_Arry = [color_Theme(Color_background: "main1", Color_Border: "color17"
                   color_Theme( Color_background: "color6", Color_Border: "color12", Color_img_inside: "color13"),
                   color_Theme( Color_background: "color15", Color_Border: "color17", Color_img_inside: "main1"),
                   color_Theme( Color_background: "color17", Color_Border: "color8", Color_img_inside: "color4"),
-                  color_Theme( Color_background: "color16", Color_Border: "color5", Color_img_inside: "color10"),
+                  color_Theme( Color_background: "color16", Color_Border: "color15", Color_img_inside: "color10"),
                   color_Theme( Color_background: "color7", Color_Border: "color14", Color_img_inside: "color6"),
                   color_Theme( Color_background: "color1", Color_Border: "color3", Color_img_inside: "color2"),
                   color_Theme( Color_background: "main1", Color_Border: "color17", Color_img_inside: "color4"),

@@ -228,10 +228,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         img_counter_inside_counterImg.tintColor = UIColor(named: "dark")
         btn_pluse_count.backgroundColor = .gray
         img_coloure_convertore.tintColor = .gray
-        btn_change_Mode.backgroundColor = .white
-        btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .white : .systemBrown
-        btn_Sound.backgroundColor = selectedsound ? .white : .systemBrown
-        btn_vibration.backgroundColor = selectedvibration ? .white : .systemBrown
+        btn_change_Mode.backgroundColor = .gray
+        btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .gray : .systemBrown
+        btn_Sound.backgroundColor = selectedsound ? .gray : .systemBrown
+        btn_vibration.backgroundColor = selectedvibration ? .gray : .systemBrown
     }
     
     func  allMethode_SidemenuAppreance_While_viewWillAppear(){
@@ -511,7 +511,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         setHeptic_FeedBack()
         selectedsound = selectedsound ? false : true
         if isDarkMode{
-            sender.backgroundColor = selectedsound ? .white : .systemBrown
+            sender.backgroundColor = selectedsound ? .gray : .systemBrown
         }else{
             sender.backgroundColor = selectedsound ? counterBorderColor : .systemBrown
         }
@@ -524,7 +524,7 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         setHeptic_FeedBack()
         selectedvibration = selectedvibration ? false : true
         if isDarkMode{
-            sender.backgroundColor = selectedvibration ? .white : .systemBrown
+            sender.backgroundColor = selectedvibration ? .gray : .systemBrown
         }else{
             sender.backgroundColor = selectedvibration ? counterBorderColor : .systemBrown
             
@@ -563,8 +563,8 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
         if (isDarkMode) {
             view_Main_Grediantcoloure.backgroundColor = UIColor(named: "dark")
             img_counter_inside_counterImg.tintColor = UIColor(named: "dark")
-            btn_Sound.backgroundColor = selectedsound ? .white : .systemBrown
-            btn_vibration.backgroundColor = selectedvibration ? .white : .systemBrown
+            btn_Sound.backgroundColor = selectedsound ? .gray : .systemBrown
+            btn_vibration.backgroundColor = selectedvibration ? .gray : .systemBrown
             btn_pluse_count.backgroundColor = .gray
             img_coloure_convertore.tintColor = .gray
         }
@@ -576,10 +576,10 @@ class ViewController: UIViewController, AVAudioPlayerDelegate{
             ThemeIndex = UserDefaults.standard.integer(forKey: "ThimIndex")
             setupTheme()
         }
-        btn_change_Mode.backgroundColor = isDarkMode ? .white : .systemBrown
+        btn_change_Mode.backgroundColor = isDarkMode ? .gray : .systemBrown
         view_lable_zero.backgroundColor = isDarkMode ? .green :  UIColor(white: 2, alpha: 0.10)
         if isDarkMode {
-            btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .white : .systemBrown
+            btn_vnavigationItem_rightbar_BtnItem.backgroundColor =  isnavigation_bar_coloure_change ? .gray : .systemBrown
         }else if !isDarkMode{
             btn_vnavigationItem_rightbar_BtnItem.backgroundColor = isnavigation_bar_coloure_change ? counterBorderColor : .systemBrown
         }else{
